@@ -16,10 +16,10 @@
 
 **Purpose**: Initialisation des tokens de style de la maquette (DESIGN.md), des polices et des modèles TypeScript.
 
-- [ ] T001 Injecter la configuration des tokens Design System (@theme) dans frontend/src/styles.css
-- [ ] T002 [P] Importer les polices Google Fonts Plus Jakarta Sans et Material Symbols dans frontend/src/index.html
-- [ ] T003 [P] Définir les modèles ColorPalette et SimulatorState dans frontend/src/app/core/models/palette.model.ts
-- [ ] T004 [P] Définir les modèles FeatureCard et ShowcaseModel dans frontend/src/app/core/models/showcase.model.ts
+- [X] T001 Injecter la configuration des tokens Design System (@theme) dans frontend/src/styles.css
+- [X] T002 [P] Importer les polices Google Fonts Plus Jakarta Sans et Material Symbols dans frontend/src/index.html
+- [X] T003 [P] Définir les modèles ColorPalette et SimulatorState dans frontend/src/app/core/models/palette.model.ts
+- [X] T004 [P] Définir les modèles FeatureCard et ShowcaseModel dans frontend/src/app/core/models/showcase.model.ts
 
 ---
 
@@ -29,9 +29,9 @@
 
 **⚠️ CRITICAL**: Pré-requis obligatoire avant l'implémentation des composants de présentation des User Stories.
 
-- [ ] T005 Générer le service réactif QrSimulatorService via CLI Angular dans frontend/src/app/features/home/data-access/qr-simulator.service.ts
-- [ ] T006 Générer le Smart Component conteneur HomeComponent via CLI Angular dans frontend/src/app/features/home/home.component.ts
-- [ ] T007 Configurer la route racine vers HomeComponent dans frontend/src/app/app.routes.ts et nettoyer frontend/src/app/app.component.html
+- [X] T005 Générer le service réactif QrSimulatorService via CLI Angular dans frontend/src/app/features/home/data-access/qr-simulator.service.ts
+- [X] T006 Générer le Smart Component conteneur HomeComponent via CLI Angular dans frontend/src/app/features/home/home.component.ts
+- [X] T007 Configurer la route racine vers HomeComponent dans frontend/src/app/app.routes.ts et nettoyer frontend/src/app/app.component.html
 
 **Checkpoint**: Socle prêt — le conteneur HomeComponent est branché sur la route `/`.
 
@@ -45,11 +45,11 @@
 
 ### Implementation for User Story 1
 
-- [ ] T008 [P] [US1] Générer le Dumb Component NavbarComponent via CLI Angular dans frontend/src/app/features/home/ui/navbar/navbar.component.ts
-- [ ] T009 [P] [US1] Générer le Dumb Component HeroSectionComponent via CLI Angular dans frontend/src/app/features/home/ui/hero-section/hero-section.component.ts
-- [ ] T010 [US1] Implémenter le gabarit et les styles pixel-perfect dans frontend/src/app/features/home/ui/navbar/navbar.component.html
-- [ ] T011 [US1] Implémenter le gabarit pixel-perfect de la section hero (titre dégradé, badges, carte bistro) dans frontend/src/app/features/home/ui/hero-section/hero-section.component.html
-- [ ] T012 [US1] Intégrer NavbarComponent et HeroSectionComponent dans frontend/src/app/features/home/home.component.html
+- [X] T008 [P] [US1] Générer le Dumb Component NavbarComponent via CLI Angular dans frontend/src/app/features/home/ui/navbar/navbar.component.ts
+- [X] T009 [P] [US1] Générer le Dumb Component HeroSectionComponent via CLI Angular dans frontend/src/app/features/home/ui/hero-section/hero-section.component.ts
+- [X] T010 [US1] Implémenter le gabarit et les styles pixel-perfect dans frontend/src/app/features/home/ui/navbar/navbar.component.html
+- [X] T011 [US1] Implémenter le gabarit pixel-perfect de la section hero (titre dégradé, badges, carte bistro) dans frontend/src/app/features/home/ui/hero-section/hero-section.component.html
+- [X] T012 [US1] Intégrer NavbarComponent et HeroSectionComponent dans frontend/src/app/features/home/home.component.html
 
 **Checkpoint**: User Story 1 (MVP d'accueil) fonctionnelle et testable de manière autonome.
 
@@ -63,14 +63,14 @@
 
 ### Tests for User Story 2 (Catégorie 2 - Test Unitaire)
 
-- [ ] T013 [P] [US2] Écrire les tests unitaires isolés pour QrSimulatorService dans frontend/src/app/features/home/data-access/qr-simulator.service.spec.ts
+- [X] T013 [P] [US2] Écrire les tests unitaires isolés pour QrSimulatorService dans frontend/src/app/features/home/data-access/qr-simulator.service.spec.ts
 
 ### Implementation for User Story 2
 
-- [ ] T014 [US2] Implémenter la logique d'état réactive (Signals Angular) dans frontend/src/app/features/home/data-access/qr-simulator.service.ts
-- [ ] T015 [P] [US2] Générer le Dumb Component SimulatorSectionComponent via CLI Angular dans frontend/src/app/features/home/ui/simulator-section/simulator-section.component.ts
-- [ ] T016 [US2] Implémenter le gabarit pixel-perfect du simulateur (formulaire et carte réactive) dans frontend/src/app/features/home/ui/simulator-section/simulator-section.component.html
-- [ ] T017 [US2] Connecter SimulatorSectionComponent aux signaux de QrSimulatorService dans frontend/src/app/features/home/home.component.ts et frontend/src/app/features/home/home.component.html
+- [X] T014 [US2] Implémenter la logique d'état réactive (Signals Angular) dans frontend/src/app/features/home/data-access/qr-simulator.service.ts
+- [X] T015 [P] [US2] Générer le Dumb Component SimulatorSectionComponent via CLI Angular dans frontend/src/app/features/home/ui/simulator-section/simulator-section.component.ts
+- [X] T016 [US2] Implémenter le gabarit pixel-perfect du simulateur (formulaire et carte réactive) dans frontend/src/app/features/home/ui/simulator-section/simulator-section.component.html
+- [X] T017 [US2] Connecter SimulatorSectionComponent aux signaux de QrSimulatorService dans frontend/src/app/features/home/home.component.ts et frontend/src/app/features/home/home.component.html
 
 **Checkpoint**: User Stories 1 et 2 complètes et interactives.
 
@@ -84,15 +84,15 @@
 
 ### Implementation for User Story 3
 
-- [ ] T018 [P] [US3] Générer le Dumb Component FeaturesSectionComponent via CLI Angular dans frontend/src/app/features/home/ui/features-section/features-section.component.ts
-- [ ] T019 [P] [US3] Générer le Dumb Component ShowcaseSectionComponent via CLI Angular dans frontend/src/app/features/home/ui/showcase-section/showcase-section.component.ts
-- [ ] T020 [P] [US3] Générer le Dumb Component CtaBannerComponent via CLI Angular dans frontend/src/app/features/home/ui/cta-banner/cta-banner.component.ts
-- [ ] T021 [P] [US3] Générer le Dumb Component FooterComponent via CLI Angular dans frontend/src/app/features/home/ui/footer/footer.component.ts
-- [ ] T022 [US3] Implémenter le gabarit des 4 cartes d'atouts dans frontend/src/app/features/home/ui/features-section/features-section.component.html
-- [ ] T023 [US3] Implémenter le gabarit de la galerie d'inspirations dans frontend/src/app/features/home/ui/showcase-section/showcase-section.component.html
-- [ ] T024 [US3] Implémenter le gabarit de la bannière finale dans frontend/src/app/features/home/ui/cta-banner/cta-banner.component.html
-- [ ] T025 [US3] Implémenter le gabarit du pied de page dans frontend/src/app/features/home/ui/footer/footer.component.html
-- [ ] T026 [US3] Assembler l'intégralité des sections dans frontend/src/app/features/home/home.component.html
+- [X] T018 [P] [US3] Générer le Dumb Component FeaturesSectionComponent via CLI Angular dans frontend/src/app/features/home/ui/features-section/features-section.component.ts
+- [X] T019 [P] [US3] Générer le Dumb Component ShowcaseSectionComponent via CLI Angular dans frontend/src/app/features/home/ui/showcase-section/showcase-section.component.ts
+- [X] T020 [P] [US3] Générer le Dumb Component CtaBannerComponent via CLI Angular dans frontend/src/app/features/home/ui/cta-banner/cta-banner.component.ts
+- [X] T021 [P] [US3] Générer le Dumb Component FooterComponent via CLI Angular dans frontend/src/app/features/home/ui/footer/footer.component.ts
+- [X] T022 [US3] Implémenter le gabarit des 4 cartes d'atouts dans frontend/src/app/features/home/ui/features-section/features-section.component.html
+- [X] T023 [US3] Implémenter le gabarit de la galerie d'inspirations dans frontend/src/app/features/home/ui/showcase-section/showcase-section.component.html
+- [X] T024 [US3] Implémenter le gabarit de la bannière finale dans frontend/src/app/features/home/ui/cta-banner/cta-banner.component.html
+- [X] T025 [US3] Implémenter le gabarit du pied de page dans frontend/src/app/features/home/ui/footer/footer.component.html
+- [X] T026 [US3] Assembler l'intégralité des sections dans frontend/src/app/features/home/home.component.html
 
 **Checkpoint**: La page d'accueil complète est intégrée de façon pixel-perfect.
 
@@ -102,10 +102,10 @@
 
 **Purpose**: Validation d'intégration, vérification de la build et passage des tests de non-régression.
 
-- [ ] T027 Écrire le test d'intégration du Smart Component HomeComponent dans frontend/src/app/features/home/home.component.spec.ts (Catégorie 3)
-- [ ] T028 [P] Exécuter la suite complète de tests Vitest via npm test dans frontend/
-- [ ] T029 [P] Valider la compilation de production et SSR via npm run build dans frontend/
-- [ ] T030 Valider le rendu final en direct selon les scénarios de specs/001-qrcraft-homepage/quickstart.md
+- [X] T027 Écrire le test d'intégration du Smart Component HomeComponent dans frontend/src/app/features/home/home.component.spec.ts (Catégorie 3)
+- [X] T028 [P] Exécuter la suite complète de tests Vitest via npm test dans frontend/
+- [X] T029 [P] Valider la compilation de production et SSR via npm run build dans frontend/
+- [X] T030 Valider le rendu final en direct selon les scénarios de specs/001-qrcraft-homepage/quickstart.md
 
 ---
 

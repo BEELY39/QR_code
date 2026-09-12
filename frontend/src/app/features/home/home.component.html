@@ -1,0 +1,19 @@
+<app-navbar />
+<main class="w-full pt-20 bg-background">
+  <div class="flex flex-col w-full overflow-hidden">
+    <app-hero-section />
+    <app-simulator-section 
+      [url]="simulatorService.url()"
+      [palettes]="simulatorService.palettes()"
+      [selectedPalette]="simulatorService.selectedPalette()"
+      [bottomText]="simulatorService.bottomText()"
+      [displayUrl]="simulatorService.displayUrl()"
+      (urlChange)="simulatorService.setUrl($event)"
+      (paletteSelect)="simulatorService.selectPalette($event)"
+      (bottomTextChange)="simulatorService.setBottomText($event)" />
+    <app-features-section />
+    <app-showcase-section />
+    <app-cta-banner />
+  </div>
+</main>
+<app-footer />
