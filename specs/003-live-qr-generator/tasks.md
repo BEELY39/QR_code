@@ -9,8 +9,8 @@
 
 **Purpose**: Création des modèles TypeScript stricts « à la Rust » et des constantes visuelles partagées.
 
-- [ ] T001 [P] Create live QR TypeScript models and discriminated unions in frontend/src/app/core/models/live-qr.model.ts
-- [ ] T002 [P] Create Base64 in-memory circular logo constant in frontend/src/app/core/constants/qr-logo.constant.ts
+- [X] T001 [P] Create live QR TypeScript models and discriminated unions in frontend/src/app/core/models/live-qr.model.ts
+- [X] T002 [P] Create Base64 in-memory circular logo constant in frontend/src/app/core/constants/qr-logo.constant.ts
 
 ---
 
@@ -20,7 +20,7 @@
 
 **⚠️ CRITICAL**: Aucun développement de User Story ne peut débuter avant l'achèvement de cette phase.
 
-- [ ] T003 Update QrSimulatorService interface and reactive state contract in frontend/src/app/features/home/data-access/qr-simulator.service.ts
+- [X] T003 Update QrSimulatorService interface and reactive state contract in frontend/src/app/features/home/data-access/qr-simulator.service.ts
 
 **Checkpoint**: Contrats et modèles prêts - le développement des User Stories peut débuter.
 
@@ -34,14 +34,14 @@
 
 ### Tests for User Story 1 (Catégorie 2 & 3)
 
-- [ ] T004 [P] [US1] Add unit test for SVG generation with ECL H and central logo in frontend/src/app/features/home/data-access/qr-simulator.service.spec.ts
-- [ ] T005 [P] [US1] Add integration test for live SVG rendering in frontend/src/app/features/home/home.component.spec.ts
+- [X] T004 [P] [US1] Add unit test for SVG generation with ECL H and central logo in frontend/src/app/features/home/data-access/qr-simulator.service.spec.ts
+- [X] T005 [P] [US1] Add integration test for live SVG rendering in frontend/src/app/features/home/home.component.spec.ts
 
 ### Implementation for User Story 1
 
-- [ ] T006 [US1] Implement SVG generation with ECL H, luxury rounded styling, and central logo in frontend/src/app/features/home/data-access/qr-simulator.service.ts
-- [ ] T007 [US1] Update SimulatorSectionComponent inputs and template to render dynamic SVG markup in frontend/src/app/features/home/ui/simulator-section/simulator-section.component.ts and frontend/src/app/features/home/ui/simulator-section/simulator-section.component.html
-- [ ] T008 [US1] Wire live SVG markup binding in HomeComponent in frontend/src/app/features/home/home.component.ts and frontend/src/app/features/home/home.component.html
+- [X] T006 [US1] Implement SVG generation with ECL H, luxury rounded styling, and central logo in frontend/src/app/features/home/data-access/qr-simulator.service.ts
+- [X] T007 [US1] Update SimulatorSectionComponent inputs and template to render dynamic SVG markup in frontend/src/app/features/home/ui/simulator-section/simulator-section.component.ts and frontend/src/app/features/home/ui/simulator-section/simulator-section.component.html
+- [X] T008 [US1] Wire live SVG markup binding in HomeComponent in frontend/src/app/features/home/home.component.ts and frontend/src/app/features/home/home.component.html
 
 **Checkpoint**: À cette étape, User Story 1 (MVP) est 100% fonctionnelle, testée et scannable.
 
@@ -55,14 +55,14 @@
 
 ### Tests for User Story 2 (Catégorie 2 & 3)
 
-- [ ] T009 [P] [US2] Add unit tests for mode switching, URL normalization, and 150ms debounce in frontend/src/app/features/home/data-access/qr-simulator.service.spec.ts
-- [ ] T010 [P] [US2] Add integration test for mode toggle and input handling in frontend/src/app/features/home/home.component.spec.ts
+- [X] T009 [P] [US2] Add unit tests for mode switching, URL normalization, and 150ms debounce in frontend/src/app/features/home/data-access/qr-simulator.service.spec.ts
+- [X] T010 [P] [US2] Add integration test for mode toggle and input handling in frontend/src/app/features/home/home.component.spec.ts
 
 ### Implementation for User Story 2
 
-- [ ] T011 [US2] Implement setMode, setValue with 150ms debounce and URL normalization in frontend/src/app/features/home/data-access/qr-simulator.service.ts
-- [ ] T012 [US2] Add Lien/Texte toggle buttons and dynamic placeholder in frontend/src/app/features/home/ui/simulator-section/simulator-section.component.ts and frontend/src/app/features/home/ui/simulator-section/simulator-section.component.html
-- [ ] T013 [US2] Bind mode changes and debounced value updates in HomeComponent in frontend/src/app/features/home/home.component.ts and frontend/src/app/features/home/home.component.html
+- [X] T011 [US2] Implement setMode, setValue with 150ms debounce and URL normalization in frontend/src/app/features/home/data-access/qr-simulator.service.ts
+- [X] T012 [US2] Add Lien/Texte toggle buttons and dynamic placeholder in frontend/src/app/features/home/ui/simulator-section/simulator-section.component.ts and frontend/src/app/features/home/ui/simulator-section/simulator-section.component.html
+- [X] T013 [US2] Bind mode changes and debounced value updates in HomeComponent in frontend/src/app/features/home/home.component.ts and frontend/src/app/features/home/home.component.html
 
 **Checkpoint**: Les modes Lien et Texte fonctionnent de manière réactive et indépendante.
 
@@ -76,14 +76,14 @@
 
 ### Tests for User Story 3 (Catégorie 2 & 3)
 
-- [ ] T014 [P] [US3] Add unit tests for palette color updates and SVG export in frontend/src/app/features/home/data-access/qr-simulator.service.spec.ts
-- [ ] T015 [P] [US3] Add integration test for palette switching and download event in frontend/src/app/features/home/home.component.spec.ts
+- [X] T014 [P] [US3] Add unit tests for palette color updates and SVG export in frontend/src/app/features/home/data-access/qr-simulator.service.spec.ts
+- [X] T015 [P] [US3] Add integration test for palette switching and download event in frontend/src/app/features/home/home.component.spec.ts
 
 ### Implementation for User Story 3
 
-- [ ] T016 [US3] Implement dynamic gradient palette synchronization and downloadSvg in frontend/src/app/features/home/data-access/qr-simulator.service.ts
-- [ ] T017 [US3] Connect download button event in frontend/src/app/features/home/ui/simulator-section/simulator-section.component.ts and frontend/src/app/features/home/ui/simulator-section/simulator-section.component.html
-- [ ] T018 [US3] Wire download event handler in HomeComponent in frontend/src/app/features/home/home.component.ts
+- [X] T016 [US3] Implement dynamic gradient palette synchronization and downloadSvg in frontend/src/app/features/home/data-access/qr-simulator.service.ts
+- [X] T017 [US3] Connect download button event in frontend/src/app/features/home/ui/simulator-section/simulator-section.component.ts and frontend/src/app/features/home/ui/simulator-section/simulator-section.component.html
+- [X] T018 [US3] Wire download event handler in HomeComponent in frontend/src/app/features/home/home.component.ts
 
 **Checkpoint**: Toutes les user stories sont terminées et intégrées.
 
@@ -93,10 +93,10 @@
 
 **Purpose**: Vérification du typage exhaustif à la Rust, validation de la couverture de tests et compilation de production.
 
-- [ ] T019 [P] Add exhaustive TypeScript checking with never guard in frontend/src/app/features/home/data-access/qr-simulator.service.ts
-- [ ] T020 Run full test suite with Vitest in frontend/
-- [ ] T021 Run production SSR build validation in frontend/
-- [ ] T022 Perform live validation following quickstart guide in specs/003-live-qr-generator/quickstart.md
+- [X] T019 [P] Add exhaustive TypeScript checking with never guard in frontend/src/app/features/home/data-access/qr-simulator.service.ts
+- [X] T020 Run full test suite with Vitest in frontend/
+- [X] T021 Run production SSR build validation in frontend/
+- [X] T022 Perform live validation following quickstart guide in specs/003-live-qr-generator/quickstart.md
 
 ---
 
