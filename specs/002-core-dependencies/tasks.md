@@ -1,4 +1,4 @@
-﻿# Tasks: Installation et Configuration des Dépendances Cœur (V1)
+# Tasks: Installation et Configuration des Dépendances Cœur (V1)
 
 **Feature Branch**: `002-core-dependencies`
 
@@ -16,10 +16,10 @@
 
 **Purpose**: Installation npm des 4 packages fondamentaux et déclaration des interfaces TypeScript.
 
-- [ ] T001 Installer les packages tierces clés (qr-code-styling, html-to-image, @abacritt/angularx-social-login, jspdf) dans frontend/package.json
-- [ ] T002 [P] Déclarer les contrats TypeScript pour le moteur QR vectoriel dans frontend/src/app/core/models/qr-engine.model.ts
-- [ ] T003 [P] Déclarer les contrats TypeScript pour la capture DOM et l'export haute résolution dans frontend/src/app/core/models/export.model.ts
-- [ ] T004 [P] Déclarer les contrats TypeScript pour l'authentification différée dans frontend/src/app/core/models/auth.model.ts
+- [X] T001 Installer les packages tierces clés (qr-code-styling, html-to-image, @abacritt/angularx-social-login, jspdf) dans frontend/package.json
+- [X] T002 [P] Déclarer les contrats TypeScript pour le moteur QR vectoriel dans frontend/src/app/core/models/qr-engine.model.ts
+- [X] T003 [P] Déclarer les contrats TypeScript pour la capture DOM et l'export haute résolution dans frontend/src/app/core/models/export.model.ts
+- [X] T004 [P] Déclarer les contrats TypeScript pour l'authentification différée dans frontend/src/app/core/models/auth.model.ts
 
 ---
 
@@ -29,9 +29,9 @@
 
 **⚠️ CRITICAL**: Pré-requis obligatoire pour respecter la Règle n°1 (CLI Angular exclusif).
 
-- [ ] T005 Générer le service QrEngineService via CLI Angular dans frontend/src/app/core/services/qr-engine.service.ts
-- [ ] T006 [P] Générer le service DomExportService via CLI Angular dans frontend/src/app/core/services/dom-export.service.ts
-- [ ] T007 [P] Générer le service DeferredAuthService via CLI Angular dans frontend/src/app/core/services/deferred-auth.service.ts
+- [X] T005 Générer le service QrEngineService via CLI Angular dans frontend/src/app/core/services/qr-engine.service.ts
+- [X] T006 [P] Générer le service DomExportService via CLI Angular dans frontend/src/app/core/services/dom-export.service.ts
+- [X] T007 [P] Générer le service DeferredAuthService via CLI Angular dans frontend/src/app/core/services/deferred-auth.service.ts
 
 **Checkpoint**: Socle CLI en place — Les services d'infrastructure sont prêts pour l'injection et les tests unitaires.
 
@@ -45,11 +45,11 @@
 
 ### Tests for User Story 1 (Catégorie 2 - Test Unitaire)
 
-- [ ] T008 [TEST] [US1] Écrire les tests unitaires isolés pour QrEngineService (garde isPlatformBrowser, no-op SSR, rendu SVG pur) dans frontend/src/app/core/services/qr-engine.service.spec.ts
+- [X] T008 [TEST] [US1] Écrire les tests unitaires isolés pour QrEngineService (garde isPlatformBrowser, no-op SSR, rendu SVG pur) dans frontend/src/app/core/services/qr-engine.service.spec.ts
 
 ### Implementation for User Story 1
 
-- [ ] T009 [US1] Implémenter QrEngineService avec injection PLATFORM_ID et import dynamique de qr-code-styling dans frontend/src/app/core/services/qr-engine.service.ts
+- [X] T009 [US1] Implémenter QrEngineService avec injection PLATFORM_ID et import dynamique de qr-code-styling dans frontend/src/app/core/services/qr-engine.service.ts
 
 **Checkpoint**: Moteur vectoriel de QR Code opérationnel et sécurisé pour le SSR.
 
@@ -63,11 +63,11 @@
 
 ### Tests for User Story 2 (Catégorie 2 - Test Unitaire)
 
-- [ ] T010 [TEST] [US2] Écrire les tests unitaires isolés pour DomExportService (capture PNG, conversion PDF, révocation URL.revokeObjectURL) dans frontend/src/app/core/services/dom-export.service.spec.ts
+- [X] T010 [TEST] [US2] Écrire les tests unitaires isolés pour DomExportService (capture PNG, conversion PDF, révocation URL.revokeObjectURL) dans frontend/src/app/core/services/dom-export.service.spec.ts
 
 ### Implementation for User Story 2
 
-- [ ] T011 [US2] Implémenter DomExportService avec imports dynamiques (html-to-image, jspdf) et hygiène mémoire dans frontend/src/app/core/services/dom-export.service.ts
+- [X] T011 [US2] Implémenter DomExportService avec imports dynamiques (html-to-image, jspdf) et hygiène mémoire dans frontend/src/app/core/services/dom-export.service.ts
 
 **Checkpoint**: Moteur de capture DOM et conversion PDF opérationnels.
 
@@ -81,11 +81,11 @@
 
 ### Tests for User Story 3 (Catégorie 2 - Test Unitaire)
 
-- [ ] T012 [TEST] [US3] Écrire les tests unitaires isolés pour DeferredAuthService (état initial non-bloquant, gestion du mock/fallback) dans frontend/src/app/core/services/deferred-auth.service.spec.ts
+- [X] T012 [TEST] [US3] Écrire les tests unitaires isolés pour DeferredAuthService (état initial non-bloquant, gestion du mock/fallback) dans frontend/src/app/core/services/deferred-auth.service.spec.ts
 
 ### Implementation for User Story 3
 
-- [ ] T013 [US3] Implémenter DeferredAuthService avec gestion d'état réactive (Signals) et fallback défensif dans frontend/src/app/core/services/deferred-auth.service.ts
+- [X] T013 [US3] Implémenter DeferredAuthService avec gestion d'état réactive (Signals) et fallback défensif dans frontend/src/app/core/services/deferred-auth.service.ts
 
 **Checkpoint**: Infrastructure d'authentification différée prête et conforme au Principe V.
 
@@ -95,9 +95,9 @@
 
 **Purpose**: Validation d'ensemble, exécution de la suite de tests et certification du build SSR.
 
-- [ ] T014 [P] Exécuter la suite complète de tests Vitest via npm test dans frontend/
-- [ ] T015 [P] Valider la compilation de production complète et SSR via npm run build dans frontend/
-- [ ] T016 Valider le démarrage sans erreur du serveur de développement Angular via npm start
+- [X] T014 [P] Exécuter la suite complète de tests Vitest via npm test dans frontend/
+- [X] T015 [P] Valider la compilation de production complète et SSR via npm run build dans frontend/
+- [X] T016 Valider le démarrage sans erreur du serveur de développement Angular via npm start
 
 ---
 
