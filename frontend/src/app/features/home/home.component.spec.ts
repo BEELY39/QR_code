@@ -1,6 +1,7 @@
-﻿import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { By } from '@angular/platform-browser';
+import { provideRouter } from '@angular/router';
 import { QrSimulatorService } from './data-access/qr-simulator.service';
 import { QrEngineService } from '../../core/services/qr-engine.service';
 
@@ -9,8 +10,8 @@ describe('HomeComponent (Catégorie 3 - Test Intégration)', () => {
   let fixture: ComponentFixture<HomeComponent>;
   let simulatorService: QrSimulatorService;
   let qrEngineMock: {
-    getSvgString: any;
-    download: any;
+    getSvgString: ReturnType<typeof vi.fn>;
+    download: ReturnType<typeof vi.fn>;
   };
 
   beforeEach(async () => {
@@ -22,6 +23,7 @@ describe('HomeComponent (Catégorie 3 - Test Intégration)', () => {
     await TestBed.configureTestingModule({
       imports: [HomeComponent],
       providers: [
+        provideRouter([]),
         { provide: QrEngineService, useValue: qrEngineMock },
       ],
     }).compileComponents();
@@ -79,7 +81,19 @@ describe('HomeComponent (Catégorie 3 - Test Intégration)', () => {
 
       expect(simulatorService.mode()).toBe('text');
       const inputEl = fixture.debugElement.query(By.css('#demo-input'));
-      expect(inputEl.nativeElement.getAttribute('placeholder')).toContain('Wi-Fi');
+      expect(inputEl.nativeElement.getAttribute('placeholder')).toContain('Bonjour');
+    });
+
+        it('devrait relayer le changement de mode wifi vers le service et afficher le formulaire', () => {
+      const modeWifiBtn = fixture.debugElement.query(By.css('#mode-toggle-wifi'));
+      expect(modeWifiBtn).toBeTruthy();
+
+      modeWifiBtn.triggerEventHandler('click', null);
+      fixture.detectChanges();
+
+      expect(simulatorService.mode()).toBe('wifi');
+      const wifiFormEl = fixture.debugElement.query(By.css('app-wifi-form'));
+      expect(wifiFormEl).toBeTruthy();
     });
 
     it('devrait propager la saisie textuelle vers le service', () => {
@@ -114,4 +128,51 @@ describe('HomeComponent (Catégorie 3 - Test Intégration)', () => {
       expect(downloadSpy).toHaveBeenCalledTimes(1);
     });
   });
+
+  describe('Feature 004 (Intégration) - Options Avancées QR (Design & Onglets)', () => {
+    it('devrait basculer entre les onglets de design et afficher les formulaires correspondants', () => {
+      // Onglet Couleurs
+      const tabColorsBtn = fixture.debugElement.query(By.css('#tab-btn-colors'));
+      expect(tabColorsBtn).toBeTruthy();
+      tabColorsBtn.triggerEventHandler('click', null);
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('app-colors-form'))).toBeTruthy();
+
+      // Onglet Cadre
+      const tabFrameBtn = fixture.debugElement.query(By.css('#tab-btn-frame'));
+      expect(tabFrameBtn).toBeTruthy();
+      tabFrameBtn.triggerEventHandler('click', null);
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('app-frame-form'))).toBeTruthy();
+
+      // Onglet Style
+      const tabStyleBtn = fixture.debugElement.query(By.css('#tab-btn-style'));
+      expect(tabStyleBtn).toBeTruthy();
+      tabStyleBtn.triggerEventHandler('click', null);
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('app-styling-form'))).toBeTruthy();
+
+      // Onglet Logo
+      const tabLogoBtn = fixture.debugElement.query(By.css('#tab-btn-logo'));
+      expect(tabLogoBtn).toBeTruthy();
+      tabLogoBtn.triggerEventHandler('click', null);
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('app-logo-form'))).toBeTruthy();
+    });
+
+    it('devrait propager les modifications de design vers le service', () => {
+      const simulatorDebugEl = fixture.debugElement.query(By.css('app-simulator-section'));
+      expect(simulatorDebugEl).toBeTruthy();
+
+      simulatorDebugEl.triggerEventHandler('designChange', {
+        dotsStyle: 'dots',
+        cornersColor: '#ff0000',
+      });
+      fixture.detectChanges();
+
+      expect(simulatorService.design().dotsStyle).toBe('dots');
+      expect(simulatorService.design().cornersColor).toBe('#ff0000');
+    });
+  });
 });
+

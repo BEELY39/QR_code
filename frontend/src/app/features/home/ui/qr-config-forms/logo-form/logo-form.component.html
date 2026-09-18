@@ -1,0 +1,45 @@
+<div class="flex flex-col gap-4 p-4">
+  <div class="flex flex-col gap-1">
+    <label class="text-sm font-semibold text-on-surface">Logo central du QR Code</label>
+    
+    @if (error()) {
+      <div class="text-error text-sm mb-2">{{ error() }}</div>
+    }
+
+    <div class="flex items-center gap-4 mt-2">
+      <div 
+        class="w-16 h-16 rounded-xl border-2 border-dashed border-outline-variant flex items-center justify-center bg-surface-container overflow-hidden"
+      >
+        @if (currentLogo()) {
+          <img [src]="currentLogo()" alt="Logo Preview" class="w-full h-full object-contain p-1" />
+        } @else {
+          <span class="material-symbols-outlined text-outline-variant">image</span>
+        }
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label 
+          class="px-4 py-2 bg-primary text-on-primary text-sm font-bold rounded-md cursor-pointer hover:bg-primary-container hover:text-on-primary-container transition-colors"
+        >
+          Importer un logo
+          <input 
+            type="file" 
+            class="hidden" 
+            accept=".png,.jpg,.jpeg,.svg"
+            (change)="onFileSelected($event)"
+          />
+        </label>
+        
+        @if (currentLogo()) {
+          <button 
+            type="button" 
+            class="text-sm text-error hover:underline text-left"
+            (click)="removeLogo()"
+          >
+            Retirer le logo
+          </button>
+        }
+      </div>
+    </div>
+  </div>
+</div>

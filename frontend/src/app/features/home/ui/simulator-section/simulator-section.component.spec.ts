@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+﻿import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SimulatorSectionComponent } from './simulator-section.component';
 import { ColorPalette } from '../../../../core/models/palette.model';
 
@@ -28,8 +28,9 @@ describe('SimulatorSectionComponent (Dumb Component)', () => {
     fixture.componentRef.setInput('url', 'https://instagram.com/monbistro');
     fixture.componentRef.setInput('palettes', [mockPalette]);
     fixture.componentRef.setInput('selectedPalette', mockPalette);
-    fixture.componentRef.setInput('bottomText', 'REJOIGNEZ LA COMMUNAUTÉ ✨');
+    fixture.componentRef.setInput('bottomText', 'REJOIGNEZ LA COMMUNAUTÃ‰ âœ¨');
     fixture.componentRef.setInput('displayUrl', 'instagram.com/monbistro');
+    fixture.componentRef.setInput('design', { dotsStyle: 'rounded', dotsColor: { kind: 'single', color: '#000'}, cornersColor: '#000', backgroundColor: '#fff', customLogoBase64: null, frame: { style: 'none', text: '', font: 'Roboto', frameColor: '#000', textColor: '#fff' }});
 
     fixture.detectChanges();
   });
@@ -38,3 +39,6 @@ describe('SimulatorSectionComponent (Dumb Component)', () => {
     expect(component).toBeTruthy();
   });
 });
+
+
+

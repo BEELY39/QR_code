@@ -1,0 +1,63 @@
+<form [formGroup]="colorsForm" class="flex flex-col gap-6 p-4">
+  <!-- Dots Color -->
+  <div class="flex flex-col gap-3">
+    <span class="text-sm font-semibold text-on-surface">Couleur principale (Points)</span>
+    
+    <div class="flex items-center gap-4">
+      <label class="flex items-center gap-2 cursor-pointer text-sm">
+        <input type="radio" formControlName="dotsColorType" value="single" class="text-primary focus:ring-primary" />
+        Couleur unie
+      </label>
+      <label class="flex items-center gap-2 cursor-pointer text-sm">
+        <input type="radio" formControlName="dotsColorType" value="gradient" class="text-primary focus:ring-primary" />
+        Dégradé
+      </label>
+    </div>
+
+    <!-- Single Color -->
+    <div *ngIf="colorsForm.get('dotsColorType')?.value === 'single'" class="flex items-center gap-2">
+      <input type="color" formControlName="dotsColorSingle" class="h-10 w-full max-w-[100px] rounded border border-outline cursor-pointer" />
+    </div>
+
+    <!-- Gradient -->
+    <div *ngIf="colorsForm.get('dotsColorType')?.value === 'gradient'" class="flex flex-col gap-3 p-3 bg-surface-container rounded-lg border border-outline-variant">
+      <div class="flex gap-4">
+        <div class="flex-1 flex flex-col gap-1">
+          <label class="text-xs text-on-surface-variant">Type</label>
+          <select formControlName="dotsGradientType" class="rounded border border-outline p-1.5 bg-surface text-sm">
+            <option value="linear">Linéaire</option>
+            <option value="radial">Radial</option>
+          </select>
+        </div>
+        <div class="flex-1 flex flex-col gap-1">
+          <label class="text-xs text-on-surface-variant">Rotation (°)</label>
+          <input type="number" formControlName="dotsGradientRotation" class="rounded border border-outline p-1.5 bg-surface text-sm" />
+        </div>
+      </div>
+      <div class="flex gap-4">
+        <div class="flex-1 flex flex-col gap-1">
+          <label class="text-xs text-on-surface-variant">Début</label>
+          <input type="color" formControlName="dotsGradientStart" class="h-8 w-full rounded border border-outline cursor-pointer" />
+        </div>
+        <div class="flex-1 flex flex-col gap-1">
+          <label class="text-xs text-on-surface-variant">Fin</label>
+          <input type="color" formControlName="dotsGradientEnd" class="h-8 w-full rounded border border-outline cursor-pointer" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="border-outline-variant" />
+
+  <!-- Corners and Background -->
+  <div class="flex gap-4">
+    <div class="flex-1 flex flex-col gap-2">
+      <label class="text-sm font-semibold text-on-surface" for="cornersColor">Couleur des coins</label>
+      <input type="color" id="cornersColor" formControlName="cornersColor" class="h-10 w-full max-w-[100px] rounded border border-outline cursor-pointer" />
+    </div>
+    <div class="flex-1 flex flex-col gap-2">
+      <label class="text-sm font-semibold text-on-surface" for="backgroundColor">Couleur de fond</label>
+      <input type="color" id="backgroundColor" formControlName="backgroundColor" class="h-10 w-full max-w-[100px] rounded border border-outline cursor-pointer" />
+    </div>
+  </div>
+</form>

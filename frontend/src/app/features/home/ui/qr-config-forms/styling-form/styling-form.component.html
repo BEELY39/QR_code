@@ -1,0 +1,19 @@
+<form [formGroup]="stylingForm" class="flex flex-col gap-4 p-4">
+  <div class="flex flex-col gap-1">
+    <label class="text-sm font-semibold text-on-surface" for="dotsStyle">Forme des points du QR</label>
+    <div class="grid grid-cols-2 gap-2 mt-2">
+      <div 
+        *ngFor="let style of dotStyles" 
+        class="relative flex items-center justify-center p-3 rounded-lg border-2 cursor-pointer transition-all"
+        [class.border-primary]="stylingForm.get('dotsStyle')?.value === style.value"
+        [class.bg-primary-container]="stylingForm.get('dotsStyle')?.value === style.value"
+        [class.border-outline]="stylingForm.get('dotsStyle')?.value !== style.value"
+        (click)="stylingForm.get('dotsStyle')?.setValue(style.value)"
+      >
+        <span class="text-sm font-medium" [class.text-on-primary-container]="stylingForm.get('dotsStyle')?.value === style.value">
+          {{ style.label }}
+        </span>
+      </div>
+    </div>
+  </div>
+</form>

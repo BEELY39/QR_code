@@ -1,4 +1,4 @@
-﻿import { Injectable, computed, signal, PLATFORM_ID, inject, InjectionToken } from '@angular/core';
+import { Injectable, computed, signal, PLATFORM_ID, inject, InjectionToken } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { AuthState, SocialUserProfile } from '../models/auth.model';
 
@@ -59,11 +59,12 @@ export class DeferredAuthService {
       const socialModule = await import('@abacritt/angularx-social-login');
       // Ready for live GIS integration
       return null;
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Erreur d authentification';
       this.state.update((s) => ({
         ...s,
         isLoading: false,
-        error: err?.message || 'Erreur d authentification',
+        error: errorMessage,
       }));
       return null;
     }

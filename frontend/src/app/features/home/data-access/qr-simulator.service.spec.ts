@@ -1,4 +1,4 @@
-﻿import { TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { QrSimulatorService } from './qr-simulator.service';
 import { QrEngineService } from '../../../core/services/qr-engine.service';
 import { QR_CENTRAL_LOGO_BASE64 } from '../../../core/constants/qr-logo.constant';
@@ -7,8 +7,8 @@ import { QrEngineOptions } from '../../../core/models/qr-engine.model';
 describe('QrSimulatorService (Catégorie 2 - Test Unitaire)', () => {
   let service: QrSimulatorService;
   let qrEngineMock: {
-    getSvgString: any;
-    download: any;
+    getSvgString: ReturnType<typeof vi.fn>;
+    download: ReturnType<typeof vi.fn>;
   };
 
   beforeEach(async () => {

@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 
 import { Footer } from './footer.component';
 
@@ -8,7 +9,8 @@ describe('Footer', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Footer]
+      imports: [Footer],
+      providers: [provideRouter([])]
     })
     .compileComponents();
 
@@ -19,5 +21,11 @@ describe('Footer', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should link to the legal notice page', () => {
+    const link: HTMLAnchorElement = fixture.nativeElement.querySelector('#footer-legal-link');
+    expect(link).toBeTruthy();
+    expect(link.getAttribute('href')).toBe('/mentions-legales');
   });
 });

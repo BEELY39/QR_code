@@ -1,6 +1,7 @@
 ﻿import { Injectable, computed, inject, signal } from '@angular/core';
 import { ColorPalette } from '../../../core/models/palette.model';
-import { GeneratorStatus, InputMode, QrPayload } from '../../../core/models/live-qr.model';
+import { GeneratorStatus, InputMode, QrPayload, WifiConfig, QrDesignOptions } from '../../../core/models/live-qr.model';
+import { formatWifiPayload } from '../../../core/utils/wifi-formatter';
 import { QrEngineService } from '../../../core/services/qr-engine.service';
 import { QR_CENTRAL_LOGO_BASE64 } from '../../../core/constants/qr-logo.constant';
 import { QrEngineOptions } from '../../../core/models/qr-engine.model';
@@ -77,6 +78,22 @@ export class QrSimulatorService {
   readonly bottomText = signal<string>('REJOIGNEZ LA COMMUNAUTÉ ✨');
   readonly status = signal<GeneratorStatus>({ kind: 'idle' });
 
+  readonly wifiConfig = signal<WifiConfig | null>(null);
+  readonly design = signal<QrDesignOptions>({
+    dotsStyle: 'rounded',
+    dotsColor: { kind: 'single', color: '#000000' },
+    cornersColor: '#000000',
+    backgroundColor: '#ffffff',
+    customLogoBase64: null,
+    frame: {
+      style: 'none',
+      text: '',
+      font: 'Roboto',
+      frameColor: '#000000',
+      textColor: '#ffffff',
+    }
+  });
+
   private debounceTimer: ReturnType<typeof setTimeout> | null = null;
 
   // Alias rétrocompatible pour les bindings existants
@@ -112,6 +129,15 @@ export class QrSimulatorService {
           content: effectiveText,
         };
       }
+      case 'wifi': {
+        const fallbackConfig: WifiConfig = { ssid: 'QRCraft-Guest', encryption: 'WPA', password: 'password123', hidden: false };
+        const conf = this.wifiConfig() ?? fallbackConfig;
+        return {
+          kind: 'wifi',
+          config: conf,
+          rawString: formatWifiPayload(conf),
+        };
+      }
       default: {
         const _exhaustiveCheck: never = currentMode;
         throw new Error(`Mode non supporté: ${String(_exhaustiveCheck)}`);
@@ -126,6 +152,8 @@ export class QrSimulatorService {
         return p.targetUrl.replace(/^https?:\/\//i, '');
       case 'text':
         return p.content;
+      case 'wifi':
+        return `Wi-Fi: ${p.config.ssid}`;
       default: {
         const _exhaustiveCheck: never = p;
         throw new Error(`Payload non supporté: ${JSON.stringify(_exhaustiveCheck)}`);
@@ -177,6 +205,22 @@ export class QrSimulatorService {
 
   selectPalette(paletteId: string): void {
     this.selectedPaletteId.set(paletteId);
+    const palette = this.selectedPalette();
+    this.design.update(d => ({
+      ...d,
+      dotsColor: {
+        kind: 'gradient',
+        gradient: {
+          type: 'linear',
+          rotation: 45,
+          colorStops: [
+            { offset: 0, color: palette.previewGradient.start },
+            { offset: 1, color: palette.previewGradient.end }
+          ]
+        }
+      },
+      cornersColor: palette.previewGradient.start
+    }));
     this.scheduleRegeneration(0);
   }
 
@@ -184,60 +228,26 @@ export class QrSimulatorService {
     this.bottomText.set(newText);
   }
 
+  setWifiConfig(config: WifiConfig): void {
+    this.wifiConfig.set(config);
+    if (this.mode() !== 'wifi') {
+      this.mode.set('wifi');
+    }
+    this.scheduleRegeneration(150);
+  }
+
+  updateDesign(partialDesign: Partial<QrDesignOptions>): void {
+    this.design.update(d => ({ ...d, ...partialDesign }));
+    this.scheduleRegeneration(150);
+  }
+
   async regenerateQr(): Promise<void> {
     this.status.set({ kind: 'generating' });
 
     try {
       const p = this.payload();
-      const dataToEncode = p.kind === 'url' ? p.targetUrl : p.content;
-      const palette = this.selectedPalette();
-
-      const options: QrEngineOptions = {
-        width: 280,
-        height: 280,
-        data: dataToEncode,
-        margin: 8,
-        image: QR_CENTRAL_LOGO_BASE64,
-        qrOptions: {
-          typeNumber: 0,
-          errorCorrectionLevel: 'H',
-        },
-        imageOptions: {
-          hideBackgroundDots: true,
-          imageSize: 0.28,
-          margin: 4,
-        },
-        dotsOptions: {
-          type: 'rounded',
-          gradient: {
-            type: 'linear',
-            rotation: 45,
-            colorStops: [
-              { offset: 0, color: palette.previewGradient.start },
-              { offset: 1, color: palette.previewGradient.end },
-            ],
-          },
-        },
-        cornersSquareOptions: {
-          type: 'extra-rounded',
-          gradient: {
-            type: 'linear',
-            rotation: 45,
-            colorStops: [
-              { offset: 0, color: palette.previewGradient.start },
-              { offset: 1, color: palette.previewGradient.end },
-            ],
-          },
-        },
-        cornersDotOptions: {
-          type: 'dot',
-          color: palette.previewGradient.start,
-        },
-        backgroundOptions: {
-          color: '#ffffff',
-        },
-      };
-
+      const dataToEncode = p.kind === 'url' ? p.targetUrl : (p.kind === 'text' ? p.content : p.rawString);
+      const options = this.buildQrOptions(dataToEncode, false);
       const svgMarkup = await this.qrEngine.getSvgString(options);
       this.status.set({ kind: 'ready', svgMarkup });
     } catch (err: unknown) {
@@ -248,16 +258,31 @@ export class QrSimulatorService {
 
   async downloadSvg(): Promise<void> {
     const p = this.payload();
-    const dataToEncode = p.kind === 'url' ? p.targetUrl : p.content;
-    const palette = this.selectedPalette();
+    const dataToEncode = p.kind === 'url' ? p.targetUrl : (p.kind === 'text' ? p.content : p.rawString);
     const filename = p.kind === 'url' ? 'qrcraft-live-url' : 'qrcraft-live-text';
+    const options = this.buildQrOptions(dataToEncode, true);
+    await this.qrEngine.download(options, filename, 'svg');
+  }
 
-    const options: QrEngineOptions = {
-      width: 600,
-      height: 600,
+
+  private buildQrOptions(dataToEncode: string, isDownload = false): QrEngineOptions {
+    const d = this.design();
+    // Convert readonly colorStops to mutable to satisfy qr-code-styling typing
+    const dotsColorOpt = d.dotsColor.kind === 'single'
+      ? { color: d.dotsColor.color }
+      : { 
+          gradient: {
+            ...d.dotsColor.gradient,
+            colorStops: d.dotsColor.gradient.colorStops.map(s => ({ ...s }))
+          } 
+        };
+
+    return {
+      width: isDownload ? 600 : 280,
+      height: isDownload ? 600 : 280,
       data: dataToEncode,
-      margin: 12,
-      image: QR_CENTRAL_LOGO_BASE64,
+      margin: isDownload ? 12 : 8,
+      image: d.customLogoBase64 || QR_CENTRAL_LOGO_BASE64,
       qrOptions: {
         typeNumber: 0,
         errorCorrectionLevel: 'H',
@@ -265,40 +290,24 @@ export class QrSimulatorService {
       imageOptions: {
         hideBackgroundDots: true,
         imageSize: 0.28,
-        margin: 6,
+        margin: isDownload ? 6 : 4,
       },
       dotsOptions: {
-        type: 'rounded',
-        gradient: {
-          type: 'linear',
-          rotation: 45,
-          colorStops: [
-            { offset: 0, color: palette.previewGradient.start },
-            { offset: 1, color: palette.previewGradient.end },
-          ],
-        },
+        type: d.dotsStyle,
+        ...dotsColorOpt
       },
       cornersSquareOptions: {
         type: 'extra-rounded',
-        gradient: {
-          type: 'linear',
-          rotation: 45,
-          colorStops: [
-            { offset: 0, color: palette.previewGradient.start },
-            { offset: 1, color: palette.previewGradient.end },
-          ],
-        },
+        color: d.cornersColor,
       },
       cornersDotOptions: {
         type: 'dot',
-        color: palette.previewGradient.start,
+        color: d.cornersColor,
       },
       backgroundOptions: {
-        color: '#ffffff',
+        color: d.backgroundColor,
       },
     };
-
-    await this.qrEngine.download(options, filename, 'svg');
   }
 
   private scheduleRegeneration(delayMs: number): void {

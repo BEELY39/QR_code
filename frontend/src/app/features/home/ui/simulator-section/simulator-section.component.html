@@ -1,4 +1,4 @@
-﻿<!-- MINI SIMULATEUR INTERACTIF : "TEST EXPRESS" -->
+<!-- MINI SIMULATEUR INTERACTIF : "TEST EXPRESS" -->
 <section class="max-w-[1440px] mx-auto px-margin py-12 w-full" id="simulateur">
   <div class="bg-surface-container-lowest rounded-3xl p-6 lg:p-10 shadow-[0_12px_40px_-8px_rgba(31,32,70,0.06)]">
     
@@ -39,51 +39,153 @@
               [ngClass]="mode() === 'text' ? 'bg-primary text-on-primary shadow-sm' : 'text-on-surface-variant hover:text-on-surface'"
               (click)="onModeSelect('text')">
               <span class="material-symbols-outlined text-lg">notes</span>
-              <span>Texte libre / Wi-Fi</span>
+              <span>Texte libre</span>
+            </button>
+            <button 
+              type="button"
+              id="mode-toggle-wifi"
+              class="flex items-center gap-2 px-5 py-2.5 rounded-xl font-label-md text-label-md font-bold transition-all cursor-pointer"
+              [ngClass]="mode() === 'wifi' ? 'bg-primary text-on-primary shadow-sm' : 'text-on-surface-variant hover:text-on-surface'"
+              (click)="onModeSelect('wifi')">
+              <span class="material-symbols-outlined text-lg">wifi</span>
+              <span>Réseau Wi-Fi</span>
             </button>
           </div>
         </div>
         
-        <!-- Text / Link Input -->
+                <!-- Text / Link / Wi-Fi Input -->
         <div class="flex flex-col gap-2">
-          <label class="font-label-md text-label-md text-on-surface font-bold" for="demo-input">
-            {{ mode() === 'url' ? 'Lien ou page web à encoder' : 'Texte brut ou identifiants Wi-Fi' }}
-          </label>
-          <div class="relative flex items-center">
-            <span class="material-symbols-outlined absolute left-4 text-on-surface-variant">
-              {{ mode() === 'url' ? 'link' : 'notes' }}
-            </span>
-            <input 
-              class="w-full h-14 pl-12 pr-4 bg-surface-container-low rounded-2xl font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant/60 focus:outline-none focus:bg-surface-container focus:ring-2 focus:ring-primary transition-all" 
-              id="demo-input" 
-              [placeholder]="mode() === 'url' ? 'Ex: bistro-paris.fr ou instagram.com/hotel' : 'Ex: Wi-Fi: Hotel-Guest | Code: VIP2026'" 
-              type="text" 
-              [value]="currentInputValue()" 
-              (input)="onValueInput($event)"/>
-          </div>
+          @if (mode() === 'wifi') {
+            <app-wifi-form 
+              [initialConfig]="wifiConfig()"
+              (configChange)="onWifiConfigChange($event)">
+            </app-wifi-form>
+          } @else {
+            <label class="font-label-md text-label-md text-on-surface font-bold" for="demo-input">
+              {{ mode() === 'url' ? 'Lien ou page web à encoder' : 'Texte brut' }}
+            </label>
+            <div class="relative flex items-center">
+              <span class="material-symbols-outlined absolute left-4 text-on-surface-variant">
+                {{ mode() === 'url' ? 'link' : 'notes' }}
+              </span>
+              <input 
+                class="w-full h-14 pl-12 pr-4 bg-surface-container-low rounded-2xl font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant/60 focus:outline-none focus:bg-surface-container focus:ring-2 focus:ring-primary transition-all" 
+                id="demo-input" 
+                [placeholder]="mode() === 'url' ? 'Ex: bistro-paris.fr ou instagram.com/hotel' : 'Ex: Bonjour !'" 
+                type="text" 
+                [value]="currentInputValue()" 
+                (input)="onValueInput($event)"/>
+            </div>
+          }
         </div>
 
-        <!-- Color Palette Picker -->
-        <div class="flex flex-col gap-3">
-          <span class="font-label-md text-label-md text-on-surface font-bold">Choisissez votre harmonie de couleurs</span>
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            @for (palette of palettes(); track palette.id) {
-              <button 
-                class="p-3 rounded-2xl text-left flex flex-col gap-2 transition-all cursor-pointer"
-                [ngClass]="selectedPalette().id === palette.id ? 'bg-surface-container ring-2 ring-primary shadow-sm' : 'bg-surface-container-low hover:bg-surface-container'"
-                type="button"
-                (click)="onPaletteClick(palette.id)">
-                <div 
-                  class="h-6 w-full rounded-lg"
-                  [style.background]="'linear-gradient(to right, ' + palette.previewGradient.start + ', ' + (palette.previewGradient.mid || palette.previewGradient.end) + ')'">
+                <!-- Design & Customization Section with Tabs -->
+        <div class="flex flex-col gap-4">
+          <div class="flex items-center justify-between">
+            <span class="font-label-md text-label-md text-on-surface font-bold">Personnalisation & Design</span>
+          </div>
+
+          <!-- Tabs for Design -->
+          <div class="flex items-center gap-2 p-1.5 bg-surface-container-low rounded-2xl w-fit flex-wrap">
+            <button 
+              type="button"
+              id="tab-btn-palette"
+              class="flex items-center gap-2 px-4 py-2 rounded-xl font-label-md text-sm font-bold transition-all cursor-pointer"
+              [ngClass]="activeDesignTab() === 'palette' ? 'bg-primary text-on-primary shadow-sm' : 'text-on-surface-variant hover:text-on-surface'"
+              (click)="setActiveDesignTab('palette')">
+              <span class="material-symbols-outlined text-base">palette</span>
+              <span>Palettes</span>
+            </button>
+            <button 
+              type="button"
+              id="tab-btn-colors"
+              class="flex items-center gap-2 px-4 py-2 rounded-xl font-label-md text-sm font-bold transition-all cursor-pointer"
+              [ngClass]="activeDesignTab() === 'colors' ? 'bg-primary text-on-primary shadow-sm' : 'text-on-surface-variant hover:text-on-surface'"
+              (click)="setActiveDesignTab('colors')">
+              <span class="material-symbols-outlined text-base">colorize</span>
+              <span>Couleurs & Dégradés</span>
+            </button>
+            <button 
+              type="button"
+              id="tab-btn-frame"
+              class="flex items-center gap-2 px-4 py-2 rounded-xl font-label-md text-sm font-bold transition-all cursor-pointer"
+              [ngClass]="activeDesignTab() === 'frame' ? 'bg-primary text-on-primary shadow-sm' : 'text-on-surface-variant hover:text-on-surface'"
+              (click)="setActiveDesignTab('frame')">
+              <span class="material-symbols-outlined text-base">crop_free</span>
+              <span>Cadre</span>
+            </button>
+            <button 
+              type="button"
+              id="tab-btn-style"
+              class="flex items-center gap-2 px-4 py-2 rounded-xl font-label-md text-sm font-bold transition-all cursor-pointer"
+              [ngClass]="activeDesignTab() === 'style' ? 'bg-primary text-on-primary shadow-sm' : 'text-on-surface-variant hover:text-on-surface'"
+              (click)="setActiveDesignTab('style')">
+              <span class="material-symbols-outlined text-base">grain</span>
+              <span>Forme des points</span>
+            </button>
+            <button 
+              type="button"
+              id="tab-btn-logo"
+              class="flex items-center gap-2 px-4 py-2 rounded-xl font-label-md text-sm font-bold transition-all cursor-pointer"
+              [ngClass]="activeDesignTab() === 'logo' ? 'bg-primary text-on-primary shadow-sm' : 'text-on-surface-variant hover:text-on-surface'"
+              (click)="setActiveDesignTab('logo')">
+              <span class="material-symbols-outlined text-base">image</span>
+              <span>Logo</span>
+            </button>
+          </div>
+
+          <!-- Active Tab Content Panel -->
+          <div class="bg-surface-container-low rounded-2xl p-4 transition-all">
+            @switch (activeDesignTab()) {
+              @case ('palette') {
+                <div class="flex flex-col gap-3">
+                  <span class="font-label-md text-label-md text-on-surface font-bold">Choisissez votre harmonie de couleurs</span>
+                  <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    @for (palette of palettes(); track palette.id) {
+                      <button 
+                        class="p-3 rounded-2xl text-left flex flex-col gap-2 transition-all cursor-pointer"
+                        [ngClass]="selectedPalette().id === palette.id ? 'bg-surface-container ring-2 ring-primary shadow-sm' : 'bg-surface-container hover:bg-surface-container-high'"
+                        type="button"
+                        (click)="onPaletteClick(palette.id)">
+                        <div 
+                          class="h-6 w-full rounded-lg"
+                          [style.background]="'linear-gradient(to right, ' + palette.previewGradient.start + ', ' + (palette.previewGradient.mid || palette.previewGradient.end) + ')'">
+                        </div>
+                        <div class="flex items-center justify-between">
+                          <span class="font-label-md text-label-md text-on-surface font-bold">{{ palette.name }}</span>
+                          @if (selectedPalette().id === palette.id) {
+                            <span class="material-symbols-outlined text-primary text-sm">check_circle</span>
+                          }
+                        </div>
+                      </button>
+                    }
+                  </div>
                 </div>
-                <div class="flex items-center justify-between">
-                  <span class="font-label-md text-label-md text-on-surface font-bold">{{ palette.name }}</span>
-                  @if (selectedPalette().id === palette.id) {
-                    <span class="material-symbols-outlined text-primary text-sm">check_circle</span>
-                  }
-                </div>
-              </button>
+              }
+              @case ('colors') {
+                <app-colors-form
+                  [initialConfig]="design()"
+                  (configChange)="onColorsChange($event)">
+                </app-colors-form>
+              }
+              @case ('frame') {
+                <app-frame-form
+                  [initialConfig]="design().frame"
+                  (configChange)="onFrameChange($event)">
+                </app-frame-form>
+              }
+              @case ('style') {
+                <app-styling-form
+                  [initialStyle]="design().dotsStyle"
+                  (styleChange)="onDotStyleChange($event)">
+                </app-styling-form>
+              }
+              @case ('logo') {
+                <app-logo-form
+                  [initialLogo]="design().customLogoBase64"
+                  (logoChange)="onLogoChange($event)">
+                </app-logo-form>
+              }
             }
           </div>
         </div>
@@ -135,9 +237,32 @@
 
             @if (safeQrSvgMarkup()) {
               <div 
-                id="live-qr-svg-container"
-                class="w-full h-full flex items-center justify-center transition-all duration-300 [&>svg]:w-full [&>svg]:h-full [&>svg]:max-w-full [&>svg]:max-h-full"
-                [innerHTML]="safeQrSvgMarkup()">
+                class="relative flex flex-col items-center w-full transition-all duration-300 overflow-hidden"
+                [style.background-color]="design().frame.style !== 'none' ? design().frame.frameColor : 'transparent'"
+                [style.padding]="design().frame.style !== 'none' ? '0.75rem 0.75rem 1rem 0.75rem' : '0'"
+                [ngClass]="{
+                  'rounded-2xl': design().frame.style === 'rounded-bottom',
+                  'rounded-t-[2rem] rounded-b-xl': design().frame.style === 'badge-bottom',
+                  'rounded-sm': design().frame.style === 'simple-bottom'
+                }"
+              >
+                <div 
+                  id="live-qr-svg-container"
+                  class="w-full aspect-square flex items-center justify-center bg-white transition-all duration-300 [&>svg]:w-full [&>svg]:h-full [&>svg]:max-w-full [&>svg]:max-h-full"
+                  [ngClass]="{'rounded-xl': design().frame.style !== 'none'}"
+                  [innerHTML]="safeQrSvgMarkup()">
+                </div>
+                
+                @if (design().frame.style !== 'none' && design().frame.text) {
+                  <div 
+                    class="mt-3 w-full text-center text-lg tracking-wider"
+                    [style.color]="design().frame.textColor"
+                    [style.font-family]="design().frame.font"
+                    [style.font-weight]="700"
+                  >
+                    {{ design().frame.text }}
+                  </div>
+                }
               </div>
             } @else {
               <div class="w-full h-full flex items-center justify-center text-on-surface-variant">
@@ -156,7 +281,7 @@
           <div class="mt-3 flex items-center justify-between w-full px-1 text-surface-variant/70 font-body-sm text-body-sm">
             <span class="truncate max-w-[180px]">{{ displayUrl() }}</span>
             <span class="material-symbols-outlined text-sm">
-              {{ mode() === 'url' ? 'lock' : 'notes' }}
+              {{ mode() === 'url' ? 'lock' : (mode() === 'wifi' ? 'wifi' : 'notes') }}
             </span>
           </div>
 

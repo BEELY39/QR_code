@@ -1,6 +1,14 @@
-﻿import { Injectable, PLATFORM_ID, inject } from '@angular/core';
+import { Injectable, PLATFORM_ID, inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { QrEngineOptions, ErrorCorrectionLevel } from '../models/qr-engine.model';
+
+interface QrCodeStylingInstance {
+  getRawData(extension: string): Promise<Blob | null>;
+  download(downloadOptions: { name?: string; extension?: string }): Promise<void>;
+  append(element: HTMLElement): void;
+}
+
+type QrCodeStylingConstructor = new (options?: unknown) => QrCodeStylingInstance;
 
 @Injectable({
   providedIn: 'root',
@@ -23,14 +31,14 @@ export class QrEngineService {
     };
   }
 
-  async createInstance(options: QrEngineOptions): Promise<any | null> {
+  async createInstance(options: QrEngineOptions): Promise<QrCodeStylingInstance | null> {
     if (!this.isBrowser) {
       return null;
     }
     const module = await import('qr-code-styling');
-    const QRCodeStyling = module.default || (module as any).QRCodeStyling;
+    const QRCodeStyling = (module.default || (module as Record<string, unknown>)['QRCodeStyling']) as QrCodeStylingConstructor;
     const normalized = this.normalizeOptions(options);
-    return new QRCodeStyling(normalized as any);
+    return new QRCodeStyling(normalized);
   }
 
   async renderToElement(container: HTMLElement, options: QrEngineOptions): Promise<void> {

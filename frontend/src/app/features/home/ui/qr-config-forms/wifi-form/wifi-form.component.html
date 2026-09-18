@@ -1,0 +1,48 @@
+<form [formGroup]="wifiForm" class="flex flex-col gap-4 p-4">
+  <!-- SSID -->
+  <div class="flex flex-col gap-1">
+    <label class="text-sm font-semibold text-on-surface" for="ssid">Nom du réseau (SSID) *</label>
+    <input 
+      id="ssid" 
+      type="text" 
+      formControlName="ssid" 
+      placeholder="Ex: Mon Réseau Wi-Fi"
+      class="rounded-md border border-outline p-2 bg-surface focus:outline-primary"
+    />
+  </div>
+
+  <!-- Encryption -->
+  <div class="flex flex-col gap-1">
+    <label class="text-sm font-semibold text-on-surface" for="encryption">Type de sécurité *</label>
+    <select 
+      id="encryption" 
+      formControlName="encryption"
+      class="rounded-md border border-outline p-2 bg-surface focus:outline-primary"
+    >
+      <option *ngFor="let enc of encryptions" [value]="enc">{{ enc === 'nopass' ? 'Aucune' : enc }}</option>
+    </select>
+  </div>
+
+  <!-- Password -->
+  <div class="flex flex-col gap-1" *ngIf="wifiForm.get('encryption')?.value !== 'nopass'">
+    <label class="text-sm font-semibold text-on-surface" for="password">Mot de passe</label>
+    <input 
+      id="password" 
+      type="password" 
+      formControlName="password" 
+      placeholder="Clé Wi-Fi"
+      class="rounded-md border border-outline p-2 bg-surface focus:outline-primary"
+    />
+  </div>
+
+  <!-- Hidden -->
+  <div class="flex items-center gap-2 mt-2">
+    <input 
+      id="hidden" 
+      type="checkbox" 
+      formControlName="hidden" 
+      class="h-4 w-4 rounded border-outline text-primary focus:ring-primary"
+    />
+    <label class="text-sm text-on-surface" for="hidden">Réseau masqué</label>
+  </div>
+</form>

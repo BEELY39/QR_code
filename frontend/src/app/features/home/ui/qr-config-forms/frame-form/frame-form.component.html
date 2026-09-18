@@ -1,0 +1,60 @@
+<form [formGroup]="frameForm" class="flex flex-col gap-4 p-4">
+  <!-- Frame Style -->
+  <div class="flex flex-col gap-1">
+    <label class="text-sm font-semibold text-on-surface" for="style">Style de cadre</label>
+    <select 
+      id="style" 
+      formControlName="style"
+      class="rounded-md border border-outline p-2 bg-surface focus:outline-primary"
+    >
+      <option *ngFor="let s of frameStyles" [value]="s.value">{{ s.label }}</option>
+    </select>
+  </div>
+
+  <ng-container *ngIf="frameForm.get('style')?.value !== 'none'">
+    <!-- Frame Text -->
+    <div class="flex flex-col gap-1">
+      <label class="text-sm font-semibold text-on-surface" for="text">Texte du cadre</label>
+      <input 
+        id="text" 
+        type="text" 
+        formControlName="text" 
+        class="rounded-md border border-outline p-2 bg-surface focus:outline-primary"
+      />
+    </div>
+
+    <!-- Font -->
+    <div class="flex flex-col gap-1">
+      <label class="text-sm font-semibold text-on-surface" for="font">Police de caractères</label>
+      <select 
+        id="font" 
+        formControlName="font"
+        class="rounded-md border border-outline p-2 bg-surface focus:outline-primary"
+      >
+        <option *ngFor="let f of fonts" [value]="f">{{ f }}</option>
+      </select>
+    </div>
+
+    <!-- Colors -->
+    <div class="flex gap-4">
+      <div class="flex flex-col gap-1 flex-1">
+        <label class="text-sm font-semibold text-on-surface" for="frameColor">Couleur du cadre</label>
+        <input 
+          id="frameColor" 
+          type="color" 
+          formControlName="frameColor" 
+          class="h-10 w-full rounded-md border border-outline cursor-pointer"
+        />
+      </div>
+      <div class="flex flex-col gap-1 flex-1">
+        <label class="text-sm font-semibold text-on-surface" for="textColor">Couleur du texte</label>
+        <input 
+          id="textColor" 
+          type="color" 
+          formControlName="textColor" 
+          class="h-10 w-full rounded-md border border-outline cursor-pointer"
+        />
+      </div>
+    </div>
+  </ng-container>
+</form>
