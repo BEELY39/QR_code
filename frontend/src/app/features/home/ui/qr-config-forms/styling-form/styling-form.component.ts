@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject, output,
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { DotStyleType } from '../../../../../core/models/live-qr.model';
+import { DotStyleType, VisualOption } from '../../../../../core/models/live-qr.model';
 
 @Component({
   selector: 'app-styling-form',
@@ -17,20 +17,49 @@ export class StylingFormComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
 
   readonly initialStyle = input<DotStyleType>('rounded');
-  
   readonly styleChange = output<DotStyleType>();
 
   readonly stylingForm: FormGroup = this.fb.group({
     dotsStyle: ['rounded' as DotStyleType],
   });
 
-  readonly dotStyles: readonly { value: DotStyleType; label: string }[] = [
-    { value: 'rounded', label: 'Arrondi (Moderne)' },
-    { value: 'dots', label: 'Points (Circulaire)' },
-    { value: 'classy', label: 'Élégant' },
-    { value: 'classy-rounded', label: 'Élégant & Arrondi' },
-    { value: 'square', label: 'Carré (Classique)' },
-    { value: 'extra-rounded', label: 'Très Arrondi' },
+  readonly dotStyles: readonly VisualOption<DotStyleType>[] = [
+    { 
+      value: 'rounded', 
+      label: 'Arrondi moderne', 
+      description: 'Coins doux et galbés', 
+      iconName: 'lens' 
+    },
+    { 
+      value: 'dots', 
+      label: 'Points circulaires', 
+      description: 'Pastilles pleines contemporaines', 
+      iconName: 'radio_button_checked' 
+    },
+    { 
+      value: 'classy', 
+      label: 'Élégant haute couture', 
+      description: 'Angles biseautés raffinés', 
+      iconName: 'diamond' 
+    },
+    { 
+      value: 'classy-rounded', 
+      label: 'Élégant adouci', 
+      description: 'Alliance d’angles et de courbes', 
+      iconName: 'stars' 
+    },
+    { 
+      value: 'square', 
+      label: 'Carré géométrique', 
+      description: 'Matrice classique ultra-nette', 
+      iconName: 'square' 
+    },
+    { 
+      value: 'extra-rounded', 
+      label: 'Ultra arrondi', 
+      description: 'Bulles douces et épurées', 
+      iconName: 'circle' 
+    },
   ];
 
   ngOnInit(): void {
@@ -39,10 +68,18 @@ export class StylingFormComponent implements OnInit {
 
     this.stylingForm.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => {
-        if (this.stylingForm.valid) {
-          this.styleChange.emit(this.stylingForm.value.dotsStyle as DotStyleType);
+      .subscribe((val) => {
+        if (this.stylingForm.valid && val.dotsStyle) {
+          this.styleChange.emit(val.dotsStyle as DotStyleType);
         }
       });
+  }
+
+  selectDotStyle(style: DotStyleType): void {
+    this.stylingForm.patchValue({ dotsStyle: style });
+  }
+
+  isSelected(style: DotStyleType): boolean {
+    return this.stylingForm.get('dotsStyle')?.value === style;
   }
 }

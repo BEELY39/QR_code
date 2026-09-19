@@ -174,5 +174,54 @@ describe('HomeComponent (Catégorie 3 - Test Intégration)', () => {
       expect(simulatorService.design().cornersColor).toBe('#ff0000');
     });
   });
+
+  describe('Feature 005 (Intégration) - Rendu Pur du Cadre & Finitions', () => {
+    it('devrait garantir l\'absence totale de double conteneur mockup (bg-inverse-surface) dans le simulateur', () => {
+      const simulatorEl = fixture.debugElement.query(By.css('app-simulator-section'));
+      expect(simulatorEl).toBeTruthy();
+      expect(simulatorEl.query(By.css('.bg-inverse-surface'))).toBeFalsy();
+
+      const framedContainer = simulatorEl.query(By.css('#live-qr-framed-container'));
+      expect(framedContainer).toBeTruthy();
+    });
+
+    it('ne devrait plus contenir le champ redondant demo-banner dans le DOM', () => {
+      const bannerInput = fixture.debugElement.query(By.css('#demo-banner'));
+      expect(bannerInput).toBeFalsy();
+    });
+
+    it('devrait propager la mise à jour du cadre et afficher le gabarit correspondant sans conteneur parasite', () => {
+      // Sélection du gabarit badge-bottom
+      simulatorService.updateDesign({
+        frame: {
+          style: 'badge-bottom',
+          text: 'SCANNEZ ICI',
+          font: 'Outfit',
+          frameColor: '#6750A4',
+          textColor: '#ffffff',
+        }
+      });
+      fixture.detectChanges();
+
+      const badge = fixture.debugElement.query(By.css('[data-testid="frame-badge-bottom"]'));
+      expect(badge).toBeTruthy();
+      expect(badge.nativeElement.textContent).toContain('SCANNEZ ICI');
+
+      // Sélection de rounded-border
+      simulatorService.updateDesign({
+        frame: {
+          style: 'rounded-border',
+          text: '',
+          font: 'Roboto',
+          frameColor: '#0284C7',
+          textColor: '#ffffff',
+        }
+      });
+      fixture.detectChanges();
+
+      const roundedBorder = fixture.debugElement.query(By.css('[data-testid="frame-rounded-border"]'));
+      expect(roundedBorder).toBeTruthy();
+    });
+  });
 });
 

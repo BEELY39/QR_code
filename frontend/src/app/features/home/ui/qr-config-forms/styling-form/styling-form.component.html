@@ -1,19 +1,68 @@
-<form [formGroup]="stylingForm" class="flex flex-col gap-4 p-4">
-  <div class="flex flex-col gap-1">
-    <label class="text-sm font-semibold text-on-surface" for="dotsStyle">Forme des points du QR</label>
-    <div class="grid grid-cols-2 gap-2 mt-2">
-      <div 
-        *ngFor="let style of dotStyles" 
-        class="relative flex items-center justify-center p-3 rounded-lg border-2 cursor-pointer transition-all"
-        [class.border-primary]="stylingForm.get('dotsStyle')?.value === style.value"
-        [class.bg-primary-container]="stylingForm.get('dotsStyle')?.value === style.value"
-        [class.border-outline]="stylingForm.get('dotsStyle')?.value !== style.value"
-        (click)="stylingForm.get('dotsStyle')?.setValue(style.value)"
-      >
-        <span class="text-sm font-medium" [class.text-on-primary-container]="stylingForm.get('dotsStyle')?.value === style.value">
-          {{ style.label }}
-        </span>
-      </div>
+<form [formGroup]="stylingForm" class="space-y-6">
+  <!-- Section Forme des Modules -->
+  <div class="space-y-3">
+    <div class="flex items-center justify-between">
+      <label class="text-xs font-bold uppercase tracking-wider text-on-surface-variant flex items-center gap-1.5">
+        <span class="material-symbols-outlined text-base text-primary">grain</span>
+        Style des motifs (Dots)
+      </label>
+      <span class="text-xs text-on-surface-variant font-medium">6 designs</span>
+    </div>
+
+    <!-- Grille de cartes de styles -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      @for (style of dotStyles; track style.value) {
+        <button
+          type="button"
+          (click)="selectDotStyle(style.value)"
+          class="relative flex items-start gap-3 p-3.5 rounded-2xl border text-left transition-all duration-200 group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          [class.border-primary]="isSelected(style.value)"
+          [class.bg-primary/5]="isSelected(style.value)"
+          [class.ring-2]="isSelected(style.value)"
+          [class.ring-primary]="isSelected(style.value)"
+          [class.border-outline-variant]="!isSelected(style.value)"
+          [class.bg-surface-container-low]="!isSelected(style.value)"
+          [class.hover:border-outline]="!isSelected(style.value)"
+          [class.hover:bg-surface-container]="!isSelected(style.value)"
+        >
+          <!-- Badge Icône / Aperçu -->
+          <div 
+            class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors"
+            [class.bg-primary]="isSelected(style.value)"
+            [class.text-on-primary]="isSelected(style.value)"
+            [class.bg-surface-container-high]="!isSelected(style.value)"
+            [class.text-on-surface-variant]="!isSelected(style.value)"
+          >
+            <span class="material-symbols-outlined text-xl">{{ style.iconName }}</span>
+          </div>
+
+          <!-- Libellé & Description -->
+          <div class="flex-1 min-w-0 pr-6">
+            <h4 
+              class="text-sm font-semibold truncate transition-colors"
+              [class.text-primary]="isSelected(style.value)"
+              [class.text-on-surface]="!isSelected(style.value)"
+            >
+              {{ style.label }}
+            </h4>
+            <p class="text-xs text-on-surface-variant mt-0.5 line-clamp-1">
+              {{ style.description }}
+            </p>
+          </div>
+
+          <!-- Radio indicateur discret -->
+          <div 
+            class="absolute top-3.5 right-3.5 w-4 h-4 rounded-full border flex items-center justify-center transition-colors"
+            [class.border-primary]="isSelected(style.value)"
+            [class.bg-primary]="isSelected(style.value)"
+            [class.border-outline]="!isSelected(style.value)"
+          >
+            @if (isSelected(style.value)) {
+              <div class="w-1.5 h-1.5 rounded-full bg-white"></div>
+            }
+          </div>
+        </button>
+      }
     </div>
   </div>
 </form>

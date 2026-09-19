@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject, output, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject, output, input, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { WifiConfig, WifiEncryption } from '../../../../../core/models/live-qr.model';
+import { WifiConfig, WifiEncryption, VisualOption } from '../../../../../core/models/live-qr.model';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
@@ -18,8 +18,9 @@ export class WifiFormComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
 
   readonly initialConfig = input<WifiConfig | null>(null);
-  
   readonly configChange = output<WifiConfig>();
+
+  readonly showPassword = signal<boolean>(false);
 
   readonly wifiForm: FormGroup = this.fb.group({
     ssid: ['', Validators.required],
@@ -28,7 +29,11 @@ export class WifiFormComponent implements OnInit {
     hidden: [false],
   });
 
-  readonly encryptions: readonly WifiEncryption[] = ['WPA', 'WEP', 'nopass'];
+  readonly encryptionOptions: readonly VisualOption<WifiEncryption>[] = [
+    { value: 'WPA', label: 'WPA / WPA2', iconName: 'lock' },
+    { value: 'WEP', label: 'WEP', iconName: 'shield' },
+    { value: 'nopass', label: 'Réseau Ouvert', iconName: 'lock_open' },
+  ];
 
   ngOnInit(): void {
     const initial = this.initialConfig();
@@ -53,5 +58,13 @@ export class WifiFormComponent implements OnInit {
           });
         }
       });
+  }
+
+  selectEncryption(enc: WifiEncryption): void {
+    this.wifiForm.patchValue({ encryption: enc });
+  }
+
+  toggleShowPassword(): void {
+    this.showPassword.update((v) => !v);
   }
 }

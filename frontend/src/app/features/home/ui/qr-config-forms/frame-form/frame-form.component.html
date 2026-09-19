@@ -1,60 +1,126 @@
-<form [formGroup]="frameForm" class="flex flex-col gap-4 p-4">
-  <!-- Frame Style -->
-  <div class="flex flex-col gap-1">
-    <label class="text-sm font-semibold text-on-surface" for="style">Style de cadre</label>
-    <select 
-      id="style" 
-      formControlName="style"
-      class="rounded-md border border-outline p-2 bg-surface focus:outline-primary"
-    >
-      <option *ngFor="let s of frameStyles" [value]="s.value">{{ s.label }}</option>
-    </select>
+<form [formGroup]="frameForm" class="flex flex-col gap-6 p-1">
+  <!-- Visual Cards for Frame Style -->
+  <div class="flex flex-col gap-3">
+    <span class="font-label-md text-label-md text-on-surface font-bold">Modèle de cadre</span>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      @for (styleOpt of frameStyles; track styleOpt.value) {
+        <button 
+          type="button"
+          class="p-3.5 rounded-2xl border text-left flex items-center justify-between transition-all cursor-pointer"
+          [ngClass]="frameForm.get('style')?.value === styleOpt.value 
+            ? 'border-primary bg-primary/10 ring-2 ring-primary shadow-xs' 
+            : 'border-outline-variant/30 bg-surface-container-lowest hover:border-outline-variant hover:bg-surface-container/60'"
+          (click)="selectStyle(styleOpt.value)">
+          <div class="flex items-center gap-3">
+            <div 
+              class="w-10 h-10 rounded-xl flex items-center justify-center transition-colors"
+              [ngClass]="frameForm.get('style')?.value === styleOpt.value ? 'bg-primary text-on-primary' : 'bg-surface-container text-on-surface-variant'">
+              <span class="material-symbols-outlined text-xl">{{ styleOpt.iconName }}</span>
+            </div>
+            <div>
+              <p class="font-label-md text-label-md font-bold text-on-surface">{{ styleOpt.label }}</p>
+              <p class="text-xs text-on-surface-variant line-clamp-1">{{ styleOpt.description }}</p>
+            </div>
+          </div>
+          @if (frameForm.get('style')?.value === styleOpt.value) {
+            <span class="material-symbols-outlined text-primary text-lg font-bold">check_circle</span>
+          }
+        </button>
+      }
+    </div>
   </div>
 
-  <ng-container *ngIf="frameForm.get('style')?.value !== 'none'">
-    <!-- Frame Text -->
-    <div class="flex flex-col gap-1">
-      <label class="text-sm font-semibold text-on-surface" for="text">Texte du cadre</label>
-      <input 
-        id="text" 
-        type="text" 
-        formControlName="text" 
-        class="rounded-md border border-outline p-2 bg-surface focus:outline-primary"
-      />
-    </div>
+  @if (frameForm.get('style')?.value !== 'none') {
+    <div class="flex flex-col gap-5 pt-2 border-t border-outline-variant/20">
+      
+      <!-- Frame Text Input (if style has banner/badge) -->
+      @if (frameForm.get('style')?.value === 'simple-bottom' || frameForm.get('style')?.value === 'badge-bottom') {
+        <div class="flex flex-col gap-2">
+          <label class="font-label-md text-label-md text-on-surface font-bold" for="frame-text-input">
+            Texte du cadre
+          </label>
+          <div class="relative flex items-center">
+            <span class="material-symbols-outlined absolute left-4 text-on-surface-variant text-lg">title</span>
+            <input 
+              id="frame-text-input" 
+              type="text" 
+              formControlName="text"
+              placeholder="Ex: SCAN ME, MENU, INSTAGRAM..."
+              class="w-full h-12 pl-12 pr-4 bg-surface-container-lowest rounded-2xl border border-outline-variant/30 font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+            />
+          </div>
+        </div>
 
-    <!-- Font -->
-    <div class="flex flex-col gap-1">
-      <label class="text-sm font-semibold text-on-surface" for="font">Police de caractères</label>
-      <select 
-        id="font" 
-        formControlName="font"
-        class="rounded-md border border-outline p-2 bg-surface focus:outline-primary"
-      >
-        <option *ngFor="let f of fonts" [value]="f">{{ f }}</option>
-      </select>
-    </div>
+        <!-- Typography Selection -->
+        <div class="flex flex-col gap-2">
+          <label class="font-label-md text-label-md text-on-surface font-bold" for="frame-font-select">
+            Police d'écriture
+          </label>
+          <div class="relative flex items-center">
+            <span class="material-symbols-outlined absolute left-4 text-on-surface-variant text-lg">font_download</span>
+            <select 
+              id="frame-font-select" 
+              formControlName="font"
+              class="w-full h-12 pl-12 pr-10 bg-surface-container-lowest rounded-2xl border border-outline-variant/30 font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all appearance-none cursor-pointer">
+              @for (f of fonts; track f) {
+                <option [value]="f" [style.font-family]="f">{{ f }}</option>
+              }
+            </select>
+            <span class="material-symbols-outlined absolute right-4 text-on-surface-variant pointer-events-none text-lg">expand_more</span>
+          </div>
+        </div>
+      }
 
-    <!-- Colors -->
-    <div class="flex gap-4">
-      <div class="flex flex-col gap-1 flex-1">
-        <label class="text-sm font-semibold text-on-surface" for="frameColor">Couleur du cadre</label>
-        <input 
-          id="frameColor" 
-          type="color" 
-          formControlName="frameColor" 
-          class="h-10 w-full rounded-md border border-outline cursor-pointer"
-        />
+      <!-- Colors Section with Quick Presets -->
+      <div class="flex flex-col gap-3">
+        <span class="font-label-md text-label-md text-on-surface font-bold">Couleur du cadre</span>
+        
+        <!-- Quick Presets -->
+        <div class="flex items-center gap-2 flex-wrap">
+          @for (preset of colorPresets; track preset.hex) {
+            <button 
+              type="button"
+              class="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-outline-variant/30 text-xs font-medium text-on-surface transition-all cursor-pointer hover:border-primary"
+              [ngClass]="frameForm.get('frameColor')?.value === preset.hex ? 'bg-surface-container-high ring-2 ring-primary font-bold' : 'bg-surface-container-lowest'"
+              (click)="selectColorPreset(preset.hex)">
+              <span class="w-3.5 h-3.5 rounded-full border border-black/10 shadow-2xs" [style.background-color]="preset.hex"></span>
+              <span>{{ preset.name }}</span>
+            </button>
+          }
+        </div>
+
+        <!-- Custom Color Pickers -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
+          <div class="flex items-center justify-between p-3 bg-surface-container-lowest rounded-2xl border border-outline-variant/30">
+            <div class="flex items-center gap-2.5">
+              <input 
+                id="frameColorPicker" 
+                type="color" 
+                formControlName="frameColor"
+                class="w-8 h-8 rounded-lg cursor-pointer border-none bg-transparent"
+              />
+              <label for="frameColorPicker" class="text-xs font-bold text-on-surface cursor-pointer">Fond / Bordure</label>
+            </div>
+            <span class="text-xs font-mono font-bold text-on-surface-variant uppercase">{{ frameForm.get('frameColor')?.value }}</span>
+          </div>
+
+          @if (frameForm.get('style')?.value === 'simple-bottom' || frameForm.get('style')?.value === 'badge-bottom') {
+            <div class="flex items-center justify-between p-3 bg-surface-container-lowest rounded-2xl border border-outline-variant/30">
+              <div class="flex items-center gap-2.5">
+                <input 
+                  id="textColorPicker" 
+                  type="color" 
+                  formControlName="textColor"
+                  class="w-8 h-8 rounded-lg cursor-pointer border-none bg-transparent"
+                />
+                <label for="textColorPicker" class="text-xs font-bold text-on-surface cursor-pointer">Texte</label>
+              </div>
+              <span class="text-xs font-mono font-bold text-on-surface-variant uppercase">{{ frameForm.get('textColor')?.value }}</span>
+            </div>
+          }
+        </div>
       </div>
-      <div class="flex flex-col gap-1 flex-1">
-        <label class="text-sm font-semibold text-on-surface" for="textColor">Couleur du texte</label>
-        <input 
-          id="textColor" 
-          type="color" 
-          formControlName="textColor" 
-          class="h-10 w-full rounded-md border border-outline cursor-pointer"
-        />
-      </div>
+
     </div>
-  </ng-container>
+  }
 </form>
