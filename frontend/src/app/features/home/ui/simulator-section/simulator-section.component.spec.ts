@@ -92,6 +92,26 @@ describe('SimulatorSectionComponent (Dumb Component)', () => {
     expect(framedContainer).toBeTruthy();
     expect(framedContainer?.textContent).not.toContain('IGNORED');
   });
+
+  it('devrait émettre downloadClick lors du clic sur le bouton SVG', () => {
+    let svgClicked = false;
+    component.downloadClick.subscribe(() => {
+      svgClicked = true;
+    });
+
+    component.onDownload();
+    expect(svgClicked).toBe(true);
+  });
+
+  it('devrait émettre downloadPngClick lors du clic sur le bouton PNG', () => {
+    let pngClicked = false;
+    component.downloadPngClick.subscribe(() => {
+      pngClicked = true;
+    });
+
+    component.onDownloadPng();
+    expect(pngClicked).toBe(true);
+  });
 });
 
 

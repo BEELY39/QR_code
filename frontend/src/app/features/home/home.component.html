@@ -1,4 +1,4 @@
-﻿<app-navbar />
+<app-navbar />
 <main class="w-full pt-20 bg-background">
   <div class="flex flex-col w-full overflow-hidden">
     <app-hero-section />
@@ -21,7 +21,8 @@
       (urlChange)="simulatorService.setUrl($event)"
       (paletteSelect)="simulatorService.selectPalette($event)"
       (bottomTextChange)="simulatorService.setBottomText($event)"
-      (downloadClick)="simulatorService.downloadSvg()" />
+      (downloadClick)="simulatorService.downloadSvg()"
+      (downloadPngClick)="simulatorService.downloadPng()" />
     <app-features-section />
     <app-showcase-section />
     <app-cta-banner />

@@ -278,7 +278,27 @@ export class QrSimulatorService {
     const filename = p.kind === 'url' ? 'qrcraft-live-url' : (p.kind === 'text' ? 'qrcraft-live-text' : 'qrcraft-live-wifi');
     const d = this.design();
 
-    // Si un cadre est actif et présent dans le DOM, capture et export haute fidélité
+    // Si un cadre est actif et présent dans le DOM, capture et export SVG vectoriel complet
+    if (d.frame.style !== 'none' && typeof document !== 'undefined') {
+      const framedEl = document.getElementById('live-qr-framed-container');
+      if (framedEl) {
+        const result = await this.domExport.captureToSvg(framedEl, `${filename}-framed.svg`);
+        this.domExport.saveAndRelease(result);
+        return;
+      }
+    }
+
+    const options = this.buildQrOptions(dataToEncode, true);
+    await this.qrEngine.download(options, filename, 'svg');
+  }
+
+  async downloadPng(): Promise<void> {
+    const p = this.payload();
+    const dataToEncode = p.kind === 'url' ? p.targetUrl : (p.kind === 'text' ? p.content : p.rawString);
+    const filename = p.kind === 'url' ? 'qrcraft-live-url' : (p.kind === 'text' ? 'qrcraft-live-text' : 'qrcraft-live-wifi');
+    const d = this.design();
+
+    // Si un cadre est actif et présent dans le DOM, capture et export PNG haute fidélité
     if (d.frame.style !== 'none' && typeof document !== 'undefined') {
       const framedEl = document.getElementById('live-qr-framed-container');
       if (framedEl) {
@@ -289,7 +309,7 @@ export class QrSimulatorService {
     }
 
     const options = this.buildQrOptions(dataToEncode, true);
-    await this.qrEngine.download(options, filename, 'svg');
+    await this.qrEngine.download(options, filename, 'png');
   }
 
 

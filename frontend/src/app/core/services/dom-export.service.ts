@@ -1,4 +1,4 @@
-﻿import { Injectable, PLATFORM_ID, inject } from '@angular/core';
+import { Injectable, PLATFORM_ID, inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { ExportOptions, ExportResult } from '../models/export.model';
 
@@ -10,8 +10,48 @@ export class DomExportService {
   readonly isBrowser = isPlatformBrowser(this.platformId);
 
   async dataUrlToBlob(dataUrl: string): Promise<Blob> {
+    if (dataUrl.startsWith('data:image/svg+xml')) {
+      const commaIndex = dataUrl.indexOf(',');
+      const meta = dataUrl.substring(0, commaIndex);
+      const rawData = dataUrl.substring(commaIndex + 1);
+      const isBase64 = meta.includes(';base64');
+      const decoded = isBase64 ? atob(rawData) : decodeURIComponent(rawData);
+      return new Blob([decoded], { type: 'image/svg+xml;charset=utf-8' });
+    }
     const res = await fetch(dataUrl);
     return await res.blob();
+  }
+
+  async captureToSvg(element: HTMLElement, filename: string = 'qrcraft-design.svg'): Promise<ExportResult> {
+    if (!this.isBrowser || !element) {
+      const fallbackBlob = new Blob([], { type: 'image/svg+xml' });
+      return {
+        blob: fallbackBlob,
+        dataUrl: '',
+        filename,
+        revocationCallback: () => {},
+      };
+    }
+
+    const htmlToImage = await import('html-to-image');
+    const dataUrl = await htmlToImage.toSvg(element, {
+      cacheBust: true,
+    });
+
+    const blob = await this.dataUrlToBlob(dataUrl);
+    let blobUrl = URL.createObjectURL(blob);
+
+    return {
+      blob,
+      dataUrl,
+      filename,
+      revocationCallback: () => {
+        if (blobUrl) {
+          URL.revokeObjectURL(blobUrl);
+          blobUrl = '';
+        }
+      },
+    };
   }
 
   async captureToPng(element: HTMLElement, scale: number = 2, filename: string = 'qrcraft-design.png'): Promise<ExportResult> {

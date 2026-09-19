@@ -41,6 +41,7 @@ export class SimulatorSectionComponent {
   readonly paletteSelect = output<string>();
   readonly bottomTextChange = output<string>();
   readonly downloadClick = output<void>();
+  readonly downloadPngClick = output<void>();
 
   protected readonly safeQrSvgMarkup = computed<SafeHtml>(() => {
     const markup = this.qrSvgMarkup();
@@ -102,6 +103,10 @@ export class SimulatorSectionComponent {
 
   onDownload(): void {
     this.downloadClick.emit();
+  }
+
+  onDownloadPng(): void {
+    this.downloadPngClick.emit();
   }
 }
 export { SimulatorSectionComponent as SimulatorSection };
