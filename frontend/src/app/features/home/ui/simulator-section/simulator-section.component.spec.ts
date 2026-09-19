@@ -103,13 +103,16 @@ describe('SimulatorSectionComponent (Dumb Component)', () => {
     expect(svgClicked).toBe(true);
   });
 
-  it('devrait émettre downloadPngClick lors du clic sur le bouton PNG', () => {
+  it('devrait émettre downloadPngClick lorsque le format sélectionné est png', () => {
     let pngClicked = false;
     component.downloadPngClick.subscribe(() => {
       pngClicked = true;
     });
 
-    component.onDownloadPng();
+    component.setFormat('png');
+    expect(component.selectedFormat()).toBe('png');
+
+    component.onDownload();
     expect(pngClicked).toBe(true);
   });
 });

@@ -21,6 +21,7 @@ export class SimulatorSectionComponent {
   private readonly sanitizer = inject(DomSanitizer);
 
   readonly activeDesignTab = signal<'palette' | 'colors' | 'frame' | 'style' | 'logo'>('palette');
+  readonly selectedFormat = signal<'svg' | 'png'>('svg');
   readonly mode = input<InputMode>('url');
   readonly rawValue = input<string>('https://instagram.com/monbistro');
   readonly url = input<string>(''); // alias de rétrocompatibilité
@@ -101,8 +102,16 @@ export class SimulatorSectionComponent {
     this.paletteSelect.emit(id);
   }
 
+  setFormat(format: 'svg' | 'png'): void {
+    this.selectedFormat.set(format);
+  }
+
   onDownload(): void {
-    this.downloadClick.emit();
+    if (this.selectedFormat() === 'svg') {
+      this.downloadClick.emit();
+    } else {
+      this.downloadPngClick.emit();
+    }
   }
 
   onDownloadPng(): void {

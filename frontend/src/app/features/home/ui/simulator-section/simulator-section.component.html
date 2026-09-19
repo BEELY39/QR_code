@@ -330,31 +330,82 @@
           </div>
         }
 
-        <!-- Direct Download Action Buttons (SVG Vectoriel & PNG HD) -->
-        <div class="mt-6 flex flex-col gap-2.5 w-full max-w-[320px]">
-          <!-- Bouton Principal SVG -->
+        <!-- Options de Format de Téléchargement (SVG ou PNG) -->
+        <div class="mt-6 flex flex-col gap-3 w-full max-w-[340px]">
+          <!-- Sélecteur d'option de format -->
+          <div class="flex flex-col gap-1.5">
+            <label class="text-[11px] font-bold uppercase tracking-wider text-on-surface-variant flex items-center justify-between">
+              <span>Format d'export</span>
+              <span class="text-primary font-semibold lowercase text-[10px]">
+                {{ selectedFormat() === 'svg' ? 'qualité infinie' : '300 DPI' }}
+              </span>
+            </label>
+            
+            <div class="grid grid-cols-2 p-1 bg-surface-container-high rounded-xl gap-1">
+              <!-- Option SVG -->
+              <button
+                type="button"
+                id="format-select-svg"
+                (click)="setFormat('svg')"
+                class="flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-bold transition-all"
+                [class.bg-surface]="selectedFormat() === 'svg'"
+                [class.text-primary]="selectedFormat() === 'svg'"
+                [class.shadow-sm]="selectedFormat() === 'svg'"
+                [class.text-on-surface-variant]="selectedFormat() !== 'svg'"
+              >
+                <span class="material-symbols-outlined text-base">draw</span>
+                <span>SVG (Vectoriel)</span>
+              </button>
+
+              <!-- Option PNG -->
+              <button
+                type="button"
+                id="format-select-png"
+                (click)="setFormat('png')"
+                class="flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-bold transition-all"
+                [class.bg-surface]="selectedFormat() === 'png'"
+                [class.text-primary]="selectedFormat() === 'png'"
+                [class.shadow-sm]="selectedFormat() === 'png'"
+                [class.text-on-surface-variant]="selectedFormat() !== 'png'"
+              >
+                <span class="material-symbols-outlined text-base">image</span>
+                <span>PNG (Image HD)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Bouton de Téléchargement dans le format choisi -->
           <button 
             type="button"
-            id="download-svg-btn"
+            id="download-btn"
             class="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 bg-primary text-on-primary font-label-md text-sm font-bold rounded-2xl shadow-md hover:bg-primary/90 hover:shadow-lg transition-all cursor-pointer group"
             (click)="onDownload()">
             <span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform">download</span>
-            <span>Télécharger le SVG (Vectoriel)</span>
+            <span>Télécharger en {{ selectedFormat() === 'svg' ? 'SVG (Vectoriel)' : 'PNG (Haute Définition)' }}</span>
           </button>
 
-          <!-- Bouton Secondaire PNG -->
-          <button 
-            type="button"
-            id="download-png-btn"
-            class="w-full inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-md text-xs font-semibold rounded-xl border border-outline-variant transition-all cursor-pointer"
-            (click)="onDownloadPng()">
-            <span class="material-symbols-outlined text-base text-on-surface-variant">image</span>
-            <span>Télécharger en PNG (Image HD 300 DPI)</span>
-          </button>
-
-          <span class="text-[11px] text-on-surface-variant font-medium text-center">
-            Formats prêts pour l'impression et les écrans
-          </span>
+          <!-- Boutons directs de secours (pour accessibilité et tests) -->
+          <div class="flex items-center justify-center gap-3 pt-0.5">
+            <button
+              type="button"
+              id="download-svg-btn"
+              (click)="setFormat('svg'); onDownload()"
+              class="text-[11px] text-primary hover:underline font-medium inline-flex items-center gap-1"
+            >
+              <span class="material-symbols-outlined text-xs">download</span>
+              Export direct SVG
+            </button>
+            <span class="text-outline-variant">•</span>
+            <button
+              type="button"
+              id="download-png-btn"
+              (click)="setFormat('png'); onDownload()"
+              class="text-[11px] text-on-surface-variant hover:text-on-surface hover:underline font-medium inline-flex items-center gap-1"
+            >
+              <span class="material-symbols-outlined text-xs">download</span>
+              Export direct PNG
+            </button>
+          </div>
         </div>
 
       </div>
