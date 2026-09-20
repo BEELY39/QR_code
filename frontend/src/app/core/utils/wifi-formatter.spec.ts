@@ -2,7 +2,7 @@ import { formatWifiPayload, escapeWifiString } from './wifi-formatter';
 import { WifiConfig } from '../models/live-qr.model';
 
 describe('formatWifiPayload (Catégorie 2 - Test Unitaire)', () => {
-  it('devrait formater exactement l\'exemple Freebox WPA2 de l\'utilisateur avec S: en premier', () => {
+  it('devrait encoder une Freebox WPA2 avec le token standard T:WPA et S: en premier', () => {
     const config: WifiConfig = {
       ssid: 'Freebox-667ekip',
       encryption: 'WPA2',
@@ -10,7 +10,7 @@ describe('formatWifiPayload (Catégorie 2 - Test Unitaire)', () => {
       hidden: false,
     };
     const result = formatWifiPayload(config);
-    expect(result).toBe('WIFI:S:Freebox-667ekip;T:WPA2;P:369258147Az;;');
+    expect(result).toBe('WIFI:S:Freebox-667ekip;T:WPA;P:369258147Az;;');
   });
 
   it('devrait formater une connexion WPA visible standard sans le flag H:false', () => {
@@ -33,7 +33,7 @@ describe('formatWifiPayload (Catégorie 2 - Test Unitaire)', () => {
       hidden: true,
     };
     const result = formatWifiPayload(config);
-    expect(result).toBe('WIFI:S:HiddenNetwork;T:WPA2;P:SecretPassword;H:true;;');
+    expect(result).toBe('WIFI:S:HiddenNetwork;T:WPA;P:SecretPassword;H:true;;');
   });
 
   it('devrait formater une connexion WEP correctement', () => {
@@ -76,7 +76,7 @@ describe('formatWifiPayload (Catégorie 2 - Test Unitaire)', () => {
     };
     const result = formatWifiPayload(config);
     expect(result).toBe(
-      'WIFI:S:Net\\\\work\\;Name\\:Test\\,Quotes\\"Ok;T:WPA2;P:Pass\\\\word\\;123\\:456\\,Quotes\\"Ok;;'
+      'WIFI:S:Net\\\\work\\;Name\\:Test\\,Quotes\\"Ok;T:WPA;P:Pass\\\\word\\;123\\:456\\,Quotes\\"Ok;;'
     );
   });
 
@@ -88,17 +88,17 @@ describe('formatWifiPayload (Catégorie 2 - Test Unitaire)', () => {
       hidden: false,
     };
     const result = formatWifiPayload(config);
-    expect(result).toBe('WIFI:S:Bbox-Livebox;T:WPA2;P:PassWord;;');
+    expect(result).toBe('WIFI:S:Bbox-Livebox;T:WPA;P:PassWord;;');
   });
 
-  it('devrait utiliser WPA2 par défaut si l\'encryption n\'est pas spécifiée', () => {
+  it('devrait retomber sur le token WPA si l\'encryption n\'est pas spécifiée', () => {
     const config = {
       ssid: 'DefaultNet',
       password: 'mypass',
       hidden: false,
     } as unknown as WifiConfig;
     const result = formatWifiPayload(config);
-    expect(result).toBe('WIFI:S:DefaultNet;T:WPA2;P:mypass;;');
+    expect(result).toBe('WIFI:S:DefaultNet;T:WPA;P:mypass;;');
   });
 });
 
