@@ -30,7 +30,7 @@ export class WifiFormComponent implements OnInit {
   });
 
   readonly encryptionOptions: readonly VisualOption<WifiEncryption>[] = [
-    { value: 'WPA', label: 'WPA / WPA2', iconName: 'lock' },
+    { value: 'WPA', label: 'WPA / WPA2 / WPA3', iconName: 'lock' },
     { value: 'WEP', label: 'WEP', iconName: 'shield' },
     { value: 'nopass', label: 'Réseau Ouvert', iconName: 'lock_open' },
   ];
