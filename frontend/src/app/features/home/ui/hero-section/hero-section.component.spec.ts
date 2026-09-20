@@ -4,6 +4,7 @@ import {
   HeroSection,
   HERO_DOT_STYLES,
   HERO_QR_DATA,
+  HERO_CYCLE_INTERVAL_MS,
 } from './hero-section.component';
 import { QrEngineService } from '../../../../core/services/qr-engine.service';
 import { QrEngineOptions } from '../../../../core/models/qr-engine.model';
@@ -46,6 +47,10 @@ describe('HeroSection', () => {
 
   it('should encode "Bienvenue" as the QR code data', () => {
     expect(HERO_QR_DATA).toBe('Bienvenue');
+  });
+
+  it('should configure cycle interval to 30 seconds (30000ms)', () => {
+    expect(HERO_CYCLE_INTERVAL_MS).toBe(30_000);
   });
 
   it('should contain the 4 requested dot styles in order', () => {

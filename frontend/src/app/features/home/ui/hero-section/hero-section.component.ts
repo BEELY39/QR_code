@@ -52,6 +52,7 @@ export const HERO_DOT_STYLES: readonly HeroDotStyleConfig[] = [
 ] as const;
 
 export const HERO_QR_DATA = 'Bienvenue';
+export const HERO_CYCLE_INTERVAL_MS = 30_000;
 
 @Component({
   selector: 'app-hero-section',
@@ -120,7 +121,7 @@ export class HeroSectionComponent implements OnInit, OnDestroy {
     }
     this.cycleIntervalId = setInterval(() => {
       this.switchStyle();
-    }, 2800);
+    }, HERO_CYCLE_INTERVAL_MS);
   }
 
   stopCycle(): void {
