@@ -1,0 +1,43 @@
+# Configuration de compilation Netlify pour QRCraft
+[build]
+  base = "frontend"
+  publish = "dist/frontend/browser"
+  command = "npm run build"
+
+[build.environment]
+  NODE_VERSION = "20"
+  NPM_FLAGS = "--legacy-peer-deps"
+
+# Règle de réécriture SPA universelle :
+# Tout chemin d'URL non résolu par un fichier statique physique est servi par /index.html en 200
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = false
+
+# Mise en cache immuable longue durée (1 an) pour les bundles JavaScript compilés
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Mise en cache immuable longue durée (1 an) pour les styles CSS compilés
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Pas de cache persistant sur les fichiers HTML pour garantir l'immédiateté des mises à jour
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# En-têtes de sécurité HTTP universels
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

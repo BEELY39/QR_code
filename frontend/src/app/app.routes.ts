@@ -6,7 +6,8 @@ export const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
-    pathMatch: 'full'
+    pathMatch: 'full',
+    title: 'QRCraft — Générateur de QR Code Personnalisé Gratuit en Ligne'
   },
   {
     path: 'mentions-legales',

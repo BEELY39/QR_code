@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://qrcraft.netlify.app/sitemap.xml
