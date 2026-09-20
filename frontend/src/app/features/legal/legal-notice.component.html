@@ -64,10 +64,10 @@
           <dl class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
             <div class="bg-surface-container-low rounded-2xl p-space-md">
               <dt class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Éditeur</dt>
-              <dd class="font-body-md text-body-md text-on-surface mt-space-xs">{{ identity.editorName }}</dd>
+              <dd class="font-body-md text-body-md text-on-surface mt-space-xs font-semibold">{{ identity.editorName }}</dd>
             </div>
             <div class="bg-surface-container-low rounded-2xl p-space-md">
-              <dt class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Statut</dt>
+              <dt class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Statut juridique</dt>
               <dd class="font-body-md text-body-md text-on-surface mt-space-xs">{{ identity.legalForm }}</dd>
             </div>
             <div class="bg-surface-container-low rounded-2xl p-space-md">
@@ -75,16 +75,28 @@
               <dd class="font-body-md text-body-md text-on-surface mt-space-xs">{{ identity.address }}</dd>
             </div>
             <div class="bg-surface-container-low rounded-2xl p-space-md">
-              <dt class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">SIRET</dt>
+              <dt class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">SIRET / SIREN</dt>
               <dd class="font-body-md text-body-md text-on-surface mt-space-xs">{{ identity.siret }}</dd>
             </div>
             <div class="bg-surface-container-low rounded-2xl p-space-md">
+              <dt class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Activité (Code APE)</dt>
+              <dd class="font-body-md text-body-md text-on-surface mt-space-xs">{{ identity.ape }}</dd>
+            </div>
+            <div class="bg-surface-container-low rounded-2xl p-space-md">
+              <dt class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Régime TVA</dt>
+              <dd class="font-body-md text-body-md text-on-surface mt-space-xs">{{ identity.vat }}</dd>
+            </div>
+            <div class="bg-surface-container-low rounded-2xl p-space-md">
               <dt class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">E-mail</dt>
-              <dd class="font-body-md text-body-md text-on-surface mt-space-xs">{{ identity.email }}</dd>
+              <dd class="font-body-md text-body-md text-on-surface mt-space-xs">
+                <a [href]="'mailto:' + identity.email" class="text-primary hover:underline font-medium">{{ identity.email }}</a>
+              </dd>
             </div>
             <div class="bg-surface-container-low rounded-2xl p-space-md">
               <dt class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Téléphone</dt>
-              <dd class="font-body-md text-body-md text-on-surface mt-space-xs">{{ identity.phone }}</dd>
+              <dd class="font-body-md text-body-md text-on-surface mt-space-xs">
+                <a [href]="'tel:' + identity.phone" class="text-primary hover:underline font-medium">{{ identity.phone }}</a>
+              </dd>
             </div>
           </dl>
         </article>
@@ -98,7 +110,7 @@
             <h2 class="font-headline-md text-headline-md text-on-surface">Directeur de la publication</h2>
           </div>
           <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
-            Le directeur de la publication est <strong class="text-on-surface font-semibold">{{ identity.publicationDirector }}</strong>, joignable à l'adresse {{ identity.email }}.
+            Le directeur de la publication est <strong class="text-on-surface font-semibold">{{ identity.publicationDirector }}</strong>, joignable par e-mail à l'adresse <a [href]="'mailto:' + identity.email" class="text-primary hover:underline font-medium">{{ identity.email }}</a> ou par téléphone au <a [href]="'tel:' + identity.phone" class="text-primary hover:underline font-medium">{{ identity.phone }}</a>.
           </p>
         </article>
 
@@ -116,7 +128,9 @@
           <div class="bg-surface-container-low rounded-2xl p-space-md flex flex-col gap-space-xs font-body-md text-body-md text-on-surface">
             <span class="font-semibold">{{ identity.hostName }}</span>
             <span class="text-on-surface-variant">{{ identity.hostAddress }}</span>
-            <span class="text-on-surface-variant">{{ identity.hostContact }}</span>
+            <a [href]="identity.hostContact" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline font-medium mt-space-xs">
+              {{ identity.hostContact }}
+            </a>
           </div>
         </article>
 
