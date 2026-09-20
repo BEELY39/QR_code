@@ -24,13 +24,14 @@ export class WifiFormComponent implements OnInit {
 
   readonly wifiForm: FormGroup = this.fb.group({
     ssid: ['', Validators.required],
-    encryption: ['WPA' as WifiEncryption, Validators.required],
+    encryption: ['WPA2' as WifiEncryption, Validators.required],
     password: [''],
     hidden: [false],
   });
 
   readonly encryptionOptions: readonly VisualOption<WifiEncryption>[] = [
-    { value: 'WPA', label: 'WPA / WPA2 / WPA3', iconName: 'lock' },
+    { value: 'WPA2', label: 'WPA2 / WPA3', iconName: 'lock' },
+    { value: 'WPA', label: 'WPA', iconName: 'lock' },
     { value: 'WEP', label: 'WEP', iconName: 'shield' },
     { value: 'nopass', label: 'Réseau Ouvert', iconName: 'lock_open' },
   ];

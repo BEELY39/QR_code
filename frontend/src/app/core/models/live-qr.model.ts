@@ -4,7 +4,7 @@ import { ColorPalette } from './palette.model';
 export type InputMode = 'url' | 'text' | 'wifi';
 
 /** Type de chiffrement Wi-Fi supporté */
-export type WifiEncryption = 'WPA' | 'WEP' | 'nopass';
+export type WifiEncryption = 'WPA2' | 'WPA' | 'WEP' | 'nopass';
 
 /** Configuration de connexion Wi-Fi */
 export interface WifiConfig {

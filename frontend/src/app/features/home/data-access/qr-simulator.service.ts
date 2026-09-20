@@ -132,7 +132,7 @@ export class QrSimulatorService {
         };
       }
       case 'wifi': {
-        const fallbackConfig: WifiConfig = { ssid: 'QRCraft-Guest', encryption: 'WPA', password: 'password123', hidden: false };
+        const fallbackConfig: WifiConfig = { ssid: 'QRCraft-Guest', encryption: 'WPA2', password: 'password123', hidden: false };
         const conf = this.wifiConfig() ?? fallbackConfig;
         return {
           kind: 'wifi',
@@ -329,7 +329,11 @@ export class QrSimulatorService {
       width: isDownload ? 600 : 280,
       height: isDownload ? 600 : 280,
       data: dataToEncode,
-      margin: isDownload ? 12 : 8,
+      // Quiet zone : la norme ISO/IEC 18004 impose 4 modules de blanc autour du code.
+      // À l'export sans cadre, rien n'entoure le QR : 12px (~0,7 module) faisait échouer
+      // les scans à l'impression ou sur fond coloré. 60px ≈ 3,5 à 4 modules.
+      // En aperçu, le cadre blanc (p-4/p-6) fournit déjà cette marge.
+      margin: isDownload ? 60 : 8,
       image: d.customLogoBase64 || QR_CENTRAL_LOGO_BASE64,
       qrOptions: {
         typeNumber: 0,

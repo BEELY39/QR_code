@@ -18,23 +18,24 @@ export function escapeWifiString(str: string): string {
  * Formate un objet WifiConfig en une chaîne standard WIFI: pour QR Code.
  * Conforme au standard ZXing supporté nativement par iOS (Appareil Photo Apple) et Android (Google Lens / Samsung Camera).
  *
- * Spécifications de la syntaxe :
- * - WPA / WPA2 / WPA3 : WIFI:T:WPA;S:NomDuReseau;P:MotDePasse;;
- * - Réseau sans mot de passe : WIFI:T:nopass;S:NomDuReseau;;
- * - Réseau masqué : WIFI:T:WPA;S:NomDuReseau;P:MotDePasse;H:true;;
+ * Spécifications de la syntaxe (Standard Universel & Box Françaises) :
+ * - WPA2 : WIFI:S:NomDuReseau;T:WPA2;P:MotDePasse;;
+ * - WPA  : WIFI:S:NomDuReseau;T:WPA;P:MotDePasse;;
+ * - WEP  : WIFI:S:NomDuReseau;T:WEP;P:MotDePasse;;
+ * - Réseau ouvert : WIFI:S:NomDuReseau;T:nopass;;
+ * - Réseau masqué : WIFI:S:NomDuReseau;T:WPA2;P:MotDePasse;H:true;;
  *
- * NOTE CRITIQUE DE COMPATIBILITÉ (iOS & Android) :
- * Le paramètre H: ne doit être présent QUE si hidden === true ('H:true;').
- * Ajouter 'H:false;' casse la détection et la tentative de connexion automatique
- * sur l'application Appareil Photo d'iOS (qui échoue avec "Impossible de rejoindre le réseau"
- * ou tente une association active vers un SSID masqué) ainsi que sur certains terminaux Android.
+ * NOTE CRITIQUE DE COMPATIBILITÉ (iOS, Android & Box internet) :
+ * 1. Le SSID (S:) placé en première position assure la détection immédiate du réseau.
+ * 2. Le type WPA2 correspond au standard de chiffrement des box modernes (Freebox, Livebox, SFR, Bouygues).
+ * 3. Le paramètre H: ne doit être présent QUE si hidden === true ('H:true;').
  */
 export function formatWifiPayload(config: WifiConfig): string {
-  const enc: WifiEncryption = config.encryption || 'WPA';
+  const enc: WifiEncryption = config.encryption || 'WPA2';
   const ssid = escapeWifiString(config.ssid || '');
   const pass = config.password ? escapeWifiString(config.password) : '';
 
-  let payload = `WIFI:T:${enc};S:${ssid};`;
+  let payload = `WIFI:S:${ssid};T:${enc};`;
 
   if (enc !== 'nopass' && pass.length > 0) {
     payload += `P:${pass};`;
