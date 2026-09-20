@@ -53,6 +53,72 @@
   }
   </script>
 
+  <!-- Données structurées FAQ Schema.org JSON-LD -->
+  <script type="application/ld+json" id="faq-schema-jsonld">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "QRCraft est-il réellement 100% gratuit et sans abonnement caché ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Oui, absolument. QRCraft est un outil web libre, gratuit et sans carte bancaire requise. Nos QR codes sont statiques, autonomes et utilisables à vie sans aucun frais ni abonnement caché."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Les QR codes créés ont-ils une date d’expiration ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Non, ils n’expirent jamais. Les informations sont directement encodées dans le motif graphique vectoriel du QR code sans passer par un serveur intermédiaire."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Mes données saisies sont-elles enregistrées sur vos serveurs ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Non, aucune donnée n’est transmise ni conservée sur un serveur. La génération graphique du QR code s’exécute intégralement en local dans votre navigateur web."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Pourquoi privilégier le format SVG vectoriel pour l’impression ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Le format SVG ne pixellise jamais, quelle que soit la taille d’impression. Il garantit des contours d’une netteté chirurgicale indispensables pour un scan rapide par les smartphones."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Comment fonctionne le QR code Wi-Fi pour mes clients ou invités ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Le QR code Wi-Fi permet aux clients de rejoindre votre réseau en un tap sur smartphone (iOS et Android), sans devoir recopier manuellement une clé de sécurité complexe."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Faut-il installer une application tierce pour scanner ces QR codes ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Non. L’appareil photo natif des smartphones modernes (iOS et Android) intègre la reconnaissance automatique de QR codes sans aucune application à installer."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Puis-je personnaliser les couleurs et ajouter un logo sans briser la scannabilité ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Oui, grâce au niveau de correction d’erreur élevé (ECL High à 30%), le QR code tolère un logo central tout en restant lisible tant que le contraste est respecté."
+        }
+      }
+    ]
+  }
+  </script>
+
   <!-- Favicons et Fonts -->
   <link rel="icon" type="image/png" href="favicon.png">
   <link rel="icon" type="image/x-icon" href="favicon.ico">

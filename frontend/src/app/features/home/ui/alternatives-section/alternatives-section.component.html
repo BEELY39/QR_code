@@ -1,0 +1,88 @@
+<section class="max-w-[1440px] mx-auto px-margin-sm sm:px-margin py-16 w-full" id="alternatives">
+  <div class="flex flex-col gap-10">
+    
+    <!-- Section Header & Controls -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+      <div>
+        <div class="inline-flex items-center gap-space-xs px-space-md py-1.5 rounded-full bg-surface-container-high shadow-xs mb-4">
+          <span class="material-symbols-outlined text-primary text-base">balance</span>
+          <span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider font-bold">Transparence &amp; Comparatif</span>
+        </div>
+        <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+          Pourquoi choisir QRCraft ?
+        </h2>
+        <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mt-2">
+          Mêmes libertés créatives que les leaders du marché, mais sans abonnement forcé, sans compte et sans date d'expiration.
+        </p>
+      </div>
+
+      <!-- Carousel Navigation Buttons -->
+      <div class="flex items-center gap-3 self-start md:self-end">
+        <button
+          type="button"
+          id="carousel-prev-btn"
+          aria-label="Alternative précédente"
+          (click)="scrollLeft()"
+          class="w-12 h-12 rounded-full bg-surface-container-lowest border border-outline-variant/30 text-on-surface flex items-center justify-center hover:bg-surface-container-high hover:border-outline-variant transition-all shadow-xs cursor-pointer">
+          <span class="material-symbols-outlined text-xl">arrow_back</span>
+        </button>
+        <button
+          type="button"
+          id="carousel-next-btn"
+          aria-label="Alternative suivante"
+          (click)="scrollRight()"
+          class="w-12 h-12 rounded-full bg-surface-container-lowest border border-outline-variant/30 text-on-surface flex items-center justify-center hover:bg-surface-container-high hover:border-outline-variant transition-all shadow-xs cursor-pointer">
+          <span class="material-symbols-outlined text-xl">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Scrollable Carousel Track -->
+    <div
+      #carouselTrack
+      class="flex items-stretch gap-6 overflow-x-auto pb-6 scroll-smooth snap-x snap-mandatory focus:outline-none [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      
+      @for (alt of alternatives(); track alt.id) {
+        <div
+          [id]="alt.id"
+          class="w-[300px] sm:w-[360px] shrink-0 snap-start bg-surface-container-lowest rounded-3xl p-6 sm:p-8 border border-outline-variant/30 shadow-xs flex flex-col justify-between transition-all hover:shadow-md">
+          
+          <div>
+            <!-- Competitor Header -->
+            <div class="flex items-center justify-between gap-3 mb-4">
+              <span class="font-title-lg text-title-lg text-on-surface font-extrabold">{{ alt.name }}</span>
+              <div class="w-10 h-10 rounded-2xl bg-surface-container-low flex items-center justify-center text-on-surface-variant">
+                <span class="material-symbols-outlined text-xl">{{ alt.icon }}</span>
+              </div>
+            </div>
+
+            <!-- Friction Badge -->
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-error-container/40 text-error font-label-sm text-label-sm font-bold mb-4">
+              <span class="material-symbols-outlined text-sm">warning</span>
+              <span>{{ alt.badge }}</span>
+            </div>
+
+            <!-- Friction Description -->
+            <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-6">
+              {{ alt.frictionPoint }}
+            </p>
+          </div>
+
+          <!-- QRCraft Advantage Box -->
+          <div class="p-4 sm:p-5 rounded-2xl bg-primary/5 border border-primary/15">
+            <div class="flex items-center gap-2 mb-2 text-primary font-label-md text-label-md font-extrabold uppercase tracking-wide">
+              <span class="material-symbols-outlined text-base">check_circle</span>
+              <span>L’avantage QRCraft</span>
+            </div>
+            <p class="font-body-sm text-body-sm text-on-surface leading-relaxed">
+              {{ alt.qrcraftAdvantage }}
+            </p>
+          </div>
+
+        </div>
+      }
+
+    </div>
+
+  </div>
+</section>

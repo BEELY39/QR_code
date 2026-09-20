@@ -4,6 +4,8 @@ import { HeroSectionComponent } from './ui/hero-section/hero-section.component';
 import { SimulatorSectionComponent } from './ui/simulator-section/simulator-section.component';
 import { FeaturesSectionComponent } from './ui/features-section/features-section.component';
 import { ShowcaseSectionComponent } from './ui/showcase-section/showcase-section.component';
+import { AlternativesSectionComponent } from './ui/alternatives-section/alternatives-section.component';
+import { FaqSectionComponent } from './ui/faq-section/faq-section.component';
 import { CtaBannerComponent } from './ui/cta-banner/cta-banner.component';
 import { FooterComponent } from './ui/footer/footer.component';
 import { QrSimulatorService } from './data-access/qr-simulator.service';
@@ -19,6 +21,8 @@ import { SITE_URL } from '../../core/constants/site.constant';
     SimulatorSectionComponent,
     FeaturesSectionComponent,
     ShowcaseSectionComponent,
+    AlternativesSectionComponent,
+    FaqSectionComponent,
     CtaBannerComponent,
     FooterComponent,
   ],

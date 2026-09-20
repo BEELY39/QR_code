@@ -45,6 +45,12 @@ describe('HeroSection', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should render the exact SEO H1 heading', () => {
+    const h1: HTMLHeadingElement = fixture.nativeElement.querySelector('h1');
+    expect(h1).toBeTruthy();
+    expect(h1.textContent?.replace(/\s+/g, ' ').trim()).toContain('Générateur de QR code personnalisé gratuit');
+  });
+
   it('should encode "Bienvenue" as the QR code data', () => {
     expect(HERO_QR_DATA).toBe('Bienvenue');
   });

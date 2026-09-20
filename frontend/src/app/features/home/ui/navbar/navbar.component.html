@@ -1,7 +1,7 @@
 <header class="fixed top-0 left-0 right-0 z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(31,32,70,0.04)]">
   <div class="h-20 max-w-[1440px] mx-auto px-margin-sm sm:px-margin flex items-center justify-between gap-space-md">
     <div class="flex items-center gap-space-md">
-      <a class="flex items-center gap-space-sm" href="#">
+      <a class="flex items-center gap-space-sm" routerLink="/">
         <div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary shadow-sm">
           <span class="material-symbols-outlined text-xl">qr_code_2</span>
         </div>
@@ -9,10 +9,11 @@
       </a>
     </div>
     <nav class="hidden md:flex items-center gap-space-xs p-space-xs bg-surface-container-low rounded-full">
-      <a aria-current="page" class="px-space-md py-space-xs rounded-full transition-all bg-primary-fixed text-on-primary-fixed font-semibold" href="#">Accueil</a>
-      <a class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" href="#simulateur">Studio de Création</a>
-      <a class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" href="#galerie">Modèles &amp; Galerie</a>
-      <a class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" href="#tarifs">Tarifs</a>
+      <a class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" routerLink="/" routerLinkActive="bg-primary-fixed text-on-primary-fixed font-semibold" [routerLinkActiveOptions]="{ exact: true }">Accueil</a>
+      <a class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" href="#simulateur">Studio</a>
+      <a class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" href="#galerie">Galerie</a>
+      <a id="nav-articles-link" class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" routerLink="/articles" routerLinkActive="bg-primary-fixed text-on-primary-fixed font-semibold">Articles</a>
+      <a class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" href="#faq">FAQ</a>
     </nav>
     <div class="flex items-center gap-space-md">
       <a class="hidden sm:inline-flex items-center justify-center px-space-lg py-space-sm bg-primary-container text-on-primary font-label-lg text-label-lg rounded-full shadow-[0_4px_20px_-2px_rgba(91,77,255,0.25)] hover:bg-primary transition-all" href="#simulateur">Ouvrir le Studio</a>
@@ -44,10 +45,11 @@
       id="mobile-menu"
       class="md:hidden border-t border-outline-variant/40 bg-surface/95 backdrop-blur-xl px-margin-sm pb-space-md pt-space-sm flex flex-col gap-1"
       aria-label="Navigation principale">
-      <a class="px-space-md py-3 rounded-2xl font-label-lg text-label-lg bg-primary-fixed text-on-primary-fixed font-semibold" href="#" (click)="closeMenu()">Accueil</a>
+      <a class="px-space-md py-3 rounded-2xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container transition-colors" routerLink="/" (click)="closeMenu()">Accueil</a>
       <a class="px-space-md py-3 rounded-2xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container transition-colors" href="#simulateur" (click)="closeMenu()">Studio de Création</a>
       <a class="px-space-md py-3 rounded-2xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container transition-colors" href="#galerie" (click)="closeMenu()">Modèles &amp; Galerie</a>
-      <a class="px-space-md py-3 rounded-2xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container transition-colors" href="#tarifs" (click)="closeMenu()">Tarifs</a>
+      <a id="mobile-nav-articles-link" class="px-space-md py-3 rounded-2xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container transition-colors" routerLink="/articles" (click)="closeMenu()">Articles &amp; Guides</a>
+      <a class="px-space-md py-3 rounded-2xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container transition-colors" href="#faq" (click)="closeMenu()">Foire Aux Questions</a>
       <a class="mt-space-xs px-space-md py-3.5 rounded-full bg-primary-container text-on-primary font-label-lg text-label-lg text-center shadow-[0_4px_20px_-2px_rgba(91,77,255,0.25)]" href="#simulateur" (click)="closeMenu()">Ouvrir le Studio</a>
     </nav>
   }

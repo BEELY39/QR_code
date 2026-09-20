@@ -15,6 +15,11 @@ export const routes: Routes = [
     title: 'Mentions légales — QRCraft'
   },
   {
+    path: 'articles',
+    loadComponent: () => import('./features/articles/articles.component').then(m => m.ArticlesComponent),
+    title: 'Articles & Guides Pratiques QR Code — QRCraft'
+  },
+  {
     path: '**',
     redirectTo: ''
   }

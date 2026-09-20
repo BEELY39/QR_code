@@ -83,4 +83,34 @@ describe('SeoService', () => {
     expect(metaService.getTag("property='og:image'")?.content).toBe(config.ogImage);
     expect(metaService.getTag("name='robots'")?.content).toBe('index, follow');
   });
+
+  it('should inject FAQPage JSON-LD script tag via updateFaqSchema', () => {
+    const testFaqs = [
+      {
+        id: 'faq-1',
+        question: 'Question 1 ?',
+        answer: 'Réponse 1 détaillée.',
+        category: 'general' as const,
+      },
+      {
+        id: 'faq-2',
+        question: 'Question 2 ?',
+        answer: 'Réponse 2 détaillée.',
+        category: 'technique' as const,
+      },
+    ];
+
+    service.updateFaqSchema(testFaqs);
+
+    const script = doc.querySelector('script#faq-schema-jsonld');
+    expect(script).toBeTruthy();
+    expect(script?.getAttribute('type')).toBe('application/ld+json');
+
+    const parsed = JSON.parse(script?.textContent || '{}');
+    expect(parsed['@context']).toBe('https://schema.org');
+    expect(parsed['@type']).toBe('FAQPage');
+    expect(parsed.mainEntity.length).toBe(2);
+    expect(parsed.mainEntity[0].name).toBe('Question 1 ?');
+    expect(parsed.mainEntity[0].acceptedAnswer.text).toBe('Réponse 1 détaillée.');
+  });
 });

@@ -45,6 +45,8 @@ describe('HomeComponent (Catégorie 3 - Test Intégration)', () => {
     const simulator = fixture.debugElement.query(By.css('app-simulator-section'));
     const features = fixture.debugElement.query(By.css('app-features-section'));
     const showcase = fixture.debugElement.query(By.css('app-showcase-section'));
+    const alternatives = fixture.debugElement.query(By.css('app-alternatives-section'));
+    const faq = fixture.debugElement.query(By.css('app-faq-section'));
     const cta = fixture.debugElement.query(By.css('app-cta-banner'));
     const footer = fixture.debugElement.query(By.css('app-footer'));
 
@@ -53,6 +55,8 @@ describe('HomeComponent (Catégorie 3 - Test Intégration)', () => {
     expect(simulator).toBeTruthy();
     expect(features).toBeTruthy();
     expect(showcase).toBeTruthy();
+    expect(alternatives).toBeTruthy();
+    expect(faq).toBeTruthy();
     expect(cta).toBeTruthy();
     expect(footer).toBeTruthy();
   });

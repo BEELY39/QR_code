@@ -1,0 +1,157 @@
+<app-navbar></app-navbar>
+
+<main class="w-full pt-20 bg-background min-h-screen">
+  
+  <!-- EN-TÊTE / BANNIÈRE HERO -->
+  <section class="max-w-[1440px] mx-auto px-margin-sm sm:px-margin pt-12 pb-10">
+    <div class="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-primary via-primary-container to-secondary-container text-on-primary p-8 sm:p-12 lg:p-16 shadow-xl">
+      <div class="absolute -right-20 -bottom-20 w-96 h-96 rounded-full bg-white/10 blur-2xl pointer-events-none"></div>
+      <div class="absolute -left-20 -top-20 w-80 h-80 rounded-full bg-tertiary-fixed/20 blur-xl pointer-events-none"></div>
+
+      <div class="relative z-10 max-w-3xl">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 backdrop-blur-md text-xs font-bold uppercase tracking-wider mb-6">
+          <span class="material-symbols-outlined text-base">auto_stories</span>
+          <span>Ressources &amp; Guides Pratiques</span>
+        </div>
+
+        <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
+          Guides Pratiques pour Maîtriser vos QR Codes
+        </h1>
+
+        <p class="mt-4 font-body-lg text-body-lg text-white/90 max-w-2xl leading-relaxed">
+          Tutoriels concrets, comparatifs techniques et conseils indispensables pour réussir vos impressions, vos réseaux Wi-Fi et éviter les arnaques d’abonnement.
+        </p>
+
+        <div class="mt-8 flex flex-wrap items-center gap-4">
+          <a
+            routerLink="/"
+            fragment="simulateur"
+            class="inline-flex items-center gap-2 px-6 py-3 bg-surface-container-lowest text-primary font-label-lg text-label-lg font-bold rounded-full shadow-md hover:bg-white transition-all">
+            <span class="material-symbols-outlined text-lg">qr_code_2</span>
+            <span>Accéder au Studio Gratuit</span>
+          </a>
+          <a
+            routerLink="/"
+            fragment="faq"
+            class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white font-label-lg text-label-lg transition-all">
+            <span class="material-symbols-outlined text-lg">help</span>
+            <span>Voir la FAQ</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LISTE DES FICHES GUIDES PRATIQUES -->
+  <section class="max-w-[1440px] mx-auto px-margin-sm sm:px-margin pb-20">
+    <div class="flex flex-col gap-8 max-w-4xl mx-auto">
+      
+      @for (guide of articles(); track guide.id) {
+        <article
+          [id]="guide.id"
+          class="bg-surface-container-lowest rounded-3xl border border-outline-variant/30 shadow-sm overflow-hidden transition-all duration-200"
+          [class.ring-2]="isExpanded(guide.id)"
+          [class.ring-primary/25]="isExpanded(guide.id)">
+          
+          <!-- Carte Header -->
+          <div class="p-6 sm:p-8">
+            <div class="flex flex-wrap items-center gap-2.5 mb-4">
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary font-label-sm text-label-sm font-bold">
+                <span class="material-symbols-outlined text-sm">{{ guide.iconName }}</span>
+                <span>{{ guide.category }}</span>
+              </span>
+              <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">
+                <span class="material-symbols-outlined text-sm">schedule</span>
+                <span>{{ guide.readingTime }}</span>
+              </span>
+              <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-secondary-fixed/30 text-on-secondary-fixed-variant font-label-sm text-label-sm">
+                <span class="material-symbols-outlined text-sm">group</span>
+                <span>{{ guide.targetAudience }}</span>
+              </span>
+            </div>
+
+            <h2 class="font-headline-sm text-headline-sm text-on-surface font-bold mb-3">
+              {{ guide.title }}
+            </h2>
+
+            <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-6">
+              {{ guide.summary }}
+            </p>
+
+            <!-- Actions Bar -->
+            <div class="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-outline-variant/20">
+              <button
+                type="button"
+                [id]="'guide-toggle-' + guide.id"
+                class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-label-md text-label-md font-bold transition-all cursor-pointer"
+                [ngClass]="isExpanded(guide.id) ? 'bg-primary text-on-primary shadow-xs' : 'bg-surface-container-low text-on-surface hover:bg-surface-container-high'"
+                [attr.aria-expanded]="isExpanded(guide.id)"
+                (click)="toggleGuide(guide.id)">
+                <span>{{ isExpanded(guide.id) ? 'Réduire le guide' : 'Lire le guide complet' }}</span>
+                <span class="material-symbols-outlined text-lg transition-transform duration-200"
+                      [class.rotate-180]="isExpanded(guide.id)">
+                  expand_more
+                </span>
+              </button>
+
+              <a
+                routerLink="/"
+                fragment="simulateur"
+                class="inline-flex items-center gap-1.5 text-primary font-label-md text-label-md font-bold hover:underline">
+                <span>Appliquer dans le Studio</span>
+                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Contenu Déplié (Option A : In-Page Reading) -->
+          @if (isExpanded(guide.id)) {
+            <div class="px-6 pb-8 sm:px-8 pt-4 bg-surface-container-lowest border-t border-outline-variant/20 animate-fadeIn">
+              
+              <!-- Sections éditoriales -->
+              <div class="space-y-6">
+                @for (section of guide.sections; track section.title) {
+                  <div class="space-y-2">
+                    <h3 class="font-title-md text-title-md text-on-surface font-bold flex items-center gap-2">
+                      <span class="w-2 h-2 rounded-full bg-primary"></span>
+                      <span>{{ section.title }}</span>
+                    </h3>
+                    <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed whitespace-pre-line pl-4">
+                      {{ section.content }}
+                    </p>
+                  </div>
+                }
+              </div>
+
+              <!-- Checklist Pratique Box -->
+              <div class="mt-8 p-6 rounded-2xl bg-surface-container-low border border-outline-variant/30">
+                <div class="flex items-center gap-2.5 mb-4">
+                  <span class="material-symbols-outlined text-primary text-xl">checklist</span>
+                  <h4 class="font-label-lg text-label-lg text-on-surface font-extrabold uppercase tracking-wide">
+                    Checklist de validation
+                  </h4>
+                </div>
+                <ul class="space-y-2.5">
+                  @for (item of guide.checklist; track item) {
+                    <li class="flex items-start gap-3 text-on-surface font-body-sm text-body-sm">
+                      <span class="material-symbols-outlined text-tertiary text-lg shrink-0 mt-0.5" style="font-variation-settings: 'FILL' 1;">
+                        check_circle
+                      </span>
+                      <span>{{ item }}</span>
+                    </li>
+                  }
+                </ul>
+              </div>
+
+            </div>
+          }
+
+        </article>
+      }
+
+    </div>
+  </section>
+
+</main>
+
+<app-footer></app-footer>

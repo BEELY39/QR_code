@@ -28,4 +28,14 @@ describe('Footer', () => {
     expect(link).toBeTruthy();
     expect(link.getAttribute('href')).toBe('/mentions-legales');
   });
+
+  it('should contain no dead hash links ("#") or fake API promises', () => {
+    const links: HTMLAnchorElement[] = Array.from(fixture.nativeElement.querySelectorAll('a'));
+    for (const link of links) {
+      expect(link.getAttribute('href')).not.toBe('#');
+    }
+    const textContent = fixture.nativeElement.textContent;
+    expect(textContent).not.toContain('Documentation API');
+    expect(textContent).not.toContain('Formules & Tarifs');
+  });
 });

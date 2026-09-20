@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Title, Meta } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 import { SeoPageConfig, OpenGraphMetadata, TwitterCardMetadata } from '../models/seo.model';
+import { FaqItem, SchemaFaqPage } from '../models/faq.model';
 
 @Injectable({
   providedIn: 'root',
@@ -103,6 +104,30 @@ export class SeoService {
     if (config.robots) {
       this.metaService.updateTag({ name: 'robots', content: config.robots });
     }
+  }
+
+  updateFaqSchema(faqs: readonly FaqItem[]): void {
+    const faqSchema: SchemaFaqPage = {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((f) => ({
+        '@type': 'Question' as const,
+        name: f.question,
+        acceptedAnswer: {
+          '@type': 'Answer' as const,
+          text: f.answer,
+        },
+      })),
+    };
+
+    let script: HTMLScriptElement | null = this.document.querySelector('script#faq-schema-jsonld');
+    if (!script) {
+      script = this.document.createElement('script');
+      script.id = 'faq-schema-jsonld';
+      script.type = 'application/ld+json';
+      this.document.head.appendChild(script);
+    }
+    script.textContent = JSON.stringify(faqSchema);
   }
 }
 
