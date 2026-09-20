@@ -30,3 +30,9 @@ Thumbs.db
 !.vscode/extensions.json
 
 .claude/
+
+# Internal Speckit & Agent files (Sensible / Exclus du repo public)
+.agents/
+.specify/
+specs/
+modul_teste/
