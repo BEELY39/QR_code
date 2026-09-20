@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://qrcraft.netlify.app/sitemap.xml
+Sitemap: https://qrcraft-generation.netlify.app/sitemap.xml

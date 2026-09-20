@@ -7,6 +7,8 @@ import { ShowcaseSectionComponent } from './ui/showcase-section/showcase-section
 import { CtaBannerComponent } from './ui/cta-banner/cta-banner.component';
 import { FooterComponent } from './ui/footer/footer.component';
 import { QrSimulatorService } from './data-access/qr-simulator.service';
+import { SeoService } from '../../core/services/seo.service';
+import { SITE_URL } from '../../core/constants/site.constant';
 
 @Component({
   selector: 'app-home',
@@ -25,5 +27,10 @@ import { QrSimulatorService } from './data-access/qr-simulator.service';
 })
 export class HomeComponent {
   protected readonly simulatorService = inject(QrSimulatorService);
+
+  constructor() {
+    // Réaffirme l'URL canonique du site déployé (voir SITE_URL).
+    inject(SeoService).updateCanonical(`${SITE_URL}/`);
+  }
 }
 export { HomeComponent as Home };

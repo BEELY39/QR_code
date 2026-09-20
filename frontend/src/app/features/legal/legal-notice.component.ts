@@ -3,6 +3,8 @@ import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NavbarComponent } from '../home/ui/navbar/navbar.component';
 import { FooterComponent } from '../home/ui/footer/footer.component';
+import { SeoService } from '../../core/services/seo.service';
+import { SITE_URL } from '../../core/constants/site.constant';
 
 interface LegalIdentity {
   readonly editorName: string;
@@ -71,6 +73,15 @@ export class LegalNoticeComponent {
   constructor() {
     // Compense la navbar fixe (h-20) lors du scroll vers une ancre du sommaire.
     inject(ViewportScroller).setOffset([0, 112]);
+
+    // Sans cela, la page hérite du canonical de index.html (l'accueil) et
+    // demande à Google de ne pas l'indexer sous sa propre URL.
+    inject(SeoService).updatePageSeo({
+      title: 'Mentions légales — QRCraft',
+      description:
+        "Mentions légales de QRCraft : éditeur, directeur de la publication, hébergeur, propriété intellectuelle, données personnelles et cookies.",
+      canonicalUrl: `${SITE_URL}/mentions-legales`,
+    });
   }
 }
 export { LegalNoticeComponent as LegalNotice };

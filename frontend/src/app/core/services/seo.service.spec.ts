@@ -54,7 +54,7 @@ describe('SeoService', () => {
   });
 
   it('should update or create canonical link element', () => {
-    const canonicalUrl = 'https://qrcraft.netlify.app/test-page';
+    const canonicalUrl = 'https://qrcraft-generation.netlify.app/test-page';
     service.updateCanonical(canonicalUrl);
 
     const link = doc.querySelector("link[rel='canonical']");
@@ -70,8 +70,8 @@ describe('SeoService', () => {
       title: 'Page Spécifique — QRCraft',
       description: 'Description complète de la page spécifique.',
       keywords: ['mot-clé 1', 'mot-clé 2'],
-      canonicalUrl: 'https://qrcraft.netlify.app/page-specifique',
-      ogImage: 'https://qrcraft.netlify.app/favicon.png',
+      canonicalUrl: 'https://qrcraft-generation.netlify.app/page-specifique',
+      ogImage: 'https://qrcraft-generation.netlify.app/favicon.png',
       robots: 'index, follow',
     };
 
