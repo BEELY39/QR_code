@@ -1,48 +1,94 @@
-<form [formGroup]="wifiForm" class="flex flex-col gap-4 p-4">
+<form [formGroup]="wifiForm" class="space-y-6">
   <!-- SSID -->
-  <div class="flex flex-col gap-1">
-    <label class="text-sm font-semibold text-on-surface" for="ssid">Nom du réseau (SSID) *</label>
-    <input 
-      id="ssid" 
-      type="text" 
-      formControlName="ssid" 
-      placeholder="Ex: Mon Réseau Wi-Fi"
-      class="rounded-md border border-outline p-2 bg-surface focus:outline-primary"
-    />
+  <div class="space-y-2">
+    <label class="text-xs font-bold uppercase tracking-wider text-on-surface-variant flex items-center gap-1.5" for="ssid">
+      <span class="material-symbols-outlined text-base text-primary">wifi</span>
+      Nom du réseau (SSID) *
+    </label>
+    <div class="relative">
+      <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-on-surface-variant">
+        <span class="material-symbols-outlined text-lg">router</span>
+      </div>
+      <input 
+        id="ssid" 
+        type="text" 
+        formControlName="ssid" 
+        placeholder="Ex: Mon Réseau Wi-Fi Privé"
+        class="w-full bg-surface-container-low border border-outline-variant rounded-xl pl-10 pr-4 py-2.5 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+      />
+    </div>
   </div>
 
-  <!-- Encryption -->
-  <div class="flex flex-col gap-1">
-    <label class="text-sm font-semibold text-on-surface" for="encryption">Type de sécurité *</label>
-    <select 
-      id="encryption" 
-      formControlName="encryption"
-      class="rounded-md border border-outline p-2 bg-surface focus:outline-primary"
-    >
-      <option *ngFor="let enc of encryptions" [value]="enc">{{ enc === 'nopass' ? 'Aucune' : enc }}</option>
-    </select>
+  <!-- Type de sécurité (Segmented buttons) -->
+  <div class="space-y-2">
+    <label class="text-xs font-bold uppercase tracking-wider text-on-surface-variant flex items-center gap-1.5">
+      <span class="material-symbols-outlined text-base text-primary">security</span>
+      Sécurité du réseau *
+    </label>
+    <div class="grid grid-cols-3 gap-2 p-1 bg-surface-container-high rounded-xl">
+      @for (opt of encryptionOptions; track opt.value) {
+        <button
+          type="button"
+          (click)="selectEncryption(opt.value)"
+          class="flex flex-col sm:flex-row items-center justify-center gap-1.5 py-2 px-2 rounded-lg text-xs font-semibold transition-all"
+          [class.bg-surface]="wifiForm.get('encryption')?.value === opt.value"
+          [class.text-primary]="wifiForm.get('encryption')?.value === opt.value"
+          [class.shadow-sm]="wifiForm.get('encryption')?.value === opt.value"
+          [class.text-on-surface-variant]="wifiForm.get('encryption')?.value !== opt.value"
+        >
+          <span class="material-symbols-outlined text-base">{{ opt.iconName }}</span>
+          <span class="truncate">{{ opt.label }}</span>
+        </button>
+      }
+    </div>
   </div>
 
-  <!-- Password -->
-  <div class="flex flex-col gap-1" *ngIf="wifiForm.get('encryption')?.value !== 'nopass'">
-    <label class="text-sm font-semibold text-on-surface" for="password">Mot de passe</label>
-    <input 
-      id="password" 
-      type="password" 
-      formControlName="password" 
-      placeholder="Clé Wi-Fi"
-      class="rounded-md border border-outline p-2 bg-surface focus:outline-primary"
-    />
-  </div>
+  <!-- Mot de passe (si non ouvert) -->
+  @if (wifiForm.get('encryption')?.value !== 'nopass') {
+    <div class="space-y-2">
+      <label class="text-xs font-bold uppercase tracking-wider text-on-surface-variant flex items-center gap-1.5" for="password">
+        <span class="material-symbols-outlined text-base text-primary">key</span>
+        Mot de passe Wi-Fi
+      </label>
+      <div class="relative">
+        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-on-surface-variant">
+          <span class="material-symbols-outlined text-lg">password</span>
+        </div>
+        <input 
+          id="password" 
+          [type]="showPassword() ? 'text' : 'password'" 
+          formControlName="password" 
+          placeholder="Entrez la clé de sécurité"
+          class="w-full bg-surface-container-low border border-outline-variant rounded-xl pl-10 pr-11 py-2.5 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all font-mono"
+        />
+        <button
+          type="button"
+          (click)="toggleShowPassword()"
+          class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-on-surface-variant hover:text-on-surface transition-colors focus:outline-none"
+          title="Afficher/Masquer le mot de passe"
+        >
+          <span class="material-symbols-outlined text-lg">
+            {{ showPassword() ? 'visibility_off' : 'visibility' }}
+          </span>
+        </button>
+      </div>
+    </div>
+  }
 
-  <!-- Hidden -->
-  <div class="flex items-center gap-2 mt-2">
+  <!-- Switch Réseau Masqué -->
+  <label class="flex items-center justify-between p-3.5 bg-surface-container-low rounded-xl border border-outline-variant cursor-pointer group hover:bg-surface-container transition-colors">
+    <div class="flex items-center gap-2.5">
+      <span class="material-symbols-outlined text-on-surface-variant text-lg">visibility_off</span>
+      <div>
+        <span class="text-xs font-semibold text-on-surface block">Réseau masqué (Hidden SSID)</span>
+        <span class="text-[11px] text-on-surface-variant block">Le réseau ne diffuse pas son nom publiquement</span>
+      </div>
+    </div>
+    
     <input 
-      id="hidden" 
       type="checkbox" 
       formControlName="hidden" 
-      class="h-4 w-4 rounded border-outline text-primary focus:ring-primary"
+      class="h-4 w-4 rounded border-outline-variant text-primary focus:ring-primary accent-primary cursor-pointer"
     />
-    <label class="text-sm text-on-surface" for="hidden">Réseau masqué</label>
-  </div>
+  </label>
 </form>

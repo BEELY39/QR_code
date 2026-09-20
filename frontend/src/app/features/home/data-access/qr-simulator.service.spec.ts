@@ -146,5 +146,17 @@ describe('QrSimulatorService (Catégorie 2 - Test Unitaire)', () => {
         'svg'
       );
     });
+
+    it('devrait déclencher le téléchargement PNG via QrEngineService', async () => {
+      await service.downloadPng();
+      expect(qrEngineMock.download).toHaveBeenCalledWith(
+        expect.objectContaining({
+          qrOptions: expect.objectContaining({ errorCorrectionLevel: 'H' }),
+          image: QR_CENTRAL_LOGO_BASE64,
+        }),
+        expect.stringContaining('qrcraft'),
+        'png'
+      );
+    });
   });
 });

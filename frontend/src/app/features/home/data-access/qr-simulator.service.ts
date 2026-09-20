@@ -1,8 +1,9 @@
-﻿import { Injectable, computed, inject, signal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 import { ColorPalette } from '../../../core/models/palette.model';
 import { GeneratorStatus, InputMode, QrPayload, WifiConfig, QrDesignOptions } from '../../../core/models/live-qr.model';
 import { formatWifiPayload } from '../../../core/utils/wifi-formatter';
 import { QrEngineService } from '../../../core/services/qr-engine.service';
+import { DomExportService } from '../../../core/services/dom-export.service';
 import { QR_CENTRAL_LOGO_BASE64 } from '../../../core/constants/qr-logo.constant';
 import { QrEngineOptions } from '../../../core/models/qr-engine.model';
 
@@ -11,6 +12,7 @@ import { QrEngineOptions } from '../../../core/models/qr-engine.model';
 })
 export class QrSimulatorService {
   private readonly qrEngine = inject(QrEngineService);
+  private readonly domExport = inject(DomExportService);
 
   private readonly defaultPalettes: readonly ColorPalette[] = [
     {
@@ -86,8 +88,8 @@ export class QrSimulatorService {
     backgroundColor: '#ffffff',
     customLogoBase64: null,
     frame: {
-      style: 'none',
-      text: '',
+      style: 'simple-bottom',
+      text: 'SCAN ME',
       font: 'Roboto',
       frameColor: '#000000',
       textColor: '#ffffff',
@@ -226,6 +228,10 @@ export class QrSimulatorService {
 
   setBottomText(newText: string): void {
     this.bottomText.set(newText);
+    this.design.update(d => ({
+      ...d,
+      frame: { ...d.frame, text: newText },
+    }));
   }
 
   setWifiConfig(config: WifiConfig): void {
@@ -237,7 +243,17 @@ export class QrSimulatorService {
   }
 
   updateDesign(partialDesign: Partial<QrDesignOptions>): void {
-    this.design.update(d => ({ ...d, ...partialDesign }));
+    this.design.update(d => {
+      const updatedFrame = partialDesign.frame ? { ...d.frame, ...partialDesign.frame } : d.frame;
+      return {
+        ...d,
+        ...partialDesign,
+        frame: updatedFrame,
+      };
+    });
+    if (partialDesign.frame?.text !== undefined) {
+      this.bottomText.set(partialDesign.frame.text);
+    }
     this.scheduleRegeneration(150);
   }
 
@@ -259,9 +275,41 @@ export class QrSimulatorService {
   async downloadSvg(): Promise<void> {
     const p = this.payload();
     const dataToEncode = p.kind === 'url' ? p.targetUrl : (p.kind === 'text' ? p.content : p.rawString);
-    const filename = p.kind === 'url' ? 'qrcraft-live-url' : 'qrcraft-live-text';
+    const filename = p.kind === 'url' ? 'qrcraft-live-url' : (p.kind === 'text' ? 'qrcraft-live-text' : 'qrcraft-live-wifi');
+    const d = this.design();
+
+    // Si un cadre est actif et présent dans le DOM, capture et export SVG vectoriel complet
+    if (d.frame.style !== 'none' && typeof document !== 'undefined') {
+      const framedEl = document.getElementById('live-qr-framed-container');
+      if (framedEl) {
+        const result = await this.domExport.captureToSvg(framedEl, `${filename}-framed.svg`);
+        this.domExport.saveAndRelease(result);
+        return;
+      }
+    }
+
     const options = this.buildQrOptions(dataToEncode, true);
     await this.qrEngine.download(options, filename, 'svg');
+  }
+
+  async downloadPng(): Promise<void> {
+    const p = this.payload();
+    const dataToEncode = p.kind === 'url' ? p.targetUrl : (p.kind === 'text' ? p.content : p.rawString);
+    const filename = p.kind === 'url' ? 'qrcraft-live-url' : (p.kind === 'text' ? 'qrcraft-live-text' : 'qrcraft-live-wifi');
+    const d = this.design();
+
+    // Si un cadre est actif et présent dans le DOM, capture et export PNG haute fidélité
+    if (d.frame.style !== 'none' && typeof document !== 'undefined') {
+      const framedEl = document.getElementById('live-qr-framed-container');
+      if (framedEl) {
+        const result = await this.domExport.captureToPng(framedEl, 3, `${filename}-framed.png`);
+        this.domExport.saveAndRelease(result);
+        return;
+      }
+    }
+
+    const options = this.buildQrOptions(dataToEncode, true);
+    await this.qrEngine.download(options, filename, 'png');
   }
 
 

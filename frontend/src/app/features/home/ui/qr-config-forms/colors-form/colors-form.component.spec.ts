@@ -1,4 +1,4 @@
-﻿import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ColorsFormComponent as ColorsForm } from './colors-form.component';
 
@@ -20,5 +20,18 @@ describe('ColorsForm', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('devrait appliquer une couleur de marque aux points', () => {
+    component.applySingleDotsColor('#6750A4');
+    expect(component.colorsForm.get('dotsColorSingle')?.value).toBe('#6750A4');
+  });
+
+  it('devrait basculer en mode dégradé et mettre à jour la configuration', () => {
+    component.selectDotsColorType('gradient');
+    expect(component.colorsForm.get('dotsColorType')?.value).toBe('gradient');
+
+    component.selectGradientType('radial');
+    expect(component.colorsForm.get('dotsGradientType')?.value).toBe('radial');
   });
 });

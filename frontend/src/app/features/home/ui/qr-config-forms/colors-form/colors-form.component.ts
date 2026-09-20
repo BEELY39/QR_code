@@ -5,6 +5,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { QrColorConfig, QrDesignOptions, GradientType } from '../../../../../core/models/live-qr.model';
 
+export interface BrandColorSwatch {
+  readonly name: string;
+  readonly hex: string;
+}
+
 @Component({
   selector: 'app-colors-form',
   standalone: true,
@@ -20,12 +25,30 @@ export class ColorsFormComponent implements OnInit {
   readonly initialConfig = input.required<QrDesignOptions>();
   readonly configChange = output<Partial<QrDesignOptions>>();
 
+  readonly brandSwatches: readonly BrandColorSwatch[] = [
+    { name: 'Noir Absolu', hex: '#000000' },
+    { name: 'Violet Studio', hex: '#6750A4' },
+    { name: 'Indigo Profond', hex: '#3F51B5' },
+    { name: 'Bleu Océan', hex: '#0284C7' },
+    { name: 'Émeraude Végétal', hex: '#059669' },
+    { name: 'Ambre Chaud', hex: '#D97706' },
+    { name: 'Rubis Intense', hex: '#DC2626' },
+    { name: 'Graphite', hex: '#1E293B' },
+  ];
+
+  readonly backgroundSwatches: readonly BrandColorSwatch[] = [
+    { name: 'Blanc Pur', hex: '#ffffff' },
+    { name: 'Crème Doux', hex: '#fdfbf7' },
+    { name: 'Gris Perle', hex: '#f1f5f9' },
+    { name: 'Ardoise Sombre', hex: '#0f172a' },
+  ];
+
   readonly colorsForm: FormGroup = this.fb.group({
-    dotsColorType: ['single'], // 'single' | 'gradient'
+    dotsColorType: ['single' as 'single' | 'gradient'],
     dotsColorSingle: ['#000000'],
     dotsGradientType: ['linear' as GradientType],
-    dotsGradientStart: ['#000000'],
-    dotsGradientEnd: ['#000000'],
+    dotsGradientStart: ['#6750A4'],
+    dotsGradientEnd: ['#0284C7'],
     dotsGradientRotation: [45],
     cornersColor: ['#000000'],
     backgroundColor: ['#ffffff'],
@@ -39,8 +62,8 @@ export class ColorsFormComponent implements OnInit {
       dotsColorType: dotsColorType,
       dotsColorSingle: dotsColorType === 'single' ? d.dotsColor.color : '#000000',
       dotsGradientType: dotsColorType === 'gradient' ? d.dotsColor.gradient.type : 'linear',
-      dotsGradientStart: dotsColorType === 'gradient' ? d.dotsColor.gradient.colorStops[0].color : '#000000',
-      dotsGradientEnd: dotsColorType === 'gradient' ? d.dotsColor.gradient.colorStops[1].color : '#000000',
+      dotsGradientStart: dotsColorType === 'gradient' ? d.dotsColor.gradient.colorStops[0].color : '#6750A4',
+      dotsGradientEnd: dotsColorType === 'gradient' ? d.dotsColor.gradient.colorStops[1].color : '#0284C7',
       dotsGradientRotation: dotsColorType === 'gradient' ? (d.dotsColor.gradient.rotation ?? 45) : 45,
       cornersColor: d.cornersColor,
       backgroundColor: d.backgroundColor,
@@ -61,7 +84,7 @@ export class ColorsFormComponent implements OnInit {
             kind: 'gradient',
             gradient: {
               type: val.dotsGradientType as GradientType,
-              rotation: val.dotsGradientRotation,
+              rotation: Number(val.dotsGradientRotation) || 0,
               colorStops: [
                 { offset: 0, color: val.dotsGradientStart },
                 { offset: 1, color: val.dotsGradientEnd }
@@ -76,5 +99,25 @@ export class ColorsFormComponent implements OnInit {
           backgroundColor: val.backgroundColor,
         });
       });
+  }
+
+  selectDotsColorType(type: 'single' | 'gradient'): void {
+    this.colorsForm.patchValue({ dotsColorType: type });
+  }
+
+  selectGradientType(type: GradientType): void {
+    this.colorsForm.patchValue({ dotsGradientType: type });
+  }
+
+  applySingleDotsColor(hex: string): void {
+    this.colorsForm.patchValue({ dotsColorSingle: hex });
+  }
+
+  applyCornersColor(hex: string): void {
+    this.colorsForm.patchValue({ cornersColor: hex });
+  }
+
+  applyBackgroundColor(hex: string): void {
+    this.colorsForm.patchValue({ backgroundColor: hex });
   }
 }

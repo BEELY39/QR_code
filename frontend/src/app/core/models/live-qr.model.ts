@@ -50,7 +50,16 @@ export type QrColorConfig =
 export type DotStyleType = 'dots' | 'rounded' | 'classy' | 'classy-rounded' | 'square' | 'extra-rounded';
 
 /** Styles de cadre extérieur */
-export type FrameStyleType = 'none' | 'simple-bottom' | 'rounded-bottom' | 'badge-bottom';
+export type FrameStyleType = 'none' | 'simple-bottom' | 'badge-bottom' | 'rounded-border';
+
+/** Modèle générique pour les options de sélection visuelle (cartes interactives) */
+export interface VisualOption<T> {
+  readonly value: T;
+  readonly label: string;
+  readonly description?: string;
+  readonly iconName?: string;
+  readonly previewClass?: string;
+}
 
 /** Options de personnalisation du cadre */
 export interface QrFrameOptions {

@@ -1,4 +1,4 @@
-﻿import { TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { PLATFORM_ID } from '@angular/core';
 import { DomExportService } from './dom-export.service';
 import { ExportResult } from '../models/export.model';
@@ -69,6 +69,10 @@ describe('DomExportService (Catégorie 2 - Test Unitaire)', () => {
       const pngResult = await service.captureToPng(dummyEl);
       expect(pngResult).toBeTruthy();
       expect(pngResult.dataUrl).toBe('');
+
+      const svgResult = await service.captureToSvg(dummyEl);
+      expect(svgResult).toBeTruthy();
+      expect(svgResult.dataUrl).toBe('');
 
       const pdfResult = await service.exportToPdf(dummyEl);
       expect(pdfResult).toBeTruthy();

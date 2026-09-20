@@ -4,22 +4,41 @@ import { RouterLink } from '@angular/router';
 import { NavbarComponent } from '../home/ui/navbar/navbar.component';
 import { FooterComponent } from '../home/ui/footer/footer.component';
 
+interface LegalIdentity {
+  readonly editorName: string;
+  readonly legalForm: string;
+  readonly address: string;
+  readonly siret: string;
+  readonly siren: string;
+  readonly ape: string;
+  readonly vat: string;
+  readonly email: string;
+  readonly phone: string;
+  readonly publicationDirector: string;
+  readonly hostName: string;
+  readonly hostAddress: string;
+  readonly hostContact: string;
+}
+
 /**
- * Informations légales de l'éditeur et de l'hébergeur (art. 6-III LCEN).
- * Les valeurs entre crochets sont à remplacer par les informations réelles.
+ * Informations légales réelles de l'éditeur (DN Service / Daniel MOURANA)
+ * et de l'hébergeur (Netlify, Inc.) conformément à l'art. 6-III de la LCEN.
  */
-const LEGAL_IDENTITY = {
-  editorName: '[Nom / Raison sociale]',
-  legalForm: '[Forme juridique — ex. Entreprise individuelle, SAS]',
-  address: '[Adresse postale complète]',
-  siret: '[Numéro SIRET]',
-  email: '[contact@votre-domaine.fr]',
-  phone: '[Numéro de téléphone]',
-  publicationDirector: '[Nom du directeur de la publication]',
-  hostName: '[Nom de l’hébergeur]',
-  hostAddress: '[Adresse de l’hébergeur]',
-  hostContact: '[Site web ou téléphone de l’hébergeur]',
-} as const;
+const LEGAL_IDENTITY: LegalIdentity = {
+  editorName: 'DN Service — Daniel MOURANA',
+  legalForm: 'Entrepreneur individuel (Micro-entreprise)',
+  address: '77 Rue des Salines, 39000 Lons-le-Saunier, France',
+  siret: '930 007 836 00016',
+  siren: '930 007 836',
+  ape: '62.01Z — Programmation informatique',
+  vat: 'Franchise en base de TVA (art. 293 B du CGI — TVA non applicable)',
+  email: 'dn.services.web@gmail.com',
+  phone: '07 68 09 11 49',
+  publicationDirector: 'Daniel MOURANA',
+  hostName: 'Netlify, Inc.',
+  hostAddress: '44 Montgomery Street, Suite 300, San Francisco, CA 94104, USA',
+  hostContact: 'https://www.netlify.com',
+};
 
 interface LegalSection {
   id: string;
@@ -36,7 +55,7 @@ interface LegalSection {
 })
 export class LegalNoticeComponent {
   protected readonly identity = LEGAL_IDENTITY;
-  protected readonly lastUpdate = '14 septembre 2026';
+  protected readonly lastUpdate = '20 septembre 2026';
 
   protected readonly sections: LegalSection[] = [
     { id: 'editeur', icon: 'badge', title: 'Éditeur du site' },

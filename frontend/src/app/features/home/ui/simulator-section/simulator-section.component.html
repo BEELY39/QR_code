@@ -190,21 +190,6 @@
           </div>
         </div>
 
-        <!-- Banner Slogan Input -->
-        <div class="flex flex-col gap-2">
-          <label class="font-label-md text-label-md text-on-surface font-bold" for="demo-banner">Texte du bandeau inférieur</label>
-          <div class="relative flex items-center">
-            <span class="material-symbols-outlined absolute left-4 text-on-surface-variant">label</span>
-            <input 
-              class="w-full h-14 pl-12 pr-4 bg-surface-container-low rounded-2xl font-body-md text-body-md text-on-surface focus:outline-none focus:bg-surface-container focus:ring-2 focus:ring-primary transition-all" 
-              id="demo-banner" 
-              placeholder="Ex: SCANNEZ-MOI, WI-FI GRATUIT..." 
-              type="text" 
-              [value]="bottomText()" 
-              (input)="onBottomTextInput($event)"/>
-          </div>
-        </div>
-
         <!-- Studio Handoff & Download Action Buttons -->
         <div class="pt-2 flex flex-wrap gap-4 items-center">
           <button 
@@ -222,70 +207,207 @@
         </div>
       </div>
 
-      <!-- Live Preview Output -->
-      <div class="lg:col-span-5 flex flex-col items-center justify-center bg-surface-container-low p-6 rounded-3xl">
-        <div class="w-full max-w-[300px] bg-inverse-surface text-inverse-on-surface p-5 rounded-[2rem] shadow-xl flex flex-col items-center transition-all duration-300">
+      <!-- Live Preview Output : Studio Canvas Épuré (Zéro Double Cadre) -->
+      <div class="lg:col-span-5 flex flex-col items-center justify-center bg-surface-container-low p-6 sm:p-10 rounded-3xl min-h-[460px]">
+        
+        <!-- Loading Spinner -->
+        @if (isGenerating()) {
+          <div class="flex flex-col items-center justify-center gap-3 py-16">
+            <div class="w-10 h-10 rounded-full border-4 border-primary border-t-transparent animate-spin"></div>
+            <span class="font-label-md text-label-md text-on-surface-variant font-medium">Génération vectorielle en cours...</span>
+          </div>
+        } @else if (safeQrSvgMarkup()) {
           
-          <!-- Dynamic Vector QR Container -->
-          <div class="w-full aspect-square bg-surface-container-lowest rounded-2xl p-4 flex items-center justify-center relative overflow-hidden">
-            @if (isGenerating()) {
-              <div class="absolute inset-0 bg-surface-container-lowest/80 backdrop-blur-xs flex flex-col items-center justify-center gap-2 z-10">
-                <div class="w-8 h-8 rounded-full border-3 border-primary border-t-transparent animate-spin"></div>
-                <span class="font-label-sm text-label-sm text-on-surface-variant font-medium">Génération...</span>
-              </div>
-            }
-
-            @if (safeQrSvgMarkup()) {
-              <div 
-                class="relative flex flex-col items-center w-full transition-all duration-300 overflow-hidden"
-                [style.background-color]="design().frame.style !== 'none' ? design().frame.frameColor : 'transparent'"
-                [style.padding]="design().frame.style !== 'none' ? '0.75rem 0.75rem 1rem 0.75rem' : '0'"
-                [ngClass]="{
-                  'rounded-2xl': design().frame.style === 'rounded-bottom',
-                  'rounded-t-[2rem] rounded-b-xl': design().frame.style === 'badge-bottom',
-                  'rounded-sm': design().frame.style === 'simple-bottom'
-                }"
-              >
+          <!-- Unified Framed QR Container (Le conteneur direct unique) -->
+          <div id="live-qr-framed-container" class="flex flex-col items-center justify-center transition-all duration-300">
+            
+            @switch (design().frame.style) {
+              
+              <!-- Modèle 1 (Image 2) : Bandeau Inférieur Plein (Conteneur Blanc + Bordure + Bloc texte plein) -->
+              @case ('simple-bottom') {
                 <div 
-                  id="live-qr-svg-container"
-                  class="w-full aspect-square flex items-center justify-center bg-white transition-all duration-300 [&>svg]:w-full [&>svg]:h-full [&>svg]:max-w-full [&>svg]:max-h-full"
-                  [ngClass]="{'rounded-xl': design().frame.style !== 'none'}"
-                  [innerHTML]="safeQrSvgMarkup()">
-                </div>
-                
-                @if (design().frame.style !== 'none' && design().frame.text) {
-                  <div 
-                    class="mt-3 w-full text-center text-lg tracking-wider"
-                    [style.color]="design().frame.textColor"
-                    [style.font-family]="design().frame.font"
-                    [style.font-weight]="700"
-                  >
-                    {{ design().frame.text }}
+                  data-testid="frame-simple-bottom"
+                  class="flex flex-col bg-white rounded-3xl overflow-hidden shadow-2xl border-4 transition-all"
+                  [style.border-color]="design().frame.frameColor">
+                  
+                  <!-- QR Code Matrix -->
+                  <div class="p-4 sm:p-6 bg-white flex items-center justify-center">
+                    <div 
+                      id="live-qr-svg-container"
+                      class="w-[230px] h-[230px] sm:w-[260px] sm:h-[260px] flex items-center justify-center [&>svg]:w-full [&>svg]:h-full [&>svg]:max-w-full [&>svg]:max-h-full"
+                      [innerHTML]="safeQrSvgMarkup()">
+                    </div>
                   </div>
-                }
-              </div>
-            } @else {
-              <div class="w-full h-full flex items-center justify-center text-on-surface-variant">
-                <span class="material-symbols-outlined text-4xl animate-pulse">qr_code_2</span>
-              </div>
+                  
+                  <!-- Solid Bottom Banner -->
+                  @if (design().frame.text) {
+                    <div 
+                      class="w-full py-3.5 px-6 text-center transition-colors"
+                      [style.background-color]="design().frame.frameColor"
+                      [style.color]="design().frame.textColor"
+                      [style.font-family]="design().frame.font">
+                      <span class="text-xl sm:text-2xl font-extrabold tracking-widest uppercase block truncate leading-tight">
+                        {{ design().frame.text }}
+                      </span>
+                    </div>
+                  }
+                </div>
+              }
+
+              <!-- Modèle 2 (Image 3) : Badge Flottant avec Flèche Callout -->
+              @case ('badge-bottom') {
+                <div 
+                  data-testid="frame-badge-bottom"
+                  class="flex flex-col items-center gap-2.5 transition-all">
+                  
+                  <!-- Bordered Box with QR Code -->
+                  <div 
+                    class="p-4 sm:p-5 bg-white rounded-3xl border-4 shadow-xl flex items-center justify-center transition-all"
+                    [style.border-color]="design().frame.frameColor">
+                    <div 
+                      id="live-qr-svg-container"
+                      class="w-[230px] h-[230px] sm:w-[260px] sm:h-[260px] flex items-center justify-center [&>svg]:w-full [&>svg]:h-full [&>svg]:max-w-full [&>svg]:max-h-full"
+                      [innerHTML]="safeQrSvgMarkup()">
+                    </div>
+                  </div>
+
+                  <!-- Detached Callout Badge -->
+                  @if (design().frame.text) {
+                    <div class="relative flex flex-col items-center -mt-1">
+                      <!-- Upward pointing triangle / arrow -->
+                      <div 
+                        class="w-0 h-0 border-x-[10px] border-x-transparent border-b-[10px] transition-colors"
+                        [style.border-bottom-color]="design().frame.frameColor">
+                      </div>
+                      <!-- Badge Pill -->
+                      <div 
+                        class="px-7 py-2 rounded-full shadow-lg text-center transition-colors -mt-0.5"
+                        [style.background-color]="design().frame.frameColor"
+                        [style.color]="design().frame.textColor"
+                        [style.font-family]="design().frame.font">
+                        <span class="text-base sm:text-lg font-extrabold tracking-wider uppercase block truncate">
+                          {{ design().frame.text }}
+                        </span>
+                      </div>
+                    </div>
+                  }
+                </div>
+              }
+
+              <!-- Modèle 3 : Bordure Arrondie sans bandeau -->
+              @case ('rounded-border') {
+                <div 
+                  data-testid="frame-rounded-border"
+                  class="p-5 sm:p-6 bg-white rounded-3xl border-4 shadow-xl transition-all"
+                  [style.border-color]="design().frame.frameColor">
+                  <div 
+                    id="live-qr-svg-container"
+                    class="w-[230px] h-[230px] sm:w-[260px] sm:h-[260px] flex items-center justify-center [&>svg]:w-full [&>svg]:h-full [&>svg]:max-w-full [&>svg]:max-h-full"
+                    [innerHTML]="safeQrSvgMarkup()">
+                  </div>
+                </div>
+              }
+
+              <!-- Modèle 4 : Aucun Cadre (Matrice pure) -->
+              @case ('none') {
+                <div 
+                  data-testid="frame-none"
+                  class="p-4 bg-white rounded-2xl shadow-lg border border-outline-variant/20 flex items-center justify-center">
+                  <div 
+                    id="live-qr-svg-container"
+                    class="w-[230px] h-[230px] sm:w-[260px] sm:h-[260px] flex items-center justify-center [&>svg]:w-full [&>svg]:h-full [&>svg]:max-w-full [&>svg]:max-h-full"
+                    [innerHTML]="safeQrSvgMarkup()">
+                  </div>
+                </div>
+              }
             }
+
+          </div>
+        } @else {
+          <div class="w-full h-full flex flex-col items-center justify-center gap-2 text-on-surface-variant py-16">
+            <span class="material-symbols-outlined text-5xl animate-pulse text-primary">qr_code_2</span>
+            <span class="font-label-md text-label-md">Générez un QR code pour prévisualiser</span>
+          </div>
+        }
+
+        <!-- Options de Format de Téléchargement (SVG ou PNG) -->
+        <div class="mt-6 flex flex-col gap-3 w-full max-w-[340px]">
+          <!-- Sélecteur d'option de format -->
+          <div class="flex flex-col gap-1.5">
+            <label class="text-[11px] font-bold uppercase tracking-wider text-on-surface-variant flex items-center justify-between">
+              <span>Format d'export</span>
+              <span class="text-primary font-semibold lowercase text-[10px]">
+                {{ selectedFormat() === 'svg' ? 'qualité infinie' : '300 DPI' }}
+              </span>
+            </label>
+            
+            <div class="grid grid-cols-2 p-1 bg-surface-container-high rounded-xl gap-1">
+              <!-- Option SVG -->
+              <button
+                type="button"
+                id="format-select-svg"
+                (click)="setFormat('svg')"
+                class="flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-bold transition-all"
+                [class.bg-surface]="selectedFormat() === 'svg'"
+                [class.text-primary]="selectedFormat() === 'svg'"
+                [class.shadow-sm]="selectedFormat() === 'svg'"
+                [class.text-on-surface-variant]="selectedFormat() !== 'svg'"
+              >
+                <span class="material-symbols-outlined text-base">draw</span>
+                <span>SVG (Vectoriel)</span>
+              </button>
+
+              <!-- Option PNG -->
+              <button
+                type="button"
+                id="format-select-png"
+                (click)="setFormat('png')"
+                class="flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-bold transition-all"
+                [class.bg-surface]="selectedFormat() === 'png'"
+                [class.text-primary]="selectedFormat() === 'png'"
+                [class.shadow-sm]="selectedFormat() === 'png'"
+                [class.text-on-surface-variant]="selectedFormat() !== 'png'"
+              >
+                <span class="material-symbols-outlined text-base">image</span>
+                <span>PNG (Image HD)</span>
+              </button>
+            </div>
           </div>
 
-          <!-- Dynamic Banner in Preview -->
-          <div class="w-full mt-3 py-2 px-3 bg-surface-variant/20 rounded-xl text-center">
-            <p class="font-label-md text-label-md text-inverse-on-surface font-bold tracking-wide truncate">
-              {{ bottomText() }}
-            </p>
-          </div>
+          <!-- Bouton de Téléchargement dans le format choisi -->
+          <button 
+            type="button"
+            id="download-btn"
+            class="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 bg-primary text-on-primary font-label-md text-sm font-bold rounded-2xl shadow-md hover:bg-primary/90 hover:shadow-lg transition-all cursor-pointer group"
+            (click)="onDownload()">
+            <span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform">download</span>
+            <span>Télécharger en {{ selectedFormat() === 'svg' ? 'SVG (Vectoriel)' : 'PNG (Haute Définition)' }}</span>
+          </button>
 
-          <div class="mt-3 flex items-center justify-between w-full px-1 text-surface-variant/70 font-body-sm text-body-sm">
-            <span class="truncate max-w-[180px]">{{ displayUrl() }}</span>
-            <span class="material-symbols-outlined text-sm">
-              {{ mode() === 'url' ? 'lock' : (mode() === 'wifi' ? 'wifi' : 'notes') }}
-            </span>
+          <!-- Boutons directs de secours (pour accessibilité et tests) -->
+          <div class="flex items-center justify-center gap-3 pt-0.5">
+            <button
+              type="button"
+              id="download-svg-btn"
+              (click)="setFormat('svg'); onDownload()"
+              class="text-[11px] text-primary hover:underline font-medium inline-flex items-center gap-1"
+            >
+              <span class="material-symbols-outlined text-xs">download</span>
+              Export direct SVG
+            </button>
+            <span class="text-outline-variant">•</span>
+            <button
+              type="button"
+              id="download-png-btn"
+              (click)="setFormat('png'); onDownload()"
+              class="text-[11px] text-on-surface-variant hover:text-on-surface hover:underline font-medium inline-flex items-center gap-1"
+            >
+              <span class="material-symbols-outlined text-xs">download</span>
+              Export direct PNG
+            </button>
           </div>
-
         </div>
+
       </div>
 
     </div>

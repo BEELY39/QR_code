@@ -88,87 +88,45 @@
           <!-- Top Eyebrow / Indicator -->
           <div class="w-full flex items-center justify-between mb-5 px-1">
             <div class="flex items-center gap-2">
-              <span class="w-3 h-3 rounded-full bg-secondary-container"></span>
-              <span class="font-label-caps text-label-caps tracking-wider text-surface-variant/80 uppercase">Modèle Bistro Premium</span>
+              <span class="w-2.5 h-2.5 rounded-full bg-secondary-container animate-pulse"></span>
+              <span class="font-label-caps text-label-caps tracking-wider text-surface-variant/90 uppercase font-semibold">
+                {{ currentStyle().label }}
+              </span>
             </div>
-            <span class="material-symbols-outlined text-surface-variant/60 text-lg">wifi_tethering</span>
+            <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-variant/20 text-surface-variant/80 text-xs">
+              <span class="material-symbols-outlined text-secondary-container text-sm animate-spin" style="animation-duration: 4s;">autorenew</span>
+              <span>Dynamique</span>
+            </div>
           </div>
 
           <!-- Inner White Plate for High Contrast Scanning -->
-          <div class="w-full aspect-square bg-surface-container-lowest rounded-[2rem] p-6 shadow-inner flex flex-col items-center justify-center relative overflow-hidden group">
-            
-            <!-- Illustrative Custom Stylized Vector QR Code -->
-            <svg class="w-full h-full" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="qrGradHero" x1="0%" x2="100%" y1="0%" y2="100%">
-                  <stop offset="0%" stop-color="#412ce7"></stop>
-                  <stop offset="60%" stop-color="#7a3cf5"></stop>
-                  <stop offset="100%" stop-color="#fe5b5b"></stop>
-                </linearGradient>
-              </defs>
-              
-              <!-- Top-Left Finder Pattern -->
-              <rect fill="url(#qrGradHero)" height="42" rx="10" width="42" x="10" y="10"></rect>
-              <rect fill="#FFFFFF" height="26" rx="6" width="26" x="18" y="18"></rect>
-              <rect fill="url(#qrGradHero)" height="16" rx="4" width="16" x="23" y="23"></rect>
-
-              <!-- Top-Right Finder Pattern -->
-              <rect fill="url(#qrGradHero)" height="42" rx="10" width="42" x="108" y="10"></rect>
-              <rect fill="#FFFFFF" height="26" rx="6" width="26" x="116" y="18"></rect>
-              <rect fill="url(#qrGradHero)" height="16" rx="4" width="16" x="121" y="23"></rect>
-
-              <!-- Bottom-Left Finder Pattern -->
-              <rect fill="url(#qrGradHero)" height="42" rx="10" width="42" x="10" y="108"></rect>
-              <rect fill="#FFFFFF" height="26" rx="6" width="26" x="18" y="116"></rect>
-              <rect fill="url(#qrGradHero)" height="16" rx="4" width="16" x="23" y="121"></rect>
-
-              <!-- Data Dots & Modules -->
-              <rect fill="url(#qrGradHero)" height="10" rx="3" width="10" x="62" y="12"></rect>
-              <rect fill="url(#qrGradHero)" height="10" rx="5" width="10" x="76" y="12"></rect>
-              <rect fill="url(#qrGradHero)" height="10" rx="3" width="10" x="90" y="24"></rect>
-              <rect fill="url(#qrGradHero)" height="10" rx="5" width="24" x="62" y="36"></rect>
-
-              <rect fill="url(#qrGradHero)" height="12" rx="6" width="12" x="12" y="62"></rect>
-              <rect fill="url(#qrGradHero)" height="10" rx="4" width="20" x="30" y="62"></rect>
-              <rect fill="url(#qrGradHero)" height="18" rx="4" width="10" x="56" y="58"></rect>
-              <rect fill="url(#qrGradHero)" height="10" rx="5" width="16" x="72" y="62"></rect>
-              <rect fill="url(#qrGradHero)" height="10" rx="3" width="10" x="94" y="58"></rect>
-              <rect fill="url(#qrGradHero)" height="10" rx="4" width="18" x="110" y="62"></rect>
-              <rect fill="url(#qrGradHero)" height="14" rx="5" width="14" x="134" y="62"></rect>
-              <rect fill="url(#qrGradHero)" height="10" rx="4" width="22" x="12" y="80"></rect>
-              <rect fill="url(#qrGradHero)" height="20" rx="5" width="10" x="40" y="78"></rect>
-              <rect fill="url(#qrGradHero)" height="22" rx="4" width="12" x="110" y="78"></rect>
-              <rect fill="url(#qrGradHero)" height="10" rx="4" width="20" x="128" y="82"></rect>
-              <rect fill="url(#qrGradHero)" height="8" rx="3" width="10" x="12" y="96"></rect>
-              <rect fill="url(#qrGradHero)" height="10" rx="4" width="24" x="28" y="94"></rect>
-
-              <rect fill="url(#qrGradHero)" height="10" rx="4" width="10" x="60" y="92"></rect>
-              <rect fill="url(#qrGradHero)" height="10" rx="4" width="16" x="76" y="92"></rect>
-              <rect fill="url(#qrGradHero)" height="12" rx="5" width="24" x="60" y="108"></rect>
-              <rect fill="url(#qrGradHero)" height="24" rx="4" width="12" x="90" y="108"></rect>
-              <rect fill="url(#qrGradHero)" height="10" rx="3" width="10" x="108" y="108"></rect>
-              <rect fill="url(#qrGradHero)" height="12" rx="5" width="24" x="124" y="108"></rect>
-              <rect fill="url(#qrGradHero)" height="22" rx="4" width="12" x="60" y="126"></rect>
-              <rect fill="url(#qrGradHero)" height="12" rx="5" width="20" x="78" y="136"></rect>
-              <rect fill="url(#qrGradHero)" height="10" rx="4" width="20" x="104" y="124"></rect>
-              <rect fill="url(#qrGradHero)" height="22" rx="5" width="18" x="130" y="126"></rect>
-              <rect fill="url(#qrGradHero)" height="10" rx="4" width="18" x="104" y="140"></rect>
-
-              <!-- Center Logo Insert (Pizza Icon) -->
-              <rect fill="#FFFFFF" height="28" rx="8" width="28" x="66" y="66"></rect>
-              <circle cx="80" cy="80" fill="#fe5b5b" r="11"></circle>
-              <path d="M75 83 L80 73 L85 83 Z" fill="#FFFFFF"></path>
-              <circle cx="80" cy="80" fill="#FFE2E2" r="1.5"></circle>
-            </svg>
+          <div class="w-full aspect-square bg-surface-container-lowest rounded-[2rem] p-5 shadow-inner flex flex-col items-center justify-center relative overflow-hidden group">
+            @if (currentSvg()) {
+              <div
+                class="w-full h-full flex items-center justify-center transition-all duration-300 [&>svg]:w-full [&>svg]:h-full [&>svg]:max-w-full [&>svg]:max-h-full"
+                [class.opacity-0]="isTransitioning()"
+                [class.opacity-100]="!isTransitioning()"
+                [class.scale-95]="isTransitioning()"
+                [class.scale-100]="!isTransitioning()"
+                [innerHTML]="currentSvg()">
+              </div>
+            } @else {
+              <!-- Fallback / skeleton loader -->
+              <div class="w-full h-full flex flex-col items-center justify-center gap-3 animate-pulse">
+                <div class="w-48 h-48 rounded-2xl bg-surface-variant/10 flex items-center justify-center">
+                  <span class="material-symbols-outlined text-4xl text-surface-variant/40">qr_code_2</span>
+                </div>
+              </div>
+            }
           </div>
 
           <!-- Integrated Callout Banner -->
           <div class="w-full mt-4 py-3.5 px-4 bg-surface-variant/20 rounded-2xl flex items-center justify-between text-center">
             <span class="font-label-lg text-label-lg text-inverse-on-surface font-extrabold tracking-wide uppercase flex items-center gap-2">
-              <span>SCANNEZ POUR LE MENU</span>
-              <span class="text-base">🍕</span>
+              <span>SCANNEZ : « BIENVENUE »</span>
+              <span class="text-base">✨</span>
             </span>
-            <span class="material-symbols-outlined text-secondary-container text-xl">camera</span>
+            <span class="material-symbols-outlined text-secondary-container text-xl">qr_code_scanner</span>
           </div>
           <p class="mt-3 font-body-sm text-body-sm text-surface-variant/70 text-center">Compatible appareil photo natif iOS &amp; Android</p>
         </div>
