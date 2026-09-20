@@ -1,5 +1,5 @@
 <!-- MINI SIMULATEUR INTERACTIF : "TEST EXPRESS" -->
-<section class="max-w-[1440px] mx-auto px-margin py-12 w-full" id="simulateur">
+<section class="max-w-[1440px] mx-auto px-margin-sm sm:px-margin py-12 w-full" id="simulateur">
   <div class="bg-surface-container-lowest rounded-3xl p-6 lg:p-10 shadow-[0_12px_40px_-8px_rgba(31,32,70,0.06)]">
     
     <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 mb-8">
@@ -22,11 +22,11 @@
         <!-- Mode Toggle (Lien / Texte) -->
         <div class="flex flex-col gap-2">
           <span class="font-label-md text-label-md text-on-surface font-bold">Type de contenu</span>
-          <div class="flex items-center gap-2 p-1.5 bg-surface-container-low rounded-2xl w-fit">
-            <button 
+          <div class="grid grid-cols-3 sm:flex sm:items-center gap-2 p-1.5 bg-surface-container-low rounded-2xl w-full sm:w-fit">
+            <button
               type="button"
               id="mode-toggle-url"
-              class="flex items-center gap-2 px-5 py-2.5 rounded-xl font-label-md text-label-md font-bold transition-all cursor-pointer"
+              class="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 px-2 sm:px-5 py-2.5 rounded-xl font-label-md text-label-md font-bold text-center transition-all cursor-pointer"
               [ngClass]="mode() === 'url' ? 'bg-primary text-on-primary shadow-sm' : 'text-on-surface-variant hover:text-on-surface'"
               (click)="onModeSelect('url')">
               <span class="material-symbols-outlined text-lg">link</span>
@@ -35,7 +35,7 @@
             <button 
               type="button"
               id="mode-toggle-text"
-              class="flex items-center gap-2 px-5 py-2.5 rounded-xl font-label-md text-label-md font-bold transition-all cursor-pointer"
+              class="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 px-2 sm:px-5 py-2.5 rounded-xl font-label-md text-label-md font-bold text-center transition-all cursor-pointer"
               [ngClass]="mode() === 'text' ? 'bg-primary text-on-primary shadow-sm' : 'text-on-surface-variant hover:text-on-surface'"
               (click)="onModeSelect('text')">
               <span class="material-symbols-outlined text-lg">notes</span>
@@ -44,11 +44,12 @@
             <button 
               type="button"
               id="mode-toggle-wifi"
-              class="flex items-center gap-2 px-5 py-2.5 rounded-xl font-label-md text-label-md font-bold transition-all cursor-pointer"
+              class="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 px-2 sm:px-5 py-2.5 rounded-xl font-label-md text-label-md font-bold text-center transition-all cursor-pointer"
               [ngClass]="mode() === 'wifi' ? 'bg-primary text-on-primary shadow-sm' : 'text-on-surface-variant hover:text-on-surface'"
               (click)="onModeSelect('wifi')">
               <span class="material-symbols-outlined text-lg">wifi</span>
-              <span>Réseau Wi-Fi</span>
+              <span class="sm:hidden">Wi-Fi</span>
+              <span class="hidden sm:inline">Réseau Wi-Fi</span>
             </button>
           </div>
         </div>
@@ -86,7 +87,7 @@
           </div>
 
           <!-- Tabs for Design -->
-          <div class="flex items-center gap-2 p-1.5 bg-surface-container-low rounded-2xl w-fit flex-wrap">
+          <div class="grid grid-cols-2 sm:flex sm:items-center sm:flex-wrap gap-2 p-1.5 bg-surface-container-low rounded-2xl w-full sm:w-fit">
             <button 
               type="button"
               id="tab-btn-palette"
@@ -192,10 +193,10 @@
 
         <!-- Studio Handoff & Download Action Buttons -->
         <div class="pt-2 flex flex-wrap gap-4 items-center">
-          <button 
+          <button
             type="button"
             id="download-svg-btn"
-            class="inline-flex items-center justify-center gap-space-sm px-8 py-4 bg-primary text-on-primary font-label-lg text-label-lg rounded-full shadow-[0_8px_24px_-4px_rgba(65,44,231,0.3)] hover:bg-primary-container hover:shadow-lg transition-all cursor-pointer"
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-space-sm px-6 sm:px-8 py-4 bg-primary text-on-primary font-label-lg text-label-lg rounded-full shadow-[0_8px_24px_-4px_rgba(65,44,231,0.3)] hover:bg-primary-container hover:shadow-lg transition-all cursor-pointer"
             (click)="onDownload()">
             <span class="material-symbols-outlined text-lg">download</span>
             <span>Télécharger le QR Code (SVG)</span>
