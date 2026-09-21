@@ -18,7 +18,7 @@ export const MARKET_ALTERNATIVES: readonly AlternativeCompetitor[] = [
     frictionPoint:
       'Interface visuelle datée, présence importante de bannières publicitaires et redirection vers des offres d’abonnements SaaS payants pour le suivi statistique.',
     qrcraftAdvantage:
-      'Interface moderne et épurée, zéro publicité intrusive, design soigné conforme aux standards visuels récents et code source transparent.',
+      'Interface moderne et épurée, zéro publicité intrusive, design soigné conforme aux standards visuels récents, génération 100% locale et respect strict de la vie privée.',
     icon: 'sentiment_neutral',
   },
   {
