@@ -4,6 +4,8 @@ import { GeneratorStatus, InputMode, QrPayload, WifiConfig, QrDesignOptions } fr
 import { formatWifiPayload } from '../../../core/utils/wifi-formatter';
 import { QrEngineService } from '../../../core/services/qr-engine.service';
 import { DomExportService } from '../../../core/services/dom-export.service';
+import { PrintPackService } from '../../../core/services/print-pack.service';
+import { PrintPackContent, PrintPackFormat, PRINT_PACK_FORMATS } from '../../../core/models/print-pack.model';
 import { QR_CENTRAL_LOGO_BASE64 } from '../../../core/constants/qr-logo.constant';
 import { QrEngineOptions } from '../../../core/models/qr-engine.model';
 
@@ -13,6 +15,7 @@ import { QrEngineOptions } from '../../../core/models/qr-engine.model';
 export class QrSimulatorService {
   private readonly qrEngine = inject(QrEngineService);
   private readonly domExport = inject(DomExportService);
+  private readonly printPack = inject(PrintPackService);
 
   private readonly defaultPalettes: readonly ColorPalette[] = [
     {
@@ -312,6 +315,83 @@ export class QrSimulatorService {
     await this.qrEngine.download(options, filename, 'png');
   }
 
+
+  /**
+   * Textes imprimés sur le chevalet / l'affichette, déduits du mode courant.
+   * Le mot de passe Wi-Fi n'est jamais écrit en toutes lettres sur l'imprimé :
+   * il est déjà dans le QR code, l'afficher en clair n'apporte rien et exposerait
+   * la clé à quiconque photographie la feuille.
+   */
+  buildPrintPackContent(withCredit: boolean): PrintPackContent {
+    const p = this.payload();
+    const credit = withCredit ? 'Créé avec QRCraft — qrcraft-generation.netlify.app' : null;
+    const instruction = "Ouvrez l'appareil photo et visez le code";
+
+    switch (p.kind) {
+      case 'wifi':
+        return {
+          title: 'Wi-Fi gratuit',
+          subtitle: `Réseau : ${p.config.ssid}`,
+          instruction: `${instruction} — connexion automatique`,
+          credit,
+        };
+      case 'url':
+        return {
+          title: this.design().frame.text?.trim() || 'Scannez-moi',
+          subtitle: this.displayUrl(),
+          instruction,
+          credit,
+        };
+      case 'text':
+        return {
+          title: this.design().frame.text?.trim() || 'Scannez-moi',
+          subtitle: '',
+          instruction,
+          credit,
+        };
+      default: {
+        const exhaustive: never = p;
+        throw new Error(`Payload non supporté : ${JSON.stringify(exhaustive)}`);
+      }
+    }
+  }
+
+  /**
+   * Génère et télécharge un imprimé prêt à poser (chevalet, affichette, étiquettes).
+   * Le QR est rendu à 1200 px sans cadre décoratif : le gabarit PDF apporte
+   * son propre habillage, et la zone de silence reste intacte.
+   */
+  async downloadPrintPack(format: PrintPackFormat, withCredit = true): Promise<void> {
+    const p = this.payload();
+    const dataToEncode = p.kind === 'url' ? p.targetUrl : (p.kind === 'text' ? p.content : p.rawString);
+
+    const options: QrEngineOptions = {
+      ...this.buildQrOptions(dataToEncode, true),
+      width: 1200,
+      height: 1200,
+      margin: 120,
+    };
+
+    const pngDataUrl = await this.qrEngine.getPngDataUrl(options);
+    if (!pngDataUrl) {
+      this.status.set({ kind: 'error', errorMessage: "Impossible de préparer le QR code pour l'impression" });
+      return;
+    }
+
+    const content = this.buildPrintPackContent(withCredit);
+    const blob = await this.printPack.generate(format, pngDataUrl, content);
+    if (!blob) {
+      return;
+    }
+
+    const option = PRINT_PACK_FORMATS.find((f) => f.value === format);
+    this.domExport.saveAndRelease({
+      blob,
+      dataUrl: '',
+      filename: `${option?.filename ?? 'qrcraft-impression'}.pdf`,
+      revocationCallback: () => {},
+    });
+  }
 
   private buildQrOptions(dataToEncode: string, isDownload = false): QrEngineOptions {
     const d = this.design();

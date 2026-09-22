@@ -64,6 +64,28 @@ export class QrEngineService {
     return '';
   }
 
+  /**
+   * Rend le QR en PNG et le renvoie en data URL, pour insertion dans un PDF.
+   * Chaîne vide si le rendu échoue ou hors navigateur.
+   */
+  async getPngDataUrl(options: QrEngineOptions): Promise<string> {
+    if (!this.isBrowser) {
+      return '';
+    }
+    const instance = await this.createInstance(options);
+    if (!instance) return '';
+    const rawData = await instance.getRawData('png');
+    if (!(rawData instanceof Blob)) {
+      return '';
+    }
+    return await new Promise<string>((resolve) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(typeof reader.result === 'string' ? reader.result : '');
+      reader.onerror = () => resolve('');
+      reader.readAsDataURL(rawData);
+    });
+  }
+
   async download(options: QrEngineOptions, filename: string, extension: 'svg' | 'png' = 'svg'): Promise<void> {
     if (!this.isBrowser) {
       return;

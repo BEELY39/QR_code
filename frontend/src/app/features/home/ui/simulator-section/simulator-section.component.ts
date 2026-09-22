@@ -9,6 +9,7 @@ import { FrameFormComponent } from '../qr-config-forms/frame-form/frame-form.com
 import { StylingFormComponent } from '../qr-config-forms/styling-form/styling-form.component';
 import { LogoFormComponent } from '../qr-config-forms/logo-form/logo-form.component';
 import { ColorsFormComponent } from '../qr-config-forms/colors-form/colors-form.component';
+import { PrintPackFormat, PRINT_PACK_FORMATS } from '../../../../core/models/print-pack.model';
 
 @Component({
   selector: 'app-simulator-section',
@@ -22,6 +23,12 @@ export class SimulatorSectionComponent {
 
   readonly activeDesignTab = signal<'palette' | 'colors' | 'frame' | 'style' | 'logo'>('palette');
   readonly selectedFormat = signal<'svg' | 'png'>('svg');
+
+  /** Pack impression : gabarits PDF prêts à poser */
+  readonly printFormats = PRINT_PACK_FORMATS;
+  readonly selectedPrintFormat = signal<PrintPackFormat>('chevalet-a6');
+  readonly printCredit = signal<boolean>(true);
+  readonly isPreparingPrint = signal<boolean>(false);
   readonly mode = input<InputMode>('url');
   readonly rawValue = input<string>('https://instagram.com/monbistro');
   readonly url = input<string>(''); // alias de rétrocompatibilité
@@ -43,6 +50,7 @@ export class SimulatorSectionComponent {
   readonly bottomTextChange = output<string>();
   readonly downloadClick = output<void>();
   readonly downloadPngClick = output<void>();
+  readonly printPackClick = output<{ format: PrintPackFormat; withCredit: boolean }>();
 
   protected readonly safeQrSvgMarkup = computed<SafeHtml>(() => {
     const markup = this.qrSvgMarkup();
@@ -116,6 +124,25 @@ export class SimulatorSectionComponent {
 
   onDownloadPng(): void {
     this.downloadPngClick.emit();
+  }
+
+  selectPrintFormat(format: PrintPackFormat): void {
+    this.selectedPrintFormat.set(format);
+  }
+
+  togglePrintCredit(): void {
+    this.printCredit.update((v) => !v);
+  }
+
+  onPrintPack(): void {
+    this.isPreparingPrint.set(true);
+    this.printPackClick.emit({
+      format: this.selectedPrintFormat(),
+      withCredit: this.printCredit(),
+    });
+    // La génération est déléguée au parent : on relâche l'état après un court délai
+    // pour que le bouton ne reste pas bloqué si le parent ne renvoie rien.
+    setTimeout(() => this.isPreparingPrint.set(false), 1200);
   }
 }
 export { SimulatorSectionComponent as SimulatorSection };

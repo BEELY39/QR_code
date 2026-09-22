@@ -21,6 +21,7 @@
       (urlChange)="simulatorService.setUrl($event)"
       (paletteSelect)="simulatorService.selectPalette($event)"
       (bottomTextChange)="simulatorService.setBottomText($event)"
+      (printPackClick)="simulatorService.downloadPrintPack($event.format, $event.withCredit)"
       (downloadClick)="simulatorService.downloadSvg()"
       (downloadPngClick)="simulatorService.downloadPng()" />
     <app-features-section />
