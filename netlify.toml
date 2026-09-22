@@ -8,12 +8,14 @@
   NODE_VERSION = "20"
   NPM_FLAGS = "--legacy-peer-deps"
 
-# Règle de réécriture SPA universelle :
-# Tout chemin d'URL non résolu par un fichier statique physique est servi par /index.html en 200
+# Règle de repli SPA :
+# les routes connues sont pré-rendues en fichiers statiques et servies directement.
+# Tout chemin non résolu retombe sur l'app avec un vrai statut 404 — sinon Google
+# indexe autant de pages fantômes dupliquant l'accueil (soft 404).
 [[redirects]]
   from = "/*"
   to = "/index.html"
-  status = 200
+  status = 404
   force = false
 
 # Mise en cache immuable longue durée (1 an) pour les bundles JavaScript compilés

@@ -80,7 +80,7 @@ export class LegalNoticeComponent {
       title: 'Mentions légales — QRCraft',
       description:
         "Mentions légales de QRCraft : éditeur, directeur de la publication, hébergeur, propriété intellectuelle, données personnelles et cookies.",
-      canonicalUrl: `${SITE_URL}/mentions-legales`,
+      canonicalUrl: `${SITE_URL}/mentions-legales/`,
     });
   }
 }

@@ -1,0 +1,234 @@
+<app-navbar />
+<main class="w-full pt-20 bg-background">
+
+  <!-- HERO -->
+  <section class="max-w-[1440px] mx-auto px-margin-sm sm:px-margin pt-10 pb-12 lg:pt-16">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center">
+      <div class="lg:col-span-7 flex flex-col items-start gap-space-md">
+        <span class="inline-flex items-center gap-space-xs px-space-md py-1.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-caps text-label-caps uppercase tracking-wider">
+          <span class="material-symbols-outlined text-base">wifi</span>
+          Cas d'usage
+        </span>
+
+        <h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight">
+          Générateur de QR code Wi-Fi gratuit
+        </h1>
+
+        <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+          Vos clients scannent, leur téléphone se connecte. Plus de mot de passe dicté à voix haute ni recopié au dos d'une carte. Le code est généré dans votre navigateur, sans compte et sans abonnement, puis exporté en SVG ou PNG pour l'impression.
+        </p>
+
+        <div class="flex flex-col sm:flex-row w-full sm:w-auto gap-space-md pt-space-xs">
+          <a class="inline-flex items-center justify-center gap-space-xs px-8 py-4 bg-primary text-on-primary font-label-lg text-label-lg rounded-full shadow-[0_12px_28px_-6px_rgba(65,44,231,0.35)] hover:bg-primary-container transition-all"
+             routerLink="/" fragment="simulateur">
+            <span class="material-symbols-outlined text-xl">qr_code_scanner</span>
+            <span>Créer mon QR code Wi-Fi</span>
+          </a>
+          <a class="inline-flex items-center justify-center gap-space-xs px-6 py-4 bg-surface-container-low text-on-surface font-label-lg text-label-lg rounded-full hover:bg-surface-container-high transition-all"
+             href="#impression">
+            <span class="material-symbols-outlined text-lg">print</span>
+            <span>Tailles d'impression</span>
+          </a>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-x-space-lg gap-y-space-sm pt-space-sm font-body-sm text-body-sm text-on-surface-variant">
+          <span class="flex items-center gap-space-xs">
+            <span class="material-symbols-outlined text-tertiary text-lg" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+            Aucun mot de passe transmis
+          </span>
+          <span class="flex items-center gap-space-xs">
+            <span class="material-symbols-outlined text-tertiary text-lg" style="font-variation-settings: 'FILL' 1;">all_inclusive</span>
+            Code statique, sans expiration
+          </span>
+          <span class="flex items-center gap-space-xs">
+            <span class="material-symbols-outlined text-tertiary text-lg" style="font-variation-settings: 'FILL' 1;">smartphone</span>
+            iPhone &amp; Android natifs
+          </span>
+        </div>
+      </div>
+
+      <div class="lg:col-span-5 mt-space-lg lg:mt-0">
+        <div class="bg-surface-container-lowest rounded-3xl p-6 sm:p-8 shadow-[0_12px_40px_-8px_rgba(31,32,70,0.08)] border border-[rgba(31,32,70,0.05)]">
+          <span class="font-label-caps text-label-caps text-secondary uppercase tracking-wider">Pour qui</span>
+          <h2 class="font-headline-md text-headline-md text-on-surface mt-2 mb-space-md">Là où ça change quelque chose</h2>
+          <ul class="flex flex-col gap-space-sm font-body-md text-body-md text-on-surface-variant">
+            <li class="flex items-start gap-space-sm">
+              <span class="material-symbols-outlined text-primary text-lg mt-0.5">local_cafe</span>
+              <span><strong class="text-on-surface font-semibold">Cafés et restaurants</strong> — un chevalet sur chaque table, plus de mot de passe répété cinquante fois par service.</span>
+            </li>
+            <li class="flex items-start gap-space-sm">
+              <span class="material-symbols-outlined text-primary text-lg mt-0.5">hotel</span>
+              <span><strong class="text-on-surface font-semibold">Gîtes, chambres d'hôtes, Airbnb</strong> — une affichette dans le livret d'accueil, et vos voyageurs sont connectés avant de poser leurs valises.</span>
+            </li>
+            <li class="flex items-start gap-space-sm">
+              <span class="material-symbols-outlined text-primary text-lg mt-0.5">business_center</span>
+              <span><strong class="text-on-surface font-semibold">Bureaux et salles de réunion</strong> — le réseau invité accessible sans déranger l'informatique.</span>
+            </li>
+            <li class="flex items-start gap-space-sm">
+              <span class="material-symbols-outlined text-primary text-lg mt-0.5">home</span>
+              <span><strong class="text-on-surface font-semibold">À la maison</strong> — une étiquette collée sur la box, pour ne plus déchiffrer la clé au dos du boîtier.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ÉTAPES -->
+  <section class="max-w-[1440px] mx-auto px-margin-sm sm:px-margin py-12">
+    <h2 class="font-headline-lg text-headline-lg text-on-surface mb-space-lg">Créer votre QR code Wi-Fi en 3 étapes</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+      @for (step of steps; track step.number) {
+        <div class="bg-surface-container-lowest p-6 sm:p-8 rounded-3xl shadow-[0_4px_20px_-2px_rgba(91,77,255,0.05)] border border-[rgba(31,32,70,0.05)]">
+          <div class="flex items-center gap-space-md mb-space-md">
+            <div class="w-12 h-12 rounded-2xl bg-primary-fixed flex items-center justify-center text-on-primary-fixed">
+              <span class="material-symbols-outlined text-2xl">{{ step.icon }}</span>
+            </div>
+            <span class="font-headline-lg text-headline-lg text-outline-variant">{{ step.number }}</span>
+          </div>
+          <h3 class="font-title-md text-title-md text-on-surface mb-2">{{ step.title }}</h3>
+          <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">{{ step.text }}</p>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- CONTENU DU CODE -->
+  <section class="max-w-[1440px] mx-auto px-margin-sm sm:px-margin py-12">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter items-start">
+      <div>
+        <h2 class="font-headline-lg text-headline-lg text-on-surface mb-space-md">Ce que contient réellement le code</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-space-md">
+          Un QR code Wi-Fi n'est pas un lien : c'est une courte ligne de texte normalisée, lue nativement par l'appareil photo d'iOS et d'Android. Aucune application à installer, aucun serveur consulté au moment du scan.
+        </p>
+        <div class="bg-inverse-surface text-inverse-on-surface rounded-2xl p-space-md overflow-x-auto">
+          <code class="font-mono text-sm whitespace-pre">WIFI:S:NomDuReseau;T:WPA;P:MotDePasse;;</code>
+        </div>
+        <ul class="mt-space-md flex flex-col gap-space-sm font-body-md text-body-md text-on-surface-variant">
+          <li><strong class="text-on-surface font-semibold">S:</strong> le nom du réseau, tel qu'il est diffusé.</li>
+          <li><strong class="text-on-surface font-semibold">T:</strong> le type de sécurité — <code class="text-primary">WPA</code> couvre WPA, WPA2 et WPA3, <code class="text-primary">WEP</code> l'ancien standard, <code class="text-primary">nopass</code> un réseau ouvert.</li>
+          <li><strong class="text-on-surface font-semibold">P:</strong> la clé du réseau.</li>
+          <li><strong class="text-on-surface font-semibold">H:true</strong> n'est ajouté que si le réseau est masqué. Ajouté à tort, il fait échouer la connexion sur iPhone.</li>
+        </ul>
+      </div>
+
+      <div class="bg-surface-container-low rounded-3xl p-6 sm:p-8">
+        <h2 class="font-headline-md text-headline-md text-on-surface mb-space-md">iPhone et Android : ce qui marche</h2>
+        <div class="flex flex-col gap-space-md font-body-md text-body-md text-on-surface-variant leading-relaxed">
+          <p>
+            <strong class="text-on-surface font-semibold">iPhone (iOS 11 et plus)</strong> — ouvrez simplement l'appareil photo et visez le code : une notification propose de rejoindre le réseau. Aucune application tierce n'est nécessaire.
+          </p>
+          <p>
+            <strong class="text-on-surface font-semibold">Android (9 et plus)</strong> — l'appareil photo ou Google Lens détecte le réseau et propose la connexion. Sur certains modèles, il faut passer par Paramètres › Wi-Fi › scanner le QR code.
+          </p>
+          <p>
+            <strong class="text-on-surface font-semibold">Si la connexion échoue</strong> — vérifiez la casse du nom du réseau, l'absence d'espace en fin de mot de passe, et le mode de chiffrement de la box. Une box configurée en <em>WPA3 uniquement</em> peut refuser une trame annonçant WPA : basculez-la en WPA2/WPA3 mixte, le mode par défaut de la plupart des opérateurs.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMPRESSION -->
+  <section id="impression" class="max-w-[1440px] mx-auto px-margin-sm sm:px-margin py-12 scroll-mt-28">
+    <h2 class="font-headline-lg text-headline-lg text-on-surface mb-space-md">Imprimer le QR code sans le rendre illisible</h2>
+    <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed max-w-3xl mb-space-lg">
+      La majorité des QR codes qui « ne marchent pas » sont des codes mal imprimés, pas des codes mal générés. Trois règles suffisent : exporter en <strong class="text-on-surface">SVG</strong> (un format vectoriel reste net à n'importe quelle taille, contrairement à un PNG agrandi), conserver la <strong class="text-on-surface">marge blanche</strong> autour du motif, et garder un <strong class="text-on-surface">contraste franc</strong> entre les points et le fond.
+    </p>
+
+    <div class="overflow-x-auto rounded-3xl border border-[rgba(31,32,70,0.08)]">
+      <table class="w-full min-w-[520px] bg-surface-container-lowest text-left">
+        <thead class="bg-surface-container">
+          <tr class="font-label-caps text-label-caps uppercase tracking-wider text-on-surface-variant">
+            <th class="px-space-md py-space-sm">Format</th>
+            <th class="px-space-md py-space-sm">Usage</th>
+            <th class="px-space-md py-space-sm">Taille du QR</th>
+          </tr>
+        </thead>
+        <tbody class="font-body-md text-body-md text-on-surface-variant">
+          @for (f of printFormats; track f.format) {
+            <tr class="border-t border-[rgba(31,32,70,0.06)]">
+              <td class="px-space-md py-space-sm text-on-surface font-semibold">{{ f.format }}</td>
+              <td class="px-space-md py-space-sm">{{ f.usage }}</td>
+              <td class="px-space-md py-space-sm">{{ f.qrSize }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mt-space-lg grid grid-cols-1 md:grid-cols-3 gap-gutter">
+      <div class="bg-surface-container-low rounded-2xl p-space-md">
+        <h3 class="font-title-md text-title-md text-on-surface mb-2">La marge blanche</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">Comptez l'équivalent de quatre modules (quatre « carrés » du motif) de blanc tout autour. Sans cette zone de silence, un cadre coloré ou une photo collée au bord empêchent la détection.</p>
+      </div>
+      <div class="bg-surface-container-low rounded-2xl p-space-md">
+        <h3 class="font-title-md text-title-md text-on-surface mb-2">Le contraste</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">Points foncés sur fond clair. L'inverse — un code clair sur fond noir — n'est pas lu par tous les appareils photo. Évitez aussi les dégradés trop pâles sur les coins de repérage.</p>
+      </div>
+      <div class="bg-surface-container-low rounded-2xl p-space-md">
+        <h3 class="font-title-md text-title-md text-on-surface mb-2">La distance de scan</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">Règle simple : la largeur du code doit faire environ un dixième de la distance de lecture. Un code de 3 cm se scanne à 30 cm ; pour une vitrine lue depuis le trottoir, visez 15 cm ou plus.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SÉCURITÉ -->
+  <section class="max-w-[1440px] mx-auto px-margin-sm sm:px-margin py-12">
+    <div class="bg-surface-container-lowest rounded-3xl p-6 sm:p-10 border border-[rgba(31,32,70,0.05)] shadow-[0_4px_20px_-2px_rgba(91,77,255,0.05)]">
+      <h2 class="font-headline-lg text-headline-lg text-on-surface mb-space-md">Sécurité : ce qu'il faut savoir avant d'afficher le code</h2>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter font-body-md text-body-md text-on-surface-variant leading-relaxed">
+        <div class="flex flex-col gap-space-md">
+          <p>
+            Soyons clairs : <strong class="text-on-surface">le mot de passe est inscrit en clair dans le QR code</strong>. N'importe quelle application de scan affiche la clé au lieu de se connecter. Ce n'est pas un défaut de QRCraft, c'est le fonctionnement de la norme — c'est vrai de tous les générateurs.
+          </p>
+          <p>
+            La conséquence pratique est simple : un code affiché en salle équivaut à donner votre clé à tous ceux qui passent. C'est acceptable pour un réseau prévu pour ça, jamais pour le réseau qui porte votre caisse et vos ordinateurs.
+          </p>
+        </div>
+        <div class="bg-tertiary-fixed/40 rounded-2xl p-space-md flex flex-col gap-space-sm">
+          <span class="font-label-caps text-label-caps uppercase tracking-wider text-on-tertiary-fixed">La bonne pratique</span>
+          <p class="text-on-surface">
+            Activez le <strong>réseau invité</strong> de votre box et générez le QR code à partir de celui-ci. Il isole les appareils des clients de votre réseau interne, et vous pouvez en changer la clé quand vous voulez sans reconfigurer un seul de vos équipements.
+          </p>
+          <p class="text-on-surface">
+            Côté QRCraft, le nom du réseau et le mot de passe ne quittent jamais votre navigateur : le code est calculé localement, rien n'est envoyé ni conservé.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="max-w-[1440px] mx-auto px-margin-sm sm:px-margin py-12">
+    <h2 class="font-headline-lg text-headline-lg text-on-surface mb-space-lg">Questions fréquentes</h2>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter">
+      @for (faq of faqs; track faq.id) {
+        <div class="bg-surface-container-low rounded-2xl p-space-lg">
+          <h3 class="font-title-md text-title-md text-on-surface mb-space-sm">{{ faq.question }}</h3>
+          <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">{{ faq.answer }}</p>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="max-w-[1440px] mx-auto px-margin-sm sm:px-margin py-12 w-full">
+    <div class="relative overflow-hidden rounded-[3rem] bg-gradient-to-br from-primary via-primary-container to-secondary-container text-on-primary p-8 sm:p-14 shadow-2xl text-center flex flex-col items-center gap-space-md">
+      <div class="absolute -right-20 -bottom-20 w-96 h-96 rounded-full bg-white/10 blur-2xl pointer-events-none"></div>
+      <h2 class="relative z-10 font-headline-lg text-headline-lg tracking-tight">Votre QR code Wi-Fi, prêt en une minute</h2>
+      <p class="relative z-10 font-body-lg text-body-lg text-on-primary-container max-w-xl">
+        Sans inscription, sans filigrane, sans date d'expiration. Export SVG vectoriel pour l'imprimeur, PNG haute définition pour l'écran.
+      </p>
+      <a class="relative z-10 inline-flex items-center gap-space-xs px-8 py-4 bg-surface-container-lowest text-primary font-label-lg text-label-lg rounded-full shadow-lg hover:scale-105 transition-transform"
+         routerLink="/" fragment="simulateur">
+        <span class="material-symbols-outlined text-xl">wifi</span>
+        <span>Générer mon QR code Wi-Fi</span>
+      </a>
+      <p class="relative z-10 font-body-sm text-body-sm text-on-primary-container">
+        Voir aussi : <a class="underline" routerLink="/articles">nos guides pratiques</a>
+      </p>
+    </div>
+  </section>
+</main>
+<app-footer />

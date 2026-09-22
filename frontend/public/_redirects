@@ -1,1 +1,3 @@
-/*    /index.html   200
+# Les routes connues sont pre-rendues en fichiers statiques et servies telles quelles.
+# Tout le reste retombe sur l'app avec un vrai statut 404 (evite les pages fantomes en 200).
+/*    /index.html   404

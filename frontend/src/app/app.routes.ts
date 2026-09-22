@@ -20,7 +20,16 @@ export const routes: Routes = [
     title: 'Articles & Guides Pratiques QR Code — QRCraft'
   },
   {
+    path: 'qr-code-wifi',
+    loadComponent: () =>
+      import('./features/use-cases/qr-code-wifi/qr-code-wifi.component').then(m => m.QrCodeWifiComponent),
+    title: 'Générateur de QR code Wi-Fi gratuit — connexion sans mot de passe | QRCraft'
+  },
+  {
+    // Une URL inconnue doit afficher une 404, pas dupliquer l'accueil en 200.
     path: '**',
-    redirectTo: ''
+    loadComponent: () =>
+      import('./features/not-found/not-found.component').then(m => m.NotFoundComponent),
+    title: 'Page introuvable (404) — QRCraft'
   }
 ];

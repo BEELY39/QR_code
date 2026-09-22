@@ -29,7 +29,7 @@ export class ArticlesComponent {
       title: 'Articles & Guides Pratiques QR Code — QRCraft',
       description:
         'Guides pratiques et tutoriels QR code : configuration Wi-Fi pour commerçants, comparaison vectoriel SVG vs PNG, et conseils pour éviter les arnaques d’expiration.',
-      canonicalUrl: `${SITE_URL}/articles`,
+      canonicalUrl: `${SITE_URL}/articles/`,
       keywords: [
         'guide qr code',
         'tutoriel qr code wifi',
