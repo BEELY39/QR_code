@@ -1,0 +1,94 @@
+<app-navbar />
+<main class="w-full pt-20 bg-background">
+
+  <section class="max-w-[1440px] mx-auto px-margin-sm sm:px-margin pt-10 pb-8 lg:pt-16">
+    <div class="max-w-3xl flex flex-col items-start gap-space-md">
+      <span class="inline-flex items-center gap-space-xs px-space-md py-1.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-caps text-label-caps uppercase tracking-wider">
+        <span class="material-symbols-outlined text-base">shield_lock</span>
+        Confidentialité
+      </span>
+      <h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight">
+        Vos données ne quittent pas votre navigateur
+      </h1>
+      <p class="font-body-lg text-body-lg text-on-surface-variant">
+        QRCraft fonctionne intégralement côté client : le QR code est calculé sur votre appareil, par le code JavaScript chargé avec la page. Ce que vous saisissez n'est ni transmis, ni stocké, ni consulté.
+      </p>
+      <span class="inline-flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface-variant">
+        <span class="material-symbols-outlined text-base">update</span>
+        Dernière mise à jour : {{ lastUpdate }}
+      </span>
+    </div>
+  </section>
+
+  <section class="max-w-[1440px] mx-auto px-margin-sm sm:px-margin pb-16">
+    <div class="max-w-3xl flex flex-col gap-gutter">
+
+      <article class="bg-surface-container-lowest rounded-3xl p-6 sm:p-8 border border-[rgba(31,32,70,0.05)]">
+        <h2 class="font-headline-md text-headline-md text-on-surface mb-space-md">Ce que nous ne collectons pas</h2>
+        <ul class="flex flex-col gap-space-sm font-body-md text-body-md text-on-surface-variant leading-relaxed">
+          <li class="flex items-start gap-space-sm">
+            <span class="material-symbols-outlined text-tertiary text-lg mt-0.5">check_circle</span>
+            <span>Le contenu encodé : liens, textes, noms de réseaux Wi-Fi et <strong class="text-on-surface">mots de passe</strong>. Ces valeurs restent en mémoire dans l'onglet et disparaissent à sa fermeture.</span>
+          </li>
+          <li class="flex items-start gap-space-sm">
+            <span class="material-symbols-outlined text-tertiary text-lg mt-0.5">check_circle</span>
+            <span>Les logos que vous importez : l'image est lue localement pour être incrustée au centre du code, jamais téléversée.</span>
+          </li>
+          <li class="flex items-start gap-space-sm">
+            <span class="material-symbols-outlined text-tertiary text-lg mt-0.5">check_circle</span>
+            <span>Aucun compte n'est requis, donc aucune adresse e-mail ni mot de passe de compte n'est demandé.</span>
+          </li>
+          <li class="flex items-start gap-space-sm">
+            <span class="material-symbols-outlined text-tertiary text-lg mt-0.5">check_circle</span>
+            <span>Aucun cookie publicitaire, aucun traceur de mesure d'audience, aucun profilage.</span>
+          </li>
+        </ul>
+        <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mt-space-md">
+          Vérification simple : coupez votre connexion après le chargement de la page. Le générateur continue de fonctionner, y compris le téléchargement des fichiers.
+        </p>
+      </article>
+
+      <article class="bg-surface-container-lowest rounded-3xl p-6 sm:p-8 border border-[rgba(31,32,70,0.05)]">
+        <h2 class="font-headline-md text-headline-md text-on-surface mb-space-md">Ce qui transite malgré tout</h2>
+        <div class="flex flex-col gap-space-md font-body-md text-body-md text-on-surface-variant leading-relaxed">
+          <p>
+            <strong class="text-on-surface">L'hébergeur</strong> (Netlify) enregistre, comme tout serveur web, les requêtes techniques nécessaires à la diffusion du site : adresse IP, date, page demandée, type de navigateur. Ces journaux servent au fonctionnement et à la sécurité, pas à vous identifier.
+          </p>
+          <p>
+            <strong class="text-on-surface">Les polices et icônes</strong> sont chargées depuis Google Fonts. À cette occasion, votre adresse IP est transmise à Google pour servir ces fichiers. C'est la seule ressource tierce du site.
+          </p>
+        </div>
+      </article>
+
+      <article class="bg-surface-container-lowest rounded-3xl p-6 sm:p-8 border border-[rgba(31,32,70,0.05)]">
+        <h2 class="font-headline-md text-headline-md text-on-surface mb-space-md">Une mise en garde honnête sur les QR codes Wi-Fi</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+          Le mot de passe que vous encodez n'est pas chiffré : il est inscrit en clair dans le motif, comme le veut la norme. N'importe quelle application de scan peut l'afficher au lieu de se connecter. Ce n'est pas propre à QRCraft, c'est le fonctionnement du format — d'où notre recommandation d'utiliser le réseau invité de votre box pour tout code affiché en public.
+        </p>
+      </article>
+
+      <article class="bg-surface-container-lowest rounded-3xl p-6 sm:p-8 border border-[rgba(31,32,70,0.05)]">
+        <h2 class="font-headline-md text-headline-md text-on-surface mb-space-md">Vos droits &amp; contact</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+          Le RGPD vous donne un droit d'accès, de rectification, d'effacement, de limitation, d'opposition et de portabilité. En pratique, QRCraft ne détenant aucune donnée personnelle vous concernant, il n'y a rien à extraire ni à supprimer de notre côté. Pour toute question, écrivez à
+          <a class="text-primary hover:underline font-medium" [href]="'mailto:' + contactEmail">{{ contactEmail }}</a>.
+          Vous pouvez également saisir la CNIL (www.cnil.fr).
+        </p>
+        <div class="mt-space-lg flex flex-col sm:flex-row gap-space-md">
+          <a class="inline-flex items-center justify-center gap-space-xs px-6 py-3.5 bg-surface-container-low text-on-surface font-label-lg text-label-lg rounded-full hover:bg-surface-container-high transition-all"
+             routerLink="/mentions-legales">
+            <span class="material-symbols-outlined text-lg">gavel</span>
+            <span>Mentions légales</span>
+          </a>
+          <a class="inline-flex items-center justify-center gap-space-xs px-6 py-3.5 bg-primary text-on-primary font-label-lg text-label-lg rounded-full hover:bg-primary-container transition-all"
+             routerLink="/" fragment="simulateur">
+            <span class="material-symbols-outlined text-lg">qr_code_2</span>
+            <span>Ouvrir le générateur</span>
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+</main>
+<app-footer />

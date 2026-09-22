@@ -1,0 +1,167 @@
+<app-navbar />
+<main class="w-full pt-20 bg-background">
+
+  <!-- HERO -->
+  <section class="max-w-[1440px] mx-auto px-margin-sm sm:px-margin pt-10 pb-12 lg:pt-16">
+    <div class="max-w-3xl flex flex-col items-start gap-space-md">
+      <span class="inline-flex items-center gap-space-xs px-space-md py-1.5 rounded-full bg-primary-fixed text-on-primary-fixed font-label-caps text-label-caps uppercase tracking-wider">
+        <span class="material-symbols-outlined text-base">draw</span>
+        Format d'export
+      </span>
+
+      <h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight">
+        Générateur de QR code SVG gratuit
+      </h1>
+
+      <p class="font-body-lg text-body-lg text-on-surface-variant">
+        Le SVG est un format vectoriel : le même fichier reste parfaitement net sur une carte de visite comme sur une bâche de trois mètres. C'est le format que votre imprimeur attend, et celui qui évite les QR codes flous qui ne se scannent pas.
+      </p>
+
+      <div class="flex flex-col sm:flex-row w-full sm:w-auto gap-space-md pt-space-xs">
+        <a class="inline-flex items-center justify-center gap-space-xs px-8 py-4 bg-primary text-on-primary font-label-lg text-label-lg rounded-full shadow-[0_12px_28px_-6px_rgba(65,44,231,0.35)] hover:bg-primary-container transition-all"
+           routerLink="/" fragment="simulateur">
+          <span class="material-symbols-outlined text-xl">download</span>
+          <span>Créer mon QR code SVG</span>
+        </a>
+        <a class="inline-flex items-center justify-center gap-space-xs px-6 py-4 bg-surface-container-low text-on-surface font-label-lg text-label-lg rounded-full hover:bg-surface-container-high transition-all"
+           href="#comparatif">
+          <span class="material-symbols-outlined text-lg">compare_arrows</span>
+          <span>SVG, PNG ou PDF ?</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- POURQUOI LE VECTORIEL -->
+  <section class="max-w-[1440px] mx-auto px-margin-sm sm:px-margin py-12">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter items-start">
+      <div>
+        <h2 class="font-headline-lg text-headline-lg text-on-surface mb-space-md">Pourquoi le vectoriel change tout à l'impression</h2>
+        <div class="flex flex-col gap-space-md font-body-md text-body-md text-on-surface-variant leading-relaxed">
+          <p>
+            Une image matricielle (PNG, JPG) est un quadrillage de pixels figé à l'export. Agrandissez-la, et le logiciel invente les pixels manquants : les bords des modules deviennent flous, les angles bavent, et l'appareil photo du téléphone peine à distinguer un module noir d'un module blanc. C'est la première cause de QR code imprimé illisible.
+          </p>
+          <p>
+            Un SVG ne stocke pas de pixels mais des formes : « un carré arrondi ici, un cercle là ». À l'impression, la machine recalcule ces formes à sa propre résolution, qu'il s'agisse d'un flyer A6 ou d'un panneau de salon. Le résultat est net par construction, sans fichier plus lourd.
+          </p>
+          <p>
+            Second avantage, moins évident : un imprimeur peut ouvrir le SVG et ajuster la taille, la position ou la couleur sans jamais dégrader le code. Avec un PNG, chaque retouche part d'une image déjà aplatie.
+          </p>
+        </div>
+      </div>
+
+      <div class="bg-surface-container-low rounded-3xl p-6 sm:p-8">
+        <h2 class="font-headline-md text-headline-md text-on-surface mb-space-md">Les trois erreurs qui rendent un code illisible</h2>
+        <ul class="flex flex-col gap-space-md font-body-md text-body-md text-on-surface-variant leading-relaxed">
+          <li class="flex items-start gap-space-sm">
+            <span class="material-symbols-outlined text-secondary text-lg mt-0.5">close</span>
+            <span><strong class="text-on-surface font-semibold">Agrandir un PNG de 300 px</strong> pour en faire une affiche. Le fichier grossit, la netteté non.</span>
+          </li>
+          <li class="flex items-start gap-space-sm">
+            <span class="material-symbols-outlined text-secondary text-lg mt-0.5">close</span>
+            <span><strong class="text-on-surface font-semibold">Passer par le JPG.</strong> Sa compression crée un léger halo autour de chaque point : sur un QR code, ce bruit suffit à faire échouer la détection.</span>
+          </li>
+          <li class="flex items-start gap-space-sm">
+            <span class="material-symbols-outlined text-secondary text-lg mt-0.5">close</span>
+            <span><strong class="text-on-surface font-semibold">Supprimer la marge blanche</strong> pour gagner de la place. Sans cette zone de silence, un cadre ou une photo collée au bord empêche la lecture, même avec un fichier parfait.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARATIF DES FORMATS -->
+  <section id="comparatif" class="max-w-[1440px] mx-auto px-margin-sm sm:px-margin py-12 scroll-mt-28">
+    <h2 class="font-headline-lg text-headline-lg text-on-surface mb-space-md">SVG, PNG, PDF : lequel pour quel usage</h2>
+    <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed max-w-3xl mb-space-lg">
+      Il n'y a pas de format universel : le bon choix dépend de la destination du code. En pratique, exportez en SVG ce qui part à l'impression, en PNG ce qui reste à l'écran.
+    </p>
+
+    <div class="overflow-x-auto rounded-3xl border border-[rgba(31,32,70,0.08)]">
+      <table class="w-full min-w-[640px] bg-surface-container-lowest text-left">
+        <thead class="bg-surface-container">
+          <tr class="font-label-caps text-label-caps uppercase tracking-wider text-on-surface-variant">
+            <th class="px-space-md py-space-sm">Format</th>
+            <th class="px-space-md py-space-sm">Nature</th>
+            <th class="px-space-md py-space-sm">Usage recommandé</th>
+            <th class="px-space-md py-space-sm">Limite</th>
+          </tr>
+        </thead>
+        <tbody class="font-body-md text-body-md text-on-surface-variant">
+          @for (f of formats; track f.format) {
+            <tr class="border-t border-[rgba(31,32,70,0.06)]">
+              <td class="px-space-md py-space-sm text-on-surface font-bold">{{ f.format }}</td>
+              <td class="px-space-md py-space-sm">{{ f.nature }}</td>
+              <td class="px-space-md py-space-sm">{{ f.usage }}</td>
+              <td class="px-space-md py-space-sm">{{ f.limite }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- UTILISER LE FICHIER -->
+  <section class="max-w-[1440px] mx-auto px-margin-sm sm:px-margin py-12">
+    <div class="bg-surface-container-lowest rounded-3xl p-6 sm:p-10 border border-[rgba(31,32,70,0.05)] shadow-[0_4px_20px_-2px_rgba(91,77,255,0.05)]">
+      <h2 class="font-headline-lg text-headline-lg text-on-surface mb-space-md">Que faire du fichier une fois téléchargé</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter font-body-md text-body-md text-on-surface-variant leading-relaxed">
+        <div>
+          <h3 class="font-title-md text-title-md text-on-surface mb-2">Le vérifier</h3>
+          <p>Glissez le SVG dans votre navigateur : il s'affiche immédiatement. Scannez-le depuis l'écran avec votre téléphone avant de l'envoyer à l'impression — trente secondes qui évitent une réimpression.</p>
+        </div>
+        <div>
+          <h3 class="font-title-md text-title-md text-on-surface mb-2">L'intégrer</h3>
+          <p>Illustrator, Inkscape, Affinity, Figma, InDesign et Canva importent le SVG directement. Placez-le sur un fond clair, sans rien coller contre ses bords.</p>
+        </div>
+        <div>
+          <h3 class="font-title-md text-title-md text-on-surface mb-2">L'envoyer à l'imprimeur</h3>
+          <p>Le SVG est accepté par la plupart des imprimeurs en ligne. Si l'on vous demande un PDF, utilisez directement nos gabarits prêts à poser plutôt que de refaire la mise en page.</p>
+        </div>
+      </div>
+
+      <div class="mt-space-lg flex flex-col sm:flex-row gap-space-md">
+        <a class="inline-flex items-center justify-center gap-space-xs px-6 py-3.5 bg-primary text-on-primary font-label-lg text-label-lg rounded-full hover:bg-primary-container transition-all"
+           routerLink="/" fragment="print-pack">
+          <span class="material-symbols-outlined text-lg">picture_as_pdf</span>
+          <span>Gabarits PDF prêts à imprimer</span>
+        </a>
+        <a class="inline-flex items-center justify-center gap-space-xs px-6 py-3.5 bg-surface-container-low text-on-surface font-label-lg text-label-lg rounded-full hover:bg-surface-container-high transition-all"
+           routerLink="/qr-code-wifi">
+          <span class="material-symbols-outlined text-lg">wifi</span>
+          <span>Cas d'usage : QR code Wi-Fi</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="max-w-[1440px] mx-auto px-margin-sm sm:px-margin py-12">
+    <h2 class="font-headline-lg text-headline-lg text-on-surface mb-space-lg">Questions fréquentes</h2>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter">
+      @for (faq of faqs; track faq.id) {
+        <div class="bg-surface-container-low rounded-2xl p-space-lg">
+          <h3 class="font-title-md text-title-md text-on-surface mb-space-sm">{{ faq.question }}</h3>
+          <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">{{ faq.answer }}</p>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="max-w-[1440px] mx-auto px-margin-sm sm:px-margin py-12 w-full">
+    <div class="relative overflow-hidden rounded-[3rem] bg-gradient-to-br from-primary via-primary-container to-secondary-container text-on-primary p-8 sm:p-14 shadow-2xl text-center flex flex-col items-center gap-space-md">
+      <div class="absolute -right-20 -bottom-20 w-96 h-96 rounded-full bg-white/10 blur-2xl pointer-events-none"></div>
+      <h2 class="relative z-10 font-headline-lg text-headline-lg tracking-tight">Votre QR code vectoriel, en une minute</h2>
+      <p class="relative z-10 font-body-lg text-body-lg text-on-primary-container max-w-xl">
+        Couleurs, dégradés, logo central et bandeau personnalisé. Export SVG et PNG gratuit, sans inscription ni filigrane imposé.
+      </p>
+      <a class="relative z-10 inline-flex items-center gap-space-xs px-8 py-4 bg-surface-container-lowest text-primary font-label-lg text-label-lg rounded-full shadow-lg hover:scale-105 transition-transform"
+         routerLink="/" fragment="simulateur">
+        <span class="material-symbols-outlined text-xl">draw</span>
+        <span>Ouvrir le studio</span>
+      </a>
+    </div>
+  </section>
+</main>
+<app-footer />
