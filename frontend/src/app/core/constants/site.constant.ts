@@ -5,4 +5,4 @@
  * Si l'URL change (domaine personnalisé), mettre aussi à jour
  * `src/index.html`, `public/robots.txt` et `public/sitemap.xml`.
  */
-export const SITE_URL = 'https://qrcraft-generation.netlify.app';
+export const SITE_URL = 'https://qrcode-craft.fr';

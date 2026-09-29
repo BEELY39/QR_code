@@ -1,3 +1,6 @@
+# Redirection 301 permanente vers le domaine officiel de marque
+https://qrcraft-generation.netlify.app/*    https://qrcode-craft.fr/:splat    301!
+
 # Les routes connues sont pre-rendues en fichiers statiques et servies telles quelles.
 # Tout le reste retombe sur l'app avec un vrai statut 404 (evite les pages fantomes en 200).
 /*    /index.html   404

@@ -324,7 +324,7 @@ export class QrSimulatorService {
    */
   buildPrintPackContent(withCredit: boolean): PrintPackContent {
     const p = this.payload();
-    const credit = withCredit ? 'Créé avec QRCraft — qrcraft-generation.netlify.app' : null;
+    const credit = withCredit ? 'Créé avec QRCraft — qrcode-craft.fr' : null;
     const instruction = "Ouvrez l'appareil photo et visez le code";
 
     switch (p.kind) {

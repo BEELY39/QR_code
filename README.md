@@ -1,7 +1,7 @@
 # QRCraft — Générateur de QR Code Personnalisé & Vectoriel
 
 [![Quality Gate (Lint, Test, Build)](https://github.com/BEELY39/QR_code/actions/workflows/ci.yml/badge.svg)](https://github.com/BEELY39/QR_code/actions/workflows/ci.yml)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/your-badge/deploy-status)](https://qrcraft-generation.netlify.app/)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/your-badge/deploy-status)](https://qrcode-craft.fr/)
 
 QRCraft est une application web moderne (Angular 21 + SSR/SSG) permettant de générer des QR Codes professionnels, esthétiques et hautement personnalisables (logos, palettes de couleurs, formats Wi-Fi, cadrages sur-mesure) avec un rendu 100% vectoriel SVG et une exécution purement client-side (zéro-serveur, respect total de la confidentialité).
 

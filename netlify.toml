@@ -8,6 +8,13 @@
   NODE_VERSION = "20"
   NPM_FLAGS = "--legacy-peer-deps"
 
+# Redirection 301 permanente du sous-domaine technique vers le domaine officiel
+[[redirects]]
+  from = "https://qrcraft-generation.netlify.app/*"
+  to = "https://qrcode-craft.fr/:splat"
+  status = 301
+  force = true
+
 # Règle de repli SPA :
 # les routes connues sont pré-rendues en fichiers statiques et servies directement.
 # Tout chemin non résolu retombe sur l'app avec un vrai statut 404 — sinon Google
