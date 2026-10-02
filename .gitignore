@@ -31,6 +31,13 @@ Thumbs.db
 
 .claude/
 
+# Vidéos : trop lourdes pour le dépôt (26 Mo pour la présentation).
+# Elles sont hébergées sur YouTube ; voir src/app/core/constants/video.constant.ts.
+# Le fichier reste utilisable en local pour un test avec la source « file ».
+frontend/public/*.mp4
+frontend/public/*.mov
+frontend/public/*.webm
+
 # Internal Speckit & Agent files (Sensible / Exclus du repo public)
 .agents/
 .specify/

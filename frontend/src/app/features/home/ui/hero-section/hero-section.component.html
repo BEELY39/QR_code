@@ -35,9 +35,10 @@
             <span class="material-symbols-outlined text-xl">qr_code_scanner</span>
             <span>Créer mon premier QR Code gratuit</span>
           </a>
-          <a class="inline-flex items-center justify-center gap-space-xs px-6 py-4 bg-surface-container-low text-on-surface font-label-lg text-label-lg rounded-full hover:bg-surface-container-high transition-all" href="#simulateur">
+          <a class="inline-flex items-center justify-center gap-space-xs px-6 py-4 bg-surface-container-low text-on-surface font-label-lg text-label-lg rounded-full hover:bg-surface-container-high transition-all"
+             [href]="hasVideo ? '#demo' : '#galerie'">
             <span class="material-symbols-outlined text-lg">play_circle</span>
-            <span>Voir les exemples</span>
+            <span>{{ hasVideo ? 'Voir la démo en vidéo' : 'Voir les exemples' }}</span>
           </a>
         </div>
 

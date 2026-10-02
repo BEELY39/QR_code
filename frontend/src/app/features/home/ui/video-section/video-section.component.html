@@ -1,0 +1,107 @@
+<!-- DÉMONSTRATION VIDÉO -->
+@if (isConfigured) {
+  <section id="demo" class="max-w-[1440px] mx-auto px-margin-sm sm:px-margin py-12 w-full scroll-mt-24">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center">
+
+      <!-- Colonne texte -->
+      <div class="lg:col-span-4 flex flex-col items-start gap-space-sm">
+        <span class="inline-flex items-center gap-space-xs px-space-md py-1.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-caps text-label-caps uppercase tracking-wider">
+          <span class="material-symbols-outlined text-base">play_circle</span>
+          Démonstration
+        </span>
+
+        <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+          Voyez le studio en {{ duration }}
+        </h2>
+
+        <p class="font-body-lg text-body-lg text-on-surface-variant">
+          Du lien saisi au fichier prêt à imprimer : couleurs, cadre, logo central et export vectoriel. Aucun compte, aucune installation.
+        </p>
+
+        <ul class="flex flex-col gap-space-xs font-body-md text-body-md text-on-surface-variant pt-space-xs">
+          <li class="flex items-center gap-space-sm">
+            <span class="material-symbols-outlined text-tertiary text-lg">check_circle</span>
+            Saisie d'un lien ou d'un réseau Wi-Fi
+          </li>
+          <li class="flex items-center gap-space-sm">
+            <span class="material-symbols-outlined text-tertiary text-lg">check_circle</span>
+            Palettes, cadres et logo personnalisé
+          </li>
+          <li class="flex items-center gap-space-sm">
+            <span class="material-symbols-outlined text-tertiary text-lg">check_circle</span>
+            Export SVG, PNG et pack impression PDF
+          </li>
+        </ul>
+
+        <a class="inline-flex items-center gap-space-xs px-6 py-3.5 mt-space-sm bg-primary text-on-primary font-label-lg text-label-lg rounded-full shadow-[0_8px_24px_-4px_rgba(65,44,231,0.3)] hover:bg-primary-container transition-all"
+           href="#simulateur">
+          <span class="material-symbols-outlined text-lg">qr_code_scanner</span>
+          <span>Essayer maintenant</span>
+        </a>
+      </div>
+
+      <!-- Lecteur -->
+      <div class="lg:col-span-8">
+        <div class="relative w-full aspect-video rounded-[2rem] overflow-hidden bg-inverse-surface shadow-[0_24px_50px_-12px_rgba(26,27,33,0.35)]">
+
+          @if (isStarted()) {
+            @if (embedUrl(); as url) {
+              <!-- L'iframe n'existe qu'après le clic : aucun cookie YouTube avant -->
+              <iframe
+                id="presentation-video"
+                class="absolute inset-0 w-full h-full"
+                [src]="url"
+                [title]="video.title"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen>
+              </iframe>
+            } @else if (fileSource(); as file) {
+              <video
+                id="presentation-video"
+                class="absolute inset-0 w-full h-full"
+                [attr.width]="video.width"
+                [attr.height]="video.height"
+                controls
+                autoplay
+                playsinline
+                preload="auto">
+                <source [src]="file.src" [type]="file.mimeType" />
+                Votre navigateur ne peut pas lire cette vidéo.
+              </video>
+            }
+          } @else {
+            <button
+              id="video-play-button"
+              type="button"
+              (click)="start()"
+              [attr.aria-label]="'Lire la vidéo : ' + video.title + ' (' + duration + ')'"
+              class="group absolute inset-0 w-full h-full flex flex-col items-center justify-center gap-space-md bg-gradient-to-br from-primary via-primary-container to-secondary-container cursor-pointer">
+
+              <!-- Halos décoratifs -->
+              <span class="absolute -right-16 -bottom-16 w-72 h-72 rounded-full bg-white/10 blur-2xl pointer-events-none"></span>
+              <span class="absolute -left-16 -top-16 w-64 h-64 rounded-full bg-tertiary-fixed/20 blur-xl pointer-events-none"></span>
+
+              <span class="relative z-10 w-20 h-20 rounded-full bg-surface-container-lowest flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
+                <span class="material-symbols-outlined text-5xl text-primary" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+              </span>
+
+              <span class="relative z-10 flex flex-col items-center gap-1 px-space-md text-center">
+                <span class="font-headline-md text-headline-md text-on-primary">{{ video.title }}</span>
+                <span class="font-body-sm text-body-sm text-on-primary-container">
+                  {{ duration }} · se lance au clic
+                </span>
+              </span>
+            </button>
+          }
+        </div>
+
+        <!-- Résumé textuel : utile hors lecture, et lisible par les moteurs -->
+        <p class="mt-space-md font-body-sm text-body-sm text-on-surface-variant">
+          {{ video.description }}
+        </p>
+      </div>
+
+    </div>
+  </section>
+}

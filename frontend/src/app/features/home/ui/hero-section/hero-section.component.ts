@@ -16,6 +16,7 @@ import {
   CornerDotType,
   QrEngineOptions,
 } from '../../../../core/models/qr-engine.model';
+import { PRESENTATION_VIDEO, hasVideoSource } from '../../../../core/constants/video.constant';
 
 export interface HeroDotStyleConfig {
   readonly id: DotType;
@@ -68,6 +69,13 @@ export class HeroSectionComponent implements OnInit, OnDestroy {
 
   readonly isBrowser = isPlatformBrowser(this.platformId);
   readonly styles: readonly HeroDotStyleConfig[] = HERO_DOT_STYLES;
+
+  /**
+   * Le bouton secondaire renvoie vers la démonstration vidéo, mais seulement
+   * si une source est configurée : sinon l'ancre #demo n'existe pas et le clic
+   * ne ferait rien.
+   */
+  readonly hasVideo = hasVideoSource(PRESENTATION_VIDEO);
 
   readonly currentStyleIndex = signal<number>(0);
   readonly isTransitioning = signal<boolean>(false);

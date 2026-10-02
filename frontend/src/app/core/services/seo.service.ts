@@ -3,6 +3,14 @@ import { Title, Meta } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 import { SeoPageConfig, OpenGraphMetadata, TwitterCardMetadata } from '../models/seo.model';
 import { FaqItem, SchemaFaqPage } from '../models/faq.model';
+import {
+  PresentationVideo,
+  buildEmbedUrl,
+  buildThumbnailUrl,
+  buildWatchUrl,
+  hasVideoSource,
+  toIso8601Duration,
+} from '../constants/video.constant';
 
 @Injectable({
   providedIn: 'root',
@@ -120,14 +128,52 @@ export class SeoService {
       })),
     };
 
-    let script: HTMLScriptElement | null = this.document.querySelector('script#faq-schema-jsonld');
+    this.writeJsonLd('faq-schema-jsonld', faqSchema);
+  }
+
+  /**
+   * Déclare la vidéo de démonstration en VideoObject.
+   * Sans ce balisage, un moteur voit une balise <video> sans titre, sans durée
+   * et sans description : la page ne peut pas prétendre à un extrait vidéo.
+   */
+  updateVideoSchema(video: PresentationVideo, siteUrl: string): void {
+    if (!hasVideoSource(video)) {
+      return;
+    }
+
+    const schema: Record<string, unknown> = {
+      '@context': 'https://schema.org',
+      '@type': 'VideoObject',
+      name: video.title,
+      description: video.description,
+      thumbnailUrl: buildThumbnailUrl(video, siteUrl),
+      uploadDate: video.uploadDate,
+      duration: toIso8601Duration(video.durationSec),
+      width: video.width,
+      height: video.height,
+      isFamilyFriendly: true,
+    };
+
+    if (video.source.kind === 'youtube') {
+      schema['embedUrl'] = buildEmbedUrl(video.source);
+      schema['url'] = buildWatchUrl(video.source, siteUrl);
+    } else {
+      schema['contentUrl'] = buildWatchUrl(video.source, siteUrl);
+    }
+
+    this.writeJsonLd('video-schema-jsonld', schema);
+  }
+
+  /** Crée ou met à jour un bloc JSON-LD identifié dans le <head> */
+  private writeJsonLd(id: string, schema: unknown): void {
+    let script: HTMLScriptElement | null = this.document.querySelector(`script#${id}`);
     if (!script) {
       script = this.document.createElement('script');
-      script.id = 'faq-schema-jsonld';
+      script.id = id;
       script.type = 'application/ld+json';
       this.document.head.appendChild(script);
     }
-    script.textContent = JSON.stringify(faqSchema);
+    script.textContent = JSON.stringify(schema);
   }
 }
 

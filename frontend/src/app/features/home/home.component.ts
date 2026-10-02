@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { NavbarComponent } from './ui/navbar/navbar.component';
 import { HeroSectionComponent } from './ui/hero-section/hero-section.component';
+import { VideoSectionComponent } from './ui/video-section/video-section.component';
 import { SimulatorSectionComponent } from './ui/simulator-section/simulator-section.component';
 import { FeaturesSectionComponent } from './ui/features-section/features-section.component';
 import { ShowcaseSectionComponent } from './ui/showcase-section/showcase-section.component';
@@ -11,6 +12,7 @@ import { FooterComponent } from './ui/footer/footer.component';
 import { QrSimulatorService } from './data-access/qr-simulator.service';
 import { SeoService } from '../../core/services/seo.service';
 import { SITE_URL } from '../../core/constants/site.constant';
+import { PRESENTATION_VIDEO } from '../../core/constants/video.constant';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +20,7 @@ import { SITE_URL } from '../../core/constants/site.constant';
   imports: [
     NavbarComponent,
     HeroSectionComponent,
+    VideoSectionComponent,
     SimulatorSectionComponent,
     FeaturesSectionComponent,
     ShowcaseSectionComponent,
@@ -33,8 +36,11 @@ export class HomeComponent {
   protected readonly simulatorService = inject(QrSimulatorService);
 
   constructor() {
+    const seo = inject(SeoService);
     // Réaffirme l'URL canonique du site déployé (voir SITE_URL).
-    inject(SeoService).updateCanonical(`${SITE_URL}/`);
+    seo.updateCanonical(`${SITE_URL}/`);
+    // Déclare la vidéo de démonstration aux moteurs (extrait vidéo possible).
+    seo.updateVideoSchema(PRESENTATION_VIDEO, SITE_URL);
   }
 }
 export { HomeComponent as Home };
