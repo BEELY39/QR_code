@@ -8,16 +8,16 @@
       <div class="absolute -left-20 -top-20 w-80 h-80 rounded-full bg-tertiary-fixed/20 blur-xl pointer-events-none"></div>
 
       <div class="relative z-10 max-w-3xl flex flex-col gap-space-md">
-        <a class="inline-flex w-fit items-center gap-space-xs px-space-md py-space-xs bg-white/15 backdrop-blur-md text-on-primary font-label-md text-label-md rounded-full hover:bg-white/25 transition-all" routerLink="/">
+        <a class="inline-flex w-fit items-center gap-space-xs px-space-md py-space-xs bg-white/15 backdrop-blur-md text-on-primary font-qc-sans font-bold text-[12px] leading-[16px] tracking-[0.02em] rounded-full hover:bg-white/25 transition-all" routerLink="/">
           <span class="material-symbols-outlined text-base">arrow_back</span>
           Retour à l'accueil
         </a>
-        <span class="font-label-caps text-label-caps uppercase tracking-wider text-on-primary-container">Informations légales</span>
-        <h1 class="font-headline-xl text-headline-xl tracking-tight text-on-primary">Mentions légales</h1>
-        <p class="font-body-lg text-body-lg text-on-primary-container max-w-xl">
+        <span class="font-qc-sans font-extrabold text-[11px] leading-[14px] tracking-[0.06em] uppercase tracking-wider text-on-primary-container">Informations légales</span>
+        <h1 class="font-qc-display font-bold text-[44px] leading-[52px] tracking-[-0.03em] max-md:text-[32px] max-md:leading-[40px] max-md:tracking-[-0.02em] tracking-tight text-on-primary">Mentions légales</h1>
+        <p class="font-qc-sans text-[16px] leading-[24px] text-on-primary-container max-w-xl">
           Conformément à l'article 6 de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique (LCEN), voici les informations relatives à l'éditeur et à l'utilisation du site QRCraft.
         </p>
-        <span class="inline-flex w-fit items-center gap-space-xs font-body-sm text-body-sm text-on-primary-container">
+        <span class="inline-flex w-fit items-center gap-space-xs font-qc-sans font-medium text-[12px] leading-[18px] text-on-primary-container">
           <span class="material-symbols-outlined text-base">update</span>
           Dernière mise à jour : {{ lastUpdate }}
         </span>
@@ -32,11 +32,11 @@
       <!-- Sommaire -->
       <aside class="lg:col-span-4 lg:sticky lg:top-28">
         <nav class="bg-surface-container-lowest p-space-lg rounded-3xl shadow-[0_4px_20px_-2px_rgba(91,77,255,0.05)] border border-[rgba(31,32,70,0.05)]" aria-label="Sommaire des mentions légales">
-          <span class="block font-label-caps text-label-caps text-secondary uppercase tracking-wider mb-space-md">Sommaire</span>
+          <span class="block font-qc-sans font-extrabold text-[11px] leading-[14px] tracking-[0.06em] text-secondary uppercase tracking-wider mb-space-md">Sommaire</span>
           <ol class="flex flex-col gap-space-xs">
             @for (section of sections; track section.id; let i = $index) {
               <li>
-                <a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-full font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-all"
+                <a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-full font-qc-sans font-bold text-[14px] leading-[20px] tracking-[0.01em] text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-all"
                    [routerLink]="[]" [fragment]="section.id">
                   <span class="material-symbols-outlined text-lg text-primary">{{ section.icon }}</span>
                   <span>{{ section.title }}</span>
@@ -56,45 +56,45 @@
             <div class="w-12 h-12 rounded-2xl bg-primary-fixed flex items-center justify-center text-on-primary-fixed">
               <span class="material-symbols-outlined text-2xl">badge</span>
             </div>
-            <h2 class="font-headline-md text-headline-md text-on-surface">Éditeur du site</h2>
+            <h2 class="font-qc-display font-bold text-[22px] leading-[30px] tracking-[-0.01em] text-on-surface">Éditeur du site</h2>
           </div>
-          <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-space-md">
+          <p class="font-qc-sans text-[14px] leading-[22px] text-on-surface-variant leading-relaxed mb-space-md">
             Le site QRCraft est édité par :
           </p>
           <dl class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
             <div class="bg-surface-container-low rounded-2xl p-space-md">
-              <dt class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Éditeur</dt>
-              <dd class="font-body-md text-body-md text-on-surface mt-space-xs font-semibold">{{ identity.editorName }}</dd>
+              <dt class="font-qc-sans font-extrabold text-[11px] leading-[14px] tracking-[0.06em] text-on-surface-variant uppercase tracking-wider">Éditeur</dt>
+              <dd class="font-qc-sans text-[14px] leading-[22px] text-on-surface mt-space-xs font-semibold">{{ identity.editorName }}</dd>
             </div>
             <div class="bg-surface-container-low rounded-2xl p-space-md">
-              <dt class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Statut juridique</dt>
-              <dd class="font-body-md text-body-md text-on-surface mt-space-xs">{{ identity.legalForm }}</dd>
+              <dt class="font-qc-sans font-extrabold text-[11px] leading-[14px] tracking-[0.06em] text-on-surface-variant uppercase tracking-wider">Statut juridique</dt>
+              <dd class="font-qc-sans text-[14px] leading-[22px] text-on-surface mt-space-xs">{{ identity.legalForm }}</dd>
             </div>
             <div class="bg-surface-container-low rounded-2xl p-space-md">
-              <dt class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Siège / Adresse</dt>
-              <dd class="font-body-md text-body-md text-on-surface mt-space-xs">{{ identity.address }}</dd>
+              <dt class="font-qc-sans font-extrabold text-[11px] leading-[14px] tracking-[0.06em] text-on-surface-variant uppercase tracking-wider">Siège / Adresse</dt>
+              <dd class="font-qc-sans text-[14px] leading-[22px] text-on-surface mt-space-xs">{{ identity.address }}</dd>
             </div>
             <div class="bg-surface-container-low rounded-2xl p-space-md">
-              <dt class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">SIRET / SIREN</dt>
-              <dd class="font-body-md text-body-md text-on-surface mt-space-xs">{{ identity.siret }}</dd>
+              <dt class="font-qc-sans font-extrabold text-[11px] leading-[14px] tracking-[0.06em] text-on-surface-variant uppercase tracking-wider">SIRET / SIREN</dt>
+              <dd class="font-qc-sans text-[14px] leading-[22px] text-on-surface mt-space-xs">{{ identity.siret }}</dd>
             </div>
             <div class="bg-surface-container-low rounded-2xl p-space-md">
-              <dt class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Activité (Code APE)</dt>
-              <dd class="font-body-md text-body-md text-on-surface mt-space-xs">{{ identity.ape }}</dd>
+              <dt class="font-qc-sans font-extrabold text-[11px] leading-[14px] tracking-[0.06em] text-on-surface-variant uppercase tracking-wider">Activité (Code APE)</dt>
+              <dd class="font-qc-sans text-[14px] leading-[22px] text-on-surface mt-space-xs">{{ identity.ape }}</dd>
             </div>
             <div class="bg-surface-container-low rounded-2xl p-space-md">
-              <dt class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Régime TVA</dt>
-              <dd class="font-body-md text-body-md text-on-surface mt-space-xs">{{ identity.vat }}</dd>
+              <dt class="font-qc-sans font-extrabold text-[11px] leading-[14px] tracking-[0.06em] text-on-surface-variant uppercase tracking-wider">Régime TVA</dt>
+              <dd class="font-qc-sans text-[14px] leading-[22px] text-on-surface mt-space-xs">{{ identity.vat }}</dd>
             </div>
             <div class="bg-surface-container-low rounded-2xl p-space-md">
-              <dt class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">E-mail</dt>
-              <dd class="font-body-md text-body-md text-on-surface mt-space-xs">
+              <dt class="font-qc-sans font-extrabold text-[11px] leading-[14px] tracking-[0.06em] text-on-surface-variant uppercase tracking-wider">E-mail</dt>
+              <dd class="font-qc-sans text-[14px] leading-[22px] text-on-surface mt-space-xs">
                 <a [href]="'mailto:' + identity.email" class="text-primary hover:underline font-medium">{{ identity.email }}</a>
               </dd>
             </div>
             <div class="bg-surface-container-low rounded-2xl p-space-md">
-              <dt class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Téléphone</dt>
-              <dd class="font-body-md text-body-md text-on-surface mt-space-xs">
+              <dt class="font-qc-sans font-extrabold text-[11px] leading-[14px] tracking-[0.06em] text-on-surface-variant uppercase tracking-wider">Téléphone</dt>
+              <dd class="font-qc-sans text-[14px] leading-[22px] text-on-surface mt-space-xs">
                 <a [href]="'tel:' + identity.phone" class="text-primary hover:underline font-medium">{{ identity.phone }}</a>
               </dd>
             </div>
@@ -107,9 +107,9 @@
             <div class="w-12 h-12 rounded-2xl bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed">
               <span class="material-symbols-outlined text-2xl">edit_note</span>
             </div>
-            <h2 class="font-headline-md text-headline-md text-on-surface">Directeur de la publication</h2>
+            <h2 class="font-qc-display font-bold text-[22px] leading-[30px] tracking-[-0.01em] text-on-surface">Directeur de la publication</h2>
           </div>
-          <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+          <p class="font-qc-sans text-[14px] leading-[22px] text-on-surface-variant leading-relaxed">
             Le directeur de la publication est <strong class="text-on-surface font-semibold">{{ identity.publicationDirector }}</strong>, joignable par e-mail à l'adresse <a [href]="'mailto:' + identity.email" class="text-primary hover:underline font-medium">{{ identity.email }}</a> ou par téléphone au <a [href]="'tel:' + identity.phone" class="text-primary hover:underline font-medium">{{ identity.phone }}</a>.
           </p>
         </article>
@@ -120,12 +120,12 @@
             <div class="w-12 h-12 rounded-2xl bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed">
               <span class="material-symbols-outlined text-2xl">dns</span>
             </div>
-            <h2 class="font-headline-md text-headline-md text-on-surface">Hébergement</h2>
+            <h2 class="font-qc-display font-bold text-[22px] leading-[30px] tracking-[-0.01em] text-on-surface">Hébergement</h2>
           </div>
-          <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-space-md">
+          <p class="font-qc-sans text-[14px] leading-[22px] text-on-surface-variant leading-relaxed mb-space-md">
             Le site est hébergé par :
           </p>
-          <div class="bg-surface-container-low rounded-2xl p-space-md flex flex-col gap-space-xs font-body-md text-body-md text-on-surface">
+          <div class="bg-surface-container-low rounded-2xl p-space-md flex flex-col gap-space-xs font-qc-sans text-[14px] leading-[22px] text-on-surface">
             <span class="font-semibold">{{ identity.hostName }}</span>
             <span class="text-on-surface-variant">{{ identity.hostAddress }}</span>
             <a [href]="identity.hostContact" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline font-medium mt-space-xs">
@@ -140,9 +140,9 @@
             <div class="w-12 h-12 rounded-2xl bg-surface-container-highest flex items-center justify-center text-on-surface">
               <span class="material-symbols-outlined text-2xl">copyright</span>
             </div>
-            <h2 class="font-headline-md text-headline-md text-on-surface">Propriété intellectuelle</h2>
+            <h2 class="font-qc-display font-bold text-[22px] leading-[30px] tracking-[-0.01em] text-on-surface">Propriété intellectuelle</h2>
           </div>
-          <div class="flex flex-col gap-space-md font-body-md text-body-md text-on-surface-variant leading-relaxed">
+          <div class="flex flex-col gap-space-md font-qc-sans text-[14px] leading-[22px] text-on-surface-variant leading-relaxed">
             <p>
               L'ensemble des éléments composant le site QRCraft (structure, textes, logos, marques, visuels, charte graphique, code source) est la propriété exclusive de l'éditeur ou fait l'objet d'une autorisation d'utilisation. Ils sont protégés par le Code de la propriété intellectuelle.
             </p>
@@ -164,9 +164,9 @@
             <div class="w-12 h-12 rounded-2xl bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed">
               <span class="material-symbols-outlined text-2xl">shield_lock</span>
             </div>
-            <h2 class="font-headline-md text-headline-md text-on-surface">Données personnelles</h2>
+            <h2 class="font-qc-display font-bold text-[22px] leading-[30px] tracking-[-0.01em] text-on-surface">Données personnelles</h2>
           </div>
-          <div class="flex flex-col gap-space-md font-body-md text-body-md text-on-surface-variant leading-relaxed">
+          <div class="flex flex-col gap-space-md font-qc-sans text-[14px] leading-[22px] text-on-surface-variant leading-relaxed">
             <p>
               Les contenus saisis dans le générateur (liens, textes, bandeaux) sont traités directement dans votre navigateur pour produire le QR code et ne sont pas conservés par l'éditeur.
             </p>
@@ -185,9 +185,9 @@
             <div class="w-12 h-12 rounded-2xl bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed">
               <span class="material-symbols-outlined text-2xl">cookie</span>
             </div>
-            <h2 class="font-headline-md text-headline-md text-on-surface">Cookies &amp; services tiers</h2>
+            <h2 class="font-qc-display font-bold text-[22px] leading-[30px] tracking-[-0.01em] text-on-surface">Cookies &amp; services tiers</h2>
           </div>
-          <div class="flex flex-col gap-space-md font-body-md text-body-md text-on-surface-variant leading-relaxed">
+          <div class="flex flex-col gap-space-md font-qc-sans text-[14px] leading-[22px] text-on-surface-variant leading-relaxed">
             <p>
               Le site n'utilise pas de cookies publicitaires ni de traceurs de mesure d'audience. Seuls des éléments strictement nécessaires à son bon fonctionnement peuvent être déposés, sans consentement préalable conformément aux recommandations de la CNIL.
             </p>
@@ -203,9 +203,9 @@
             <div class="w-12 h-12 rounded-2xl bg-primary-fixed flex items-center justify-center text-on-primary-fixed">
               <span class="material-symbols-outlined text-2xl">balance</span>
             </div>
-            <h2 class="font-headline-md text-headline-md text-on-surface">Responsabilité</h2>
+            <h2 class="font-qc-display font-bold text-[22px] leading-[30px] tracking-[-0.01em] text-on-surface">Responsabilité</h2>
           </div>
-          <div class="flex flex-col gap-space-md font-body-md text-body-md text-on-surface-variant leading-relaxed">
+          <div class="flex flex-col gap-space-md font-qc-sans text-[14px] leading-[22px] text-on-surface-variant leading-relaxed">
             <p>
               L'éditeur s'efforce d'assurer l'exactitude des informations diffusées et la disponibilité du service, sans pouvoir garantir l'absence d'erreurs ou d'interruptions. Il ne saurait être tenu responsable des dommages résultant de l'utilisation du site ou des QR codes générés.
             </p>
@@ -221,9 +221,9 @@
             <div class="w-12 h-12 rounded-2xl bg-surface-container-highest flex items-center justify-center text-on-surface">
               <span class="material-symbols-outlined text-2xl">gavel</span>
             </div>
-            <h2 class="font-headline-md text-headline-md text-on-surface">Droit applicable &amp; contact</h2>
+            <h2 class="font-qc-display font-bold text-[22px] leading-[30px] tracking-[-0.01em] text-on-surface">Droit applicable &amp; contact</h2>
           </div>
-          <div class="flex flex-col gap-space-md font-body-md text-body-md text-on-surface-variant leading-relaxed">
+          <div class="flex flex-col gap-space-md font-qc-sans text-[14px] leading-[22px] text-on-surface-variant leading-relaxed">
             <p>
               Les présentes mentions légales sont régies par le droit français. En cas de litige, et à défaut de résolution amiable, les tribunaux français seront seuls compétents.
             </p>

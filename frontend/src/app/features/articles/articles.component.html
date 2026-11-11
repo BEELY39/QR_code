@@ -18,7 +18,7 @@
           Guides Pratiques pour Maîtriser vos QR Codes
         </h1>
 
-        <p class="mt-4 font-body-lg text-body-lg text-white/90 max-w-2xl leading-relaxed">
+        <p class="mt-4 font-qc-sans text-[16px] leading-[24px] text-white/90 max-w-2xl leading-relaxed">
           Tutoriels concrets, comparatifs techniques et conseils indispensables pour réussir vos impressions, vos réseaux Wi-Fi et éviter les arnaques d’abonnement.
         </p>
 
@@ -26,14 +26,14 @@
           <a
             routerLink="/"
             fragment="simulateur"
-            class="inline-flex items-center gap-2 px-6 py-3 bg-surface-container-lowest text-primary font-label-lg text-label-lg font-bold rounded-full shadow-md hover:bg-white transition-all">
+            class="inline-flex items-center gap-2 px-6 py-3 bg-surface-container-lowest text-primary font-qc-sans font-bold text-[14px] leading-[20px] tracking-[0.01em] font-bold rounded-full shadow-md hover:bg-white transition-all">
             <span class="material-symbols-outlined text-lg">qr_code_2</span>
             <span>Accéder au Studio Gratuit</span>
           </a>
           <a
             routerLink="/"
             fragment="faq"
-            class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white font-label-lg text-label-lg transition-all">
+            class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white font-qc-sans font-bold text-[14px] leading-[20px] tracking-[0.01em] transition-all">
             <span class="material-symbols-outlined text-lg">help</span>
             <span>Voir la FAQ</span>
           </a>
@@ -56,25 +56,25 @@
           <!-- Carte Header -->
           <div class="p-6 sm:p-8">
             <div class="flex flex-wrap items-center gap-2.5 mb-4">
-              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary font-label-sm text-label-sm font-bold">
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary font-qc-sans font-bold text-[11px] leading-[14px] font-bold">
                 <span class="material-symbols-outlined text-sm">{{ guide.iconName }}</span>
                 <span>{{ guide.category }}</span>
               </span>
-              <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">
+              <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant font-qc-sans font-bold text-[11px] leading-[14px]">
                 <span class="material-symbols-outlined text-sm">schedule</span>
                 <span>{{ guide.readingTime }}</span>
               </span>
-              <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-secondary-fixed/30 text-on-secondary-fixed-variant font-label-sm text-label-sm">
+              <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-secondary-fixed/30 text-on-secondary-fixed-variant font-qc-sans font-bold text-[11px] leading-[14px]">
                 <span class="material-symbols-outlined text-sm">group</span>
                 <span>{{ guide.targetAudience }}</span>
               </span>
             </div>
 
-            <h2 class="font-headline-sm text-headline-sm text-on-surface font-bold mb-3">
+            <h2 class="font-qc-display font-bold text-[18px] leading-[26px] text-on-surface font-bold mb-3">
               {{ guide.title }}
             </h2>
 
-            <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-6">
+            <p class="font-qc-sans text-[14px] leading-[22px] text-on-surface-variant leading-relaxed mb-6">
               {{ guide.summary }}
             </p>
 
@@ -83,7 +83,7 @@
               <button
                 type="button"
                 [id]="'guide-toggle-' + guide.id"
-                class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-label-md text-label-md font-bold transition-all cursor-pointer"
+                class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-qc-sans font-bold text-[12px] leading-[16px] tracking-[0.02em] font-bold transition-all cursor-pointer"
                 [ngClass]="isExpanded(guide.id) ? 'bg-primary text-on-primary shadow-xs' : 'bg-surface-container-low text-on-surface hover:bg-surface-container-high'"
                 [attr.aria-expanded]="isExpanded(guide.id)"
                 (click)="toggleGuide(guide.id)">
@@ -97,7 +97,7 @@
               <a
                 routerLink="/"
                 fragment="simulateur"
-                class="inline-flex items-center gap-1.5 text-primary font-label-md text-label-md font-bold hover:underline">
+                class="inline-flex items-center gap-1.5 text-primary font-qc-sans font-bold text-[12px] leading-[16px] tracking-[0.02em] font-bold hover:underline">
                 <span>Appliquer dans le Studio</span>
                 <span class="material-symbols-outlined text-sm">arrow_forward</span>
               </a>
@@ -112,11 +112,11 @@
               <div class="space-y-6">
                 @for (section of guide.sections; track section.title) {
                   <div class="space-y-2">
-                    <h3 class="font-title-md text-title-md text-on-surface font-bold flex items-center gap-2">
+                    <h3 class="font-qc-sans font-semibold text-[18px] leading-[26px] text-on-surface font-bold flex items-center gap-2">
                       <span class="w-2 h-2 rounded-full bg-primary"></span>
                       <span>{{ section.title }}</span>
                     </h3>
-                    <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed whitespace-pre-line pl-4">
+                    <p class="font-qc-sans text-[14px] leading-[22px] text-on-surface-variant leading-relaxed whitespace-pre-line pl-4">
                       {{ section.content }}
                     </p>
                   </div>
@@ -127,13 +127,13 @@
               <div class="mt-8 p-6 rounded-2xl bg-surface-container-low border border-outline-variant/30">
                 <div class="flex items-center gap-2.5 mb-4">
                   <span class="material-symbols-outlined text-primary text-xl">checklist</span>
-                  <h4 class="font-label-lg text-label-lg text-on-surface font-extrabold uppercase tracking-wide">
+                  <h4 class="font-qc-sans font-bold text-[14px] leading-[20px] tracking-[0.01em] text-on-surface font-extrabold uppercase tracking-wide">
                     Checklist de validation
                   </h4>
                 </div>
                 <ul class="space-y-2.5">
                   @for (item of guide.checklist; track item) {
-                    <li class="flex items-start gap-3 text-on-surface font-body-sm text-body-sm">
+                    <li class="flex items-start gap-3 text-on-surface font-qc-sans font-medium text-[12px] leading-[18px]">
                       <span class="material-symbols-outlined text-tertiary text-lg shrink-0 mt-0.5" style="font-variation-settings: 'FILL' 1;">
                         check_circle
                       </span>
@@ -154,4 +154,15 @@
 
 </main>
 
+<section class="mx-auto mt-14 w-full max-w-qc px-4 pb-14 dk:px-8">
+  <h2 class="font-qc-display text-[30px] font-bold leading-[1.12] tracking-[-0.03em] text-qc-text dk:text-[44px] dk:leading-[1.1]">Questions fréquentes</h2>
+  <div class="mt-6 flex flex-col gap-2.5">
+    @for (item of faqs; track item.id) {
+      <div class="rounded-qc-card bg-white px-5 py-4">
+        <h3 class="text-[16px] font-semibold text-qc-text">{{ item.question }}</h3>
+        <p class="mt-2 text-[15px] leading-[1.6] text-qc-muted">{{ item.answer }}</p>
+      </div>
+    }
+  </div>
+</section>
 <app-footer></app-footer>

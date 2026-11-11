@@ -2,22 +2,22 @@
   <!-- Section Couleur des Points -->
   <div class="space-y-4">
     <div class="flex items-center justify-between">
-      <label class="text-xs font-bold uppercase tracking-wider text-on-surface-variant flex items-center gap-1.5">
-        <span class="material-symbols-outlined text-base text-primary">palette</span>
+      <label class="text-xs font-bold uppercase tracking-wider text-qc-muted flex items-center gap-1.5">
+        <span class="material-symbols-outlined text-base text-qc-accent">palette</span>
         Couleur des points (Matrice)
       </label>
     </div>
 
     <!-- Segmented Control : Unie vs Dégradé -->
-    <div class="inline-flex p-1 bg-surface-container-high rounded-xl w-full">
+    <div class="inline-flex p-1 bg-qc-neutral-bg rounded-qc-md w-full">
       <button
         type="button"
         (click)="selectDotsColorType('single')"
         class="flex-1 py-2 text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5"
-        [class.bg-surface]="colorsForm.get('dotsColorType')?.value === 'single'"
-        [class.text-primary]="colorsForm.get('dotsColorType')?.value === 'single'"
+        [class.bg-white]="colorsForm.get('dotsColorType')?.value === 'single'"
+        [class.text-qc-accent]="colorsForm.get('dotsColorType')?.value === 'single'"
         [class.shadow-sm]="colorsForm.get('dotsColorType')?.value === 'single'"
-        [class.text-on-surface-variant]="colorsForm.get('dotsColorType')?.value !== 'single'"
+        [class.text-qc-muted]="colorsForm.get('dotsColorType')?.value !== 'single'"
       >
         <span class="material-symbols-outlined text-base">format_paint</span>
         Couleur unie
@@ -27,10 +27,10 @@
         type="button"
         (click)="selectDotsColorType('gradient')"
         class="flex-1 py-2 text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5"
-        [class.bg-surface]="colorsForm.get('dotsColorType')?.value === 'gradient'"
-        [class.text-primary]="colorsForm.get('dotsColorType')?.value === 'gradient'"
+        [class.bg-white]="colorsForm.get('dotsColorType')?.value === 'gradient'"
+        [class.text-qc-accent]="colorsForm.get('dotsColorType')?.value === 'gradient'"
         [class.shadow-sm]="colorsForm.get('dotsColorType')?.value === 'gradient'"
-        [class.text-on-surface-variant]="colorsForm.get('dotsColorType')?.value !== 'gradient'"
+        [class.text-qc-muted]="colorsForm.get('dotsColorType')?.value !== 'gradient'"
       >
         <span class="material-symbols-outlined text-base">gradient</span>
         Dégradé
@@ -42,14 +42,14 @@
       <div class="space-y-3 pt-1">
         <!-- Palette de marque rapide -->
         <div>
-          <span class="text-xs text-on-surface-variant block mb-2 font-medium">Nuances recommandées</span>
+          <span class="text-xs text-qc-muted block mb-2 font-medium">Nuances recommandées</span>
           <div class="flex flex-wrap gap-2">
             @for (swatch of brandSwatches; track swatch.hex) {
               <button
                 type="button"
                 (click)="applySingleDotsColor(swatch.hex)"
                 [title]="swatch.name + ' (' + swatch.hex + ')'"
-                class="w-7 h-7 rounded-full border border-outline/30 transition-transform hover:scale-110 active:scale-95 flex items-center justify-center focus:outline-none"
+                class="w-7 h-7 rounded-full border border-qc-input-line/30 transition-transform hover:scale-110 active:scale-95 flex items-center justify-center focus:outline-none"
                 [style.backgroundColor]="swatch.hex"
               >
                 @if (colorsForm.get('dotsColorSingle')?.value === swatch.hex) {
@@ -64,7 +64,7 @@
 
         <!-- Sélecteur personnalisé -->
         <div class="flex items-center gap-3 pt-1">
-          <div class="relative w-10 h-10 rounded-xl overflow-hidden border border-outline shrink-0 shadow-inner">
+          <div class="relative w-10 h-10 rounded-qc-md overflow-hidden border border-qc-input-line shrink-0 shadow-inner">
             <input
               type="color"
               formControlName="dotsColorSingle"
@@ -72,11 +72,11 @@
             />
           </div>
           <div class="flex-1">
-            <label class="text-[11px] text-on-surface-variant uppercase tracking-wider block font-semibold">Code Hexadécimal</label>
+            <label class="text-[11px] text-qc-muted uppercase tracking-wider block font-semibold">Code Hexadécimal</label>
             <input
               type="text"
               formControlName="dotsColorSingle"
-              class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-3 py-1.5 text-xs font-mono text-on-surface uppercase focus:outline-none focus:border-primary"
+              class="w-full bg-qc-surface border border-qc-input-line rounded-lg px-3 py-1.5 text-xs font-mono text-qc-text uppercase focus:outline-none focus:border-qc-accent"
             />
           </div>
         </div>
@@ -85,19 +85,19 @@
 
     <!-- Mode Dégradé -->
     @if (colorsForm.get('dotsColorType')?.value === 'gradient') {
-      <div class="space-y-4 p-4 bg-surface-container-low rounded-2xl border border-outline-variant">
+      <div class="space-y-4 p-4 bg-qc-surface rounded-qc-card border border-qc-input-line">
         <!-- Type de dégradé & Rotation -->
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="text-xs text-on-surface-variant block mb-1 font-medium">Type</label>
-            <div class="inline-flex p-0.5 bg-surface-container-high rounded-lg w-full">
+            <label class="text-xs text-qc-muted block mb-1 font-medium">Type</label>
+            <div class="inline-flex p-0.5 bg-qc-neutral-bg rounded-lg w-full">
               <button
                 type="button"
                 (click)="selectGradientType('linear')"
                 class="flex-1 py-1.5 text-xs font-medium rounded-md transition-colors"
-                [class.bg-surface]="colorsForm.get('dotsGradientType')?.value === 'linear'"
-                [class.text-primary]="colorsForm.get('dotsGradientType')?.value === 'linear'"
-                [class.text-on-surface-variant]="colorsForm.get('dotsGradientType')?.value !== 'linear'"
+                [class.bg-white]="colorsForm.get('dotsGradientType')?.value === 'linear'"
+                [class.text-qc-accent]="colorsForm.get('dotsGradientType')?.value === 'linear'"
+                [class.text-qc-muted]="colorsForm.get('dotsGradientType')?.value !== 'linear'"
               >
                 Linéaire
               </button>
@@ -105,9 +105,9 @@
                 type="button"
                 (click)="selectGradientType('radial')"
                 class="flex-1 py-1.5 text-xs font-medium rounded-md transition-colors"
-                [class.bg-surface]="colorsForm.get('dotsGradientType')?.value === 'radial'"
-                [class.text-primary]="colorsForm.get('dotsGradientType')?.value === 'radial'"
-                [class.text-on-surface-variant]="colorsForm.get('dotsGradientType')?.value !== 'radial'"
+                [class.bg-white]="colorsForm.get('dotsGradientType')?.value === 'radial'"
+                [class.text-qc-accent]="colorsForm.get('dotsGradientType')?.value === 'radial'"
+                [class.text-qc-muted]="colorsForm.get('dotsGradientType')?.value !== 'radial'"
               >
                 Radial
               </button>
@@ -115,7 +115,7 @@
           </div>
 
           <div>
-            <label class="text-xs text-on-surface-variant block mb-1 font-medium">
+            <label class="text-xs text-qc-muted block mb-1 font-medium">
               Angle : {{ colorsForm.get('dotsGradientRotation')?.value }}°
             </label>
             <input
@@ -124,7 +124,7 @@
               max="360"
               step="5"
               formControlName="dotsGradientRotation"
-              class="w-full accent-primary mt-2"
+              class="w-full accent-qc-accent mt-2"
             />
           </div>
         </div>
@@ -133,9 +133,9 @@
         <div class="grid grid-cols-2 gap-3 pt-1">
           <!-- Début -->
           <div class="space-y-1.5">
-            <span class="text-xs text-on-surface-variant font-medium block">Couleur initiale</span>
+            <span class="text-xs text-qc-muted font-medium block">Couleur initiale</span>
             <div class="flex items-center gap-2">
-              <div class="relative w-8 h-8 rounded-lg overflow-hidden border border-outline shrink-0">
+              <div class="relative w-8 h-8 rounded-lg overflow-hidden border border-qc-input-line shrink-0">
                 <input
                   type="color"
                   formControlName="dotsGradientStart"
@@ -145,16 +145,16 @@
               <input
                 type="text"
                 formControlName="dotsGradientStart"
-                class="w-full bg-surface border border-outline-variant rounded-md px-2 py-1 text-xs font-mono uppercase focus:outline-none focus:border-primary"
+                class="w-full bg-white border border-qc-input-line rounded-md px-2 py-1 text-xs font-mono uppercase focus:outline-none focus:border-qc-accent"
               />
             </div>
           </div>
 
           <!-- Fin -->
           <div class="space-y-1.5">
-            <span class="text-xs text-on-surface-variant font-medium block">Couleur finale</span>
+            <span class="text-xs text-qc-muted font-medium block">Couleur finale</span>
             <div class="flex items-center gap-2">
-              <div class="relative w-8 h-8 rounded-lg overflow-hidden border border-outline shrink-0">
+              <div class="relative w-8 h-8 rounded-lg overflow-hidden border border-qc-input-line shrink-0">
                 <input
                   type="color"
                   formControlName="dotsGradientEnd"
@@ -164,7 +164,7 @@
               <input
                 type="text"
                 formControlName="dotsGradientEnd"
-                class="w-full bg-surface border border-outline-variant rounded-md px-2 py-1 text-xs font-mono uppercase focus:outline-none focus:border-primary"
+                class="w-full bg-white border border-qc-input-line rounded-md px-2 py-1 text-xs font-mono uppercase focus:outline-none focus:border-qc-accent"
               />
             </div>
           </div>
@@ -173,19 +173,19 @@
     }
   </div>
 
-  <hr class="border-outline-variant/50" />
+  <hr class="border-qc-input-line/50" />
 
   <!-- Coins et Arrière-plan -->
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
     <!-- Coins (Yeux) -->
     <div class="space-y-2">
-      <label class="text-xs font-bold uppercase tracking-wider text-on-surface-variant flex items-center gap-1.5">
-        <span class="material-symbols-outlined text-base text-primary">filter_center_focus</span>
+      <label class="text-xs font-bold uppercase tracking-wider text-qc-muted flex items-center gap-1.5">
+        <span class="material-symbols-outlined text-base text-qc-accent">filter_center_focus</span>
         Coins (Yeux)
       </label>
       
       <div class="flex items-center gap-3">
-        <div class="relative w-10 h-10 rounded-xl overflow-hidden border border-outline shrink-0 shadow-inner">
+        <div class="relative w-10 h-10 rounded-qc-md overflow-hidden border border-qc-input-line shrink-0 shadow-inner">
           <input
             type="color"
             formControlName="cornersColor"
@@ -196,7 +196,7 @@
           <input
             type="text"
             formControlName="cornersColor"
-            class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-3 py-1.5 text-xs font-mono text-on-surface uppercase focus:outline-none focus:border-primary"
+            class="w-full bg-qc-surface border border-qc-input-line rounded-lg px-3 py-1.5 text-xs font-mono text-qc-text uppercase focus:outline-none focus:border-qc-accent"
           />
         </div>
       </div>
@@ -204,13 +204,13 @@
 
     <!-- Fond (Background) -->
     <div class="space-y-2">
-      <label class="text-xs font-bold uppercase tracking-wider text-on-surface-variant flex items-center gap-1.5">
-        <span class="material-symbols-outlined text-base text-primary">format_color_fill</span>
+      <label class="text-xs font-bold uppercase tracking-wider text-qc-muted flex items-center gap-1.5">
+        <span class="material-symbols-outlined text-base text-qc-accent">format_color_fill</span>
         Arrière-plan
       </label>
       
       <div class="flex items-center gap-3">
-        <div class="relative w-10 h-10 rounded-xl overflow-hidden border border-outline shrink-0 shadow-inner">
+        <div class="relative w-10 h-10 rounded-qc-md overflow-hidden border border-qc-input-line shrink-0 shadow-inner">
           <input
             type="color"
             formControlName="backgroundColor"
@@ -221,7 +221,7 @@
           <input
             type="text"
             formControlName="backgroundColor"
-            class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-3 py-1.5 text-xs font-mono text-on-surface uppercase focus:outline-none focus:border-primary"
+            class="w-full bg-qc-surface border border-qc-input-line rounded-lg px-3 py-1.5 text-xs font-mono text-qc-text uppercase focus:outline-none focus:border-qc-accent"
           />
         </div>
       </div>
