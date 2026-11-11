@@ -27,7 +27,8 @@ Vérification rapide une fois lancée :
 curl -i http://localhost:8080/actuator/health
 ```
 
-→ `200 {"status":"UP"}`. Tout autre chemin répond `401` sans jeton.
+→ `200 {"groups":["liveness","readiness"],"status":"UP"}`, sans aucun détail de composant. Tout
+autre chemin répond `401` sans jeton.
 
 ## Profils
 
@@ -84,4 +85,6 @@ moins 512 Mo de mémoire pour le conteneur. Si l'hébergement ne le permet pas, 
 | Tests en échec avec `Could not find a valid Docker environment` | Docker Desktop arrêté | démarrer Docker Desktop, attendre que `docker info` réponde, relancer |
 | `Failed to configure a DataSource: 'url' attribute is not specified` au lancement du jar | variables de base absentes | définir `SPRING_DATASOURCE_*`, ou utiliser `./mvnw spring-boot:run` en local |
 | `qrcraft.security.jwt.secret est obligatoire` | secret JWT absent | définir `QRCRAFT_SECURITY_JWT_SECRET` |
+| `Port 8080 was already in use` avec `spring-boot:run` | un autre service occupe 8080 (par exemple CrowdSec) | `./mvnw spring-boot:run -Dspring-boot.run.arguments=--server.port=8081` |
+| Le conteneur `qrcraft-api-postgres-1` reste actif après un arrêt brutal | l'API n'a pas pu l'arrêter elle-même | `docker compose stop` depuis ce dossier |
 | Avertissement `Géolocalisation désactivée` au démarrage | `QRCRAFT_GEOIP_DATABASE_PATH` absent ou fichier illisible | normal en dev ; en production, fournir la base DB-IP Lite |

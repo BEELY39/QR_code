@@ -71,9 +71,7 @@ qu'elle est terminée ; l'agent qui reprend part des cases non cochées et ne re
   Ajouts : Caffeine, `maxmind-db` 4.2.0 (pas `geoip2`, qui tire Jackson 2), Yauaa 8.3.0,
   Testcontainers 2, `spring-boot-docker-compose`. Mode d'emploi : `qrcraft-api/README.md`.
   Issues #211 – #217, epic #218, jalon « 012 — Socle back-end ».
-  **Reste** (`specs/012-backend-dependencies/tasks.md`, cases non cochées) : exécuter avec Docker
-  démarré `QrcraftApiApplicationTests` (T011, écrit mais jamais lancé), `./mvnw clean verify`
-  (T012, T053) et `./mvnw spring-boot:run` (T047), puis push et PR (T055). Tout le reste passe déjà
-  sans Docker (cache, contexte de scan, jetons, jar de production).
+  `./mvnw clean verify` vert (71 tests, ~100 s) ; `spring-boot:run` validé (port 8081 sur le poste
+  de l'utilisateur : CrowdSec occupe 8080). **Reste** : push et PR (T055), sur accord de l'utilisateur.
 - **Suite prévue** : entités `User`, `Campaign`, `QrCode`, `Scan`, `ScanDailyRollup` et leurs
   migrations Flyway, puis redirection `/r/{shortCode}` et point de connexion Google.
