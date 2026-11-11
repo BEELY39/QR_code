@@ -1,0 +1,50 @@
+<section class="bg-white py-14 dk:py-28">
+  <div class="mx-auto flex w-full max-w-qc flex-col gap-5 px-4 dk:gap-14 dk:px-8">
+
+    <div class="flex max-w-[720px] flex-col gap-4">
+      <span class="text-[12px] font-semibold uppercase tracking-[0.08em] text-qc-accent dk:text-[13px]">{{ heading().eyebrow }}</span>
+      <h2 class="font-qc-display text-qc-h2-m font-bold tracking-[-0.03em] dk:text-qc-h2 text-qc-text">{{ heading().title }}</h2>
+      @if (heading().lead) {
+        <p class="hidden text-[18px] leading-[1.6] text-qc-muted dk:block">{{ heading().lead }}</p>
+      }
+    </div>
+
+    <!-- Mobile -->
+    <div class="flex flex-col gap-3.5 dk:hidden">
+      @for (offer of offersMobile(); track offer.title) {
+        <div class="flex flex-col gap-3.5 rounded-qc-card-lg p-5.5 {{ offer.tone === 'dark' ? 'bg-qc-ink text-white' : 'border border-qc-line text-qc-text' }}">
+          <div class="flex items-center justify-between">
+            <h3 class="font-qc-display text-[21px] font-bold">{{ offer.title }}</h3>
+            <qc-badge [variant]="offer.tone === 'dark' ? 'accent' : 'neutral'">{{ offer.badge }}</qc-badge>
+          </div>
+          <p class="text-[15px] leading-[1.55] {{ offer.tone === 'dark' ? 'text-qc-on-dark-muted' : 'text-qc-muted' }}">{{ offer.description }}</p>
+          <a [href]="offer.cta.href" class="font-semibold no-underline {{ offer.tone === 'dark' ? 'text-white' : 'text-qc-text' }}">{{ offer.cta.label }}</a>
+        </div>
+      }
+    </div>
+
+    <!-- Desktop -->
+    <div class="hidden grid-cols-2 gap-6 dk:grid">
+      @for (offer of offers(); track offer.title) {
+        <div class="flex flex-col gap-6 rounded-qc-xl p-10 {{ offer.tone === 'dark' ? 'bg-qc-ink text-white' : 'border border-qc-line text-qc-text' }}">
+          <div class="flex items-center justify-between">
+            <h3 class="font-qc-display text-[26px] font-bold">{{ offer.title }}</h3>
+            <qc-badge [variant]="offer.badgeVariant">{{ offer.badge }}</qc-badge>
+          </div>
+          <p class="text-[16px] leading-[1.6] {{ offer.tone === 'dark' ? 'text-qc-on-dark-muted' : 'text-qc-muted' }}">{{ offer.description }}</p>
+          <ul class="flex flex-col gap-3.5 text-[15px]">
+            @for (feature of offer.features; track feature) {
+              <li class="flex gap-3">
+                <span class="shrink-0 {{ offer.tone === 'dark' ? 'text-qc-accent-on-dark' : 'text-qc-text' }}"><qc-icon name="check" [size]="20" [strokeWidth]="2.2" /></span>
+                {{ feature }}
+              </li>
+            }
+          </ul>
+          <div class="mt-auto">
+            <a [qcButton]="offer.ctaVariant" qcSize="md" [href]="offer.cta.href">{{ offer.cta.label }}</a>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

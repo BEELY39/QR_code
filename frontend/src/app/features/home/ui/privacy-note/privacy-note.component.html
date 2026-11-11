@@ -1,0 +1,24 @@
+<section class="mx-auto w-full max-w-qc px-4 pb-14 dk:px-8 dk:pb-28">
+  <div class="flex flex-col gap-3.5 rounded-qc-card-lg border border-qc-line p-5.5 dk:flex-row dk:flex-wrap dk:items-center dk:gap-12 dk:rounded-qc-panel dk:p-12">
+
+    <div class="flex flex-col gap-3.5 dk:flex-1 dk:basis-[360px]">
+      <span class="hidden h-13 w-13 items-center justify-center rounded-qc-icon bg-qc-success-bg text-qc-success dk:flex">
+        <qc-icon name="shield-check" [size]="26" />
+      </span>
+      <h2 class="font-qc-display text-[22px] font-bold dk:text-[34px] dk:tracking-[-0.02em]">{{ content().titleMobile }}</h2>
+      <p class="text-[14px] leading-[1.6] text-qc-muted dk:text-[16px] dk:leading-[1.6]">
+        <span class="dk:hidden">{{ content().leadMobile }}</span>
+        <span class="hidden dk:inline">{{ content().lead }}</span>
+      </p>
+    </div>
+
+    <ul class="hidden flex-col gap-4 text-[15px] leading-[1.55] dk:flex dk:flex-1 dk:basis-[420px]">
+      @for (point of content().points; track point) {
+        <li class="flex gap-3">
+          <span class="shrink-0 text-qc-success"><qc-icon name="check" [size]="20" [strokeWidth]="2.2" /></span>
+          <span>{{ point }}</span>
+        </li>
+      }
+    </ul>
+  </div>
+</section>

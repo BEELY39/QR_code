@@ -62,100 +62,138 @@
   --spacing-gutter: 1.5rem;
 }
 
+/* ==========================================================================
+   Refonte QRCraft — jeu de tokens unique (spec 011, contracts/design-tokens.md)
+   Un token déclaré dans @theme est à la fois une variable CSS et un
+   générateur d'utilitaires : `--color-qc-accent` → `bg-qc-accent`,
+   `--text-qc-h1` → `text-qc-h1`, `--radius-qc-card` → `rounded-qc-card`.
+   Aucune valeur de marque ne doit être écrite en dur ailleurs (FR-003).
+   ========================================================================== */
+@theme {
+  /* ---- Marque ---- */
+  --color-qc-accent: #412CE7;
+  --color-qc-accent-hover: #2E1BB8;
+  --color-qc-accent-soft: #EEEBFF;
+  --color-qc-accent-on-dark: #A99CFF;
+  --color-qc-accent-2: #8574F5;
+  --color-qc-accent-3: #D9D3FF;
+  --color-qc-warm: #F5A25D;
+  --color-qc-warm-ink: #B4510F;
+  --color-qc-youtube: #E5484D;
+  --color-qc-creator: #FF8A8A;
+
+  /* ---- Encres et fonds ---- */
+  --color-qc-ink: #0B0B14;
+  --color-qc-ink-2: #15152A;
+  --color-qc-ink-3: #1D1D36;
+  --color-qc-ink-line: #2E2E4A;
+  --color-qc-ink-line-soft: #23233A;
+  --color-qc-outline-on-dark: #3A3A58;
+  --color-qc-bg-app: #F4F4F8;
+  --color-qc-surface: #F5F5F9;
+  --color-qc-surface-soft: #FAFAFC;
+  --color-qc-neutral-bg: #F2F2F7;
+  --color-qc-qr-canvas: #F5F4FF;
+  --color-qc-line: #E4E4EE;
+  --color-qc-line-soft: #F0F0F6;
+  --color-qc-input-line: #D4D4E0;
+
+  /* ---- Texte ---- */
+  --color-qc-text: #0B0B14;
+  --color-qc-ink-soft: #3A3A4F;
+  --color-qc-muted: #55556A;
+  --color-qc-subtle: #6B6B80;
+  --color-qc-on-dark-link: #C9C9DA;
+  --color-qc-on-dark-list: #DADAE6;
+  --color-qc-on-dark-muted: #B4B4C8;
+  --color-qc-on-dark-subtle: #8A8AA3;
+  --color-qc-on-accent-muted: #E4E0FF;
+
+  /* ---- États ---- */
+  --color-qc-success: #136B3A;
+  --color-qc-success-bg: #E3F6EA;
+  --color-qc-success-on-dark: #7BE3A4;
+  --color-qc-live: #3DDC84;
+  --color-qc-warning: #8A3B08;
+  --color-qc-warning-bg: #FFF1E6;
+
+  /* ---- Moments de la journée (espace connecté à venir) ---- */
+  --color-qc-night-bg: #EEF0FB;     --color-qc-night-ink: #3730A3;     --color-qc-night-bar: #8B8FD9;
+  --color-qc-morning-bg: #FFF6E5;   --color-qc-morning-ink: #92400E;   --color-qc-morning-bar: #E8A23A;
+  --color-qc-afternoon-bg: #FEF9DB; --color-qc-afternoon-ink: #854D0E; --color-qc-afternoon-bar: #D4A514;
+  --color-qc-evening-bg: #FFEDE3;   --color-qc-evening-ink: #9A3412;   --color-qc-evening-bar: #E8622C;
+
+  /* ---- Échelle de carte de chaleur, moins → plus (espace connecté à venir) ---- */
+  --color-qc-heat-1: #F2F0FF;  --color-qc-heat-2: #DCD6FF;  --color-qc-heat-3: #B8ADFF;
+  --color-qc-heat-4: #8C7CF6;  --color-qc-heat-5: #5E48EC;  --color-qc-heat-6: #3420C9;
+
+  /* ---- Typographie ---- */
+  --font-qc-sans: 'Inter', system-ui, sans-serif;
+  --font-qc-display: 'Space Grotesk', sans-serif;
+  --font-qc-mono: ui-monospace, monospace;
+
+  --text-qc-h1: 64px;      --text-qc-h1--line-height: 1.02;   --text-qc-h1--letter-spacing: -0.035em;
+  --text-qc-h1-m: 40px;    --text-qc-h1-m--line-height: 1.04; --text-qc-h1-m--letter-spacing: -0.035em;
+  --text-qc-h2: 44px;      --text-qc-h2--line-height: 1.1;    --text-qc-h2--letter-spacing: -0.03em;
+  --text-qc-h2-m: 30px;    --text-qc-h2-m--line-height: 1.12; --text-qc-h2-m--letter-spacing: -0.03em;
+  --text-qc-h2-cta: 52px;  --text-qc-h2-cta--line-height: 1.05; --text-qc-h2-cta--letter-spacing: -0.03em;
+  --text-qc-h2-sm: 34px;   --text-qc-h2-sm--letter-spacing: -0.02em;
+  --text-qc-h3: 26px;
+  --text-qc-h4: 21px;
+  --text-qc-h5: 20px;
+  --text-qc-h6: 22px;
+
+  --text-qc-num-xl: 34px;  --text-qc-num-xl--font-weight: 700;
+  --text-qc-num-lg: 32px;  --text-qc-num-lg--font-weight: 700;
+  --text-qc-num-md: 30px;  --text-qc-num-md--font-weight: 700;
+  --text-qc-num-sm: 22px;  --text-qc-num-sm--font-weight: 700;
+
+  --text-qc-lead: 19px;     --text-qc-lead--line-height: 1.6;
+  --text-qc-body-lg: 18px;  --text-qc-body-lg--line-height: 1.6;
+  --text-qc-body: 16px;     --text-qc-body--line-height: 1.55;
+  --text-qc-body-sm: 15px;  --text-qc-body-sm--line-height: 1.6;
+  --text-qc-ui: 14px;       --text-qc-ui--line-height: 1.6;
+  --text-qc-meta: 13px;
+  --text-qc-caption: 12px;
+  --text-qc-micro: 11px;
+  --text-qc-eyebrow: 13px;    --text-qc-eyebrow--letter-spacing: 0.08em; --text-qc-eyebrow--font-weight: 600;
+  --text-qc-eyebrow-m: 12px;  --text-qc-eyebrow-m--letter-spacing: 0.08em; --text-qc-eyebrow-m--font-weight: 600;
+
+  /* ---- Rayons ---- */
+  --radius-qc-dot: 5px;
+  --radius-qc-chip: 6px;
+  --radius-qc-sm: 8px;
+  --radius-qc-inner: 9px;
+  --radius-qc-ctl: 10px;
+  --radius-qc-md: 12px;
+  --radius-qc-icon: 14px;
+  --radius-qc-card: 16px;
+  --radius-qc-lg: 18px;
+  --radius-qc-card-lg: 20px;
+  --radius-qc-xl: 24px;
+  --radius-qc-panel: 28px;
+  --radius-qc-hero: 32px;
+  --radius-qc-pill: 999px;
+
+  /* ---- Ombres ---- */
+  --shadow-qc-card: 0 20px 40px rgb(65 44 231 / 0.12);
+  --shadow-qc-hero: 0 40px 80px rgb(0 0 0 / 0.45);
+  --shadow-qc-fab: 0 8px 20px rgb(65 44 231 / 0.35);
+
+  /* ---- Mise en page ---- */
+  --container-qc: 1200px;
+  /* Les maquettes basculent à `max-width: 900px` (900 inclus) : le desktop
+     démarre donc à 901 px, et 900 px tombe côté mobile. */
+  --breakpoint-dk: 901px;
+}
+
 @layer base {
   html, body {
     margin: 0;
     padding: 0;
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: var(--font-qc-sans);
   }
   body {
     overscroll-behavior: none;
   }
 }
-
-/* Custom typography classes matching DESIGN.md */
-.font-headline-xl {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 44px;
-  line-height: 52px;
-  letter-spacing: -0.03em;
-  font-weight: 800;
-}
-
-@media (max-width: 768px) {
-  .font-headline-xl {
-    font-size: 32px;
-    line-height: 40px;
-    letter-spacing: -0.02em;
-  }
-}
-
-.font-headline-lg {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 32px;
-  line-height: 40px;
-  letter-spacing: -0.02em;
-  font-weight: 700;
-}
-
-.font-headline-md {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 22px;
-  line-height: 30px;
-  letter-spacing: -0.01em;
-  font-weight: 700;
-}
-
-.font-title-md {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 18px;
-  line-height: 26px;
-  font-weight: 600;
-}
-
-.font-body-lg {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 400;
-}
-
-.font-body-md {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 14px;
-  line-height: 22px;
-  font-weight: 400;
-}
-
-.font-body-sm {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 12px;
-  line-height: 18px;
-  font-weight: 500;
-}
-
-.font-label-lg {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 14px;
-  line-height: 20px;
-  letter-spacing: 0.01em;
-  font-weight: 700;
-}
-
-.font-label-md {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 12px;
-  line-height: 16px;
-  letter-spacing: 0.02em;
-  font-weight: 700;
-}
-
-.font-label-caps {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 11px;
-  line-height: 14px;
-  letter-spacing: 0.06em;
-  font-weight: 800;
-}
-
-

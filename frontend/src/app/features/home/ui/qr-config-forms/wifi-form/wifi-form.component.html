@@ -1,12 +1,12 @@
 <form [formGroup]="wifiForm" class="space-y-6">
   <!-- SSID -->
   <div class="space-y-2">
-    <label class="text-xs font-bold uppercase tracking-wider text-on-surface-variant flex items-center gap-1.5" for="ssid">
-      <span class="material-symbols-outlined text-base text-primary">wifi</span>
+    <label class="text-xs font-bold uppercase tracking-wider text-qc-muted flex items-center gap-1.5" for="ssid">
+      <span class="material-symbols-outlined text-base text-qc-accent">wifi</span>
       Nom du réseau (SSID) *
     </label>
     <div class="relative">
-      <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-on-surface-variant">
+      <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-qc-muted">
         <span class="material-symbols-outlined text-lg">router</span>
       </div>
       <input 
@@ -18,27 +18,27 @@
         autocorrect="off"
         autocapitalize="none"
         spellcheck="false"
-        class="w-full bg-surface-container-low border border-outline-variant rounded-xl pl-10 pr-4 py-2.5 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+        class="w-full bg-qc-surface border border-qc-input-line rounded-qc-md pl-10 pr-4 py-2.5 text-sm text-qc-text placeholder:text-qc-subtle/50 focus:outline-none focus:border-qc-accent focus:ring-2 focus:ring-qc-accent/20 transition-all"
       />
     </div>
   </div>
 
   <!-- Type de sécurité (Segmented buttons) -->
   <div class="space-y-2">
-    <label class="text-xs font-bold uppercase tracking-wider text-on-surface-variant flex items-center gap-1.5">
-      <span class="material-symbols-outlined text-base text-primary">security</span>
+    <label class="text-xs font-bold uppercase tracking-wider text-qc-muted flex items-center gap-1.5">
+      <span class="material-symbols-outlined text-base text-qc-accent">security</span>
       Sécurité du réseau *
     </label>
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 p-1 bg-surface-container-high rounded-xl">
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 p-1 bg-qc-neutral-bg rounded-qc-md">
       @for (opt of encryptionOptions; track opt.value) {
         <button
           type="button"
           (click)="selectEncryption(opt.value)"
           class="flex flex-col sm:flex-row items-center justify-center gap-1.5 py-2 px-2 rounded-lg text-xs font-semibold transition-all"
-          [class.bg-surface]="wifiForm.get('encryption')?.value === opt.value"
-          [class.text-primary]="wifiForm.get('encryption')?.value === opt.value"
+          [class.bg-white]="wifiForm.get('encryption')?.value === opt.value"
+          [class.text-qc-accent]="wifiForm.get('encryption')?.value === opt.value"
           [class.shadow-sm]="wifiForm.get('encryption')?.value === opt.value"
-          [class.text-on-surface-variant]="wifiForm.get('encryption')?.value !== opt.value"
+          [class.text-qc-muted]="wifiForm.get('encryption')?.value !== opt.value"
         >
           <span class="material-symbols-outlined text-base">{{ opt.iconName }}</span>
           <span class="truncate">{{ opt.label }}</span>
@@ -51,14 +51,14 @@
   @if (wifiForm.get('encryption')?.value !== 'nopass') {
     <div class="space-y-2">
       <div class="flex items-center justify-between">
-        <label class="text-xs font-bold uppercase tracking-wider text-on-surface-variant flex items-center gap-1.5" for="password">
-          <span class="material-symbols-outlined text-base text-primary">key</span>
+        <label class="text-xs font-bold uppercase tracking-wider text-qc-muted flex items-center gap-1.5" for="password">
+          <span class="material-symbols-outlined text-base text-qc-accent">key</span>
           Mot de passe Wi-Fi
         </label>
-        <span class="text-[10px] text-on-surface-variant/70 font-medium">Sensible à la casse</span>
+        <span class="text-[10px] text-qc-muted/70 font-medium">Sensible à la casse</span>
       </div>
       <div class="relative">
-        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-on-surface-variant">
+        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-qc-muted">
           <span class="material-symbols-outlined text-lg">password</span>
         </div>
         <input 
@@ -70,12 +70,12 @@
           autocorrect="off"
           autocapitalize="none"
           spellcheck="false"
-          class="w-full bg-surface-container-low border border-outline-variant rounded-xl pl-10 pr-11 py-2.5 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all font-mono"
+          class="w-full bg-qc-surface border border-qc-input-line rounded-qc-md pl-10 pr-11 py-2.5 text-sm text-qc-text placeholder:text-qc-subtle/50 focus:outline-none focus:border-qc-accent focus:ring-2 focus:ring-qc-accent/20 transition-all font-mono"
         />
         <button
           type="button"
           (click)="toggleShowPassword()"
-          class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-on-surface-variant hover:text-on-surface transition-colors focus:outline-none"
+          class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-qc-muted hover:text-qc-text transition-colors focus:outline-none"
           title="Afficher/Masquer le mot de passe"
         >
           <span class="material-symbols-outlined text-lg">
@@ -87,19 +87,19 @@
   }
 
   <!-- Switch Réseau Masqué -->
-  <label class="flex items-center justify-between p-3.5 bg-surface-container-low rounded-xl border border-outline-variant cursor-pointer group hover:bg-surface-container transition-colors">
+  <label class="flex items-center justify-between p-3.5 bg-qc-surface rounded-qc-md border border-qc-input-line cursor-pointer group hover:bg-qc-neutral-bg transition-colors">
     <div class="flex items-center gap-2.5">
-      <span class="material-symbols-outlined text-on-surface-variant text-lg">visibility_off</span>
+      <span class="material-symbols-outlined text-qc-muted text-lg">visibility_off</span>
       <div>
-        <span class="text-xs font-semibold text-on-surface block">Réseau masqué (Hidden SSID)</span>
-        <span class="text-[11px] text-on-surface-variant block">Le réseau ne diffuse pas son nom publiquement</span>
+        <span class="text-xs font-semibold text-qc-text block">Réseau masqué (Hidden SSID)</span>
+        <span class="text-[11px] text-qc-muted block">Le réseau ne diffuse pas son nom publiquement</span>
       </div>
     </div>
     
     <input 
       type="checkbox" 
       formControlName="hidden" 
-      class="h-4 w-4 rounded border-outline-variant text-primary focus:ring-primary accent-primary cursor-pointer"
+      class="h-4 w-4 rounded border-qc-input-line text-qc-accent focus:ring-qc-accent accent-qc-accent cursor-pointer"
     />
   </label>
 </form>

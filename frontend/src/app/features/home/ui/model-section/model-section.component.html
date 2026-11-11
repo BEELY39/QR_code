@@ -1,0 +1,51 @@
+<section class="bg-qc-surface py-14 dk:py-28">
+  <div class="mx-auto flex w-full max-w-qc flex-col gap-5 px-4 dk:gap-14 dk:px-8">
+
+    <div class="flex max-w-[720px] flex-col gap-4">
+      <span class="text-[12px] font-semibold uppercase tracking-[0.08em] text-qc-accent dk:text-[13px] dk:tracking-[0.08em]">{{ heading().eyebrow }}</span>
+      <h2 class="font-qc-display text-qc-h2-m font-bold tracking-[-0.03em] dk:text-qc-h2 text-qc-text">{{ heading().title }}</h2>
+    </div>
+
+    <!-- Mobile : étapes compactes dans une seule carte -->
+    <div class="flex flex-col rounded-qc-lg bg-white px-4.5 py-1.5 dk:hidden">
+      @for (step of steps(); track step.index; let i = $index) {
+        <div class="flex gap-3.5 py-4 {{ i < steps().length - 1 ? 'border-b border-qc-line-soft' : '' }}">
+          <span class="font-qc-display font-bold text-qc-accent">{{ step.index }}</span>
+          <strong class="text-[15px]">{{ stepsMobile()[i] }}</strong>
+        </div>
+      }
+    </div>
+
+    <!-- Desktop : trois cartes d'étape -->
+    <div class="hidden gap-6 dk:grid dk:grid-cols-3">
+      @for (step of steps(); track step.index) {
+        <div class="flex flex-col gap-3.5 rounded-qc-card-lg bg-white p-8">
+          <span class="font-qc-display text-[14px] font-bold text-qc-accent">{{ step.index }} · {{ step.kicker }}</span>
+          <h3 class="font-qc-display text-[21px] font-bold">{{ step.title }}</h3>
+          @if (step.description) {
+            <p class="text-[15px] leading-[1.6] text-qc-muted">{{ step.description }}</p>
+          }
+          @if (step.tags.length > 0) {
+            <div class="flex flex-wrap gap-2">
+              @for (tag of step.tags; track tag) {
+                <qc-tag-chip>{{ tag }}</qc-tag-chip>
+              }
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Desktop : exemples -->
+    <div class="hidden gap-4 dk:grid dk:grid-cols-2">
+      @for (example of examples(); track example.lead) {
+        <div class="flex items-center gap-5 rounded-qc-card-lg bg-white px-8 py-7">
+          <span class="flex h-13 w-13 shrink-0 items-center justify-center rounded-qc-icon {{ example.tint === 'warm' ? 'bg-qc-warning-bg text-qc-warm-ink' : 'bg-qc-accent-soft text-qc-accent' }}">
+            <qc-icon [name]="example.icon" [size]="24" />
+          </span>
+          <p class="text-[16px] leading-[1.55]"><strong>{{ example.lead }}</strong>{{ example.rest }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>

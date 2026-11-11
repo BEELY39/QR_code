@@ -115,7 +115,34 @@ describe('SimulatorSectionComponent (Dumb Component)', () => {
     component.onDownload();
     expect(pngClicked).toBe(true);
   });
+
+  describe("Panneau d'options avancées (catégorie 3 — intégration, FR-035)", () => {
+    it('ouvre le panneau via la bascule, change la forme des points, puis ferme sans perte', () => {
+      const toggle: HTMLInputElement = fixture.nativeElement.querySelector('#studio-advanced-toggle');
+      expect(toggle).toBeTruthy();
+      expect(toggle.checked).toBe(false);
+
+      // Ouverture : l'onglet « Forme des points » devient accessible.
+      toggle.checked = true;
+      toggle.dispatchEvent(new Event('change'));
+      fixture.detectChanges();
+      const styleTab: HTMLButtonElement = fixture.nativeElement.querySelector('#tab-btn-style');
+      expect(styleTab).toBeTruthy();
+      styleTab.click();
+      fixture.detectChanges();
+
+      // Changement de forme : le formulaire émet designChange avec la nouvelle forme.
+      const emitted: unknown[] = [];
+      component.designChange.subscribe((value) => emitted.push(value));
+      component.onDotStyleChange('dots');
+      expect(emitted.length).toBe(1);
+      expect(emitted[0]).toEqual(expect.objectContaining({ dotsStyle: 'dots' }));
+
+      // Fermeture : la bascule repasse à faux, sans rien effacer côté parent.
+      toggle.checked = false;
+      toggle.dispatchEvent(new Event('change'));
+      fixture.detectChanges();
+      expect(toggle.checked).toBe(false);
+    });
+  });
 });
-
-
-

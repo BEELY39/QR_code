@@ -1,0 +1,58 @@
+<!-- Desktop -->
+<div class="hidden dk:block">
+  <div class="flex flex-col gap-6 rounded-[28px] bg-qc-ink p-8 text-white">
+    <div class="flex flex-wrap items-center justify-between gap-4">
+      <div class="flex flex-col gap-1">
+        <span class="text-[13px] text-qc-on-dark-muted">{{ label() }}</span>
+        <span class="font-qc-display text-[22px] font-bold">{{ data().campaignName }}</span>
+      </div>
+      <qc-segmented
+        tone="dark"
+        [options]="data().ranges"
+        [activeIndex]="selectedRange()"
+        (selected)="selectRange($event)" />
+    </div>
+
+    <div class="grid grid-cols-4 gap-4">
+      @for (kpi of data().kpis; track kpi.label) {
+        <qc-kpi-tile [label]="kpi.label" [value]="kpi.value" [size]="kpi.size" tone="dark" />
+      }
+    </div>
+
+    <div class="rounded-qc-card bg-qc-ink-2 p-6">
+      <qc-sparkline
+        [points]="data().series.points"
+        [xs]="data().series.xs"
+        [scale]="data().series.scale"
+        [width]="1000"
+        [height]="200"
+        [strokeWidth]="3"
+        [fillOpacity]="0.12"
+        [fluid]="true" />
+    </div>
+  </div>
+  <span class="mt-3 block text-[12px] text-qc-on-dark-subtle">Données d'exemple</span>
+</div>
+
+<!-- Mobile -->
+<div class="flex flex-col gap-3.5 rounded-qc-card-lg bg-qc-ink p-5 text-white dk:hidden">
+  <span class="text-[12px] text-qc-on-dark-muted">{{ data().campaignName }} · 7 jours</span>
+  <div class="flex gap-6">
+    @for (kpi of data().kpisMobile; track kpi.label) {
+      <div>
+        <div class="font-qc-display text-[26px] font-bold">{{ kpi.value }}</div>
+        <div class="text-[12px] text-qc-on-dark-muted">{{ kpi.label }}</div>
+      </div>
+    }
+  </div>
+  <qc-sparkline
+    [points]="data().seriesMobile.points"
+    [xs]="data().seriesMobile.xs"
+    [scale]="data().seriesMobile.scale"
+    [width]="320"
+    [height]="70"
+    [fillOpacity]="0.15"
+    [fluid]="true" />
+  <a [href]="dashboardLink().href" class="text-[14px] font-semibold text-white no-underline">Voir le tableau de bord →</a>
+  <span class="text-[11px] text-qc-on-dark-subtle">Données d'exemple</span>
+</div>

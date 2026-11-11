@@ -1,29 +1,29 @@
 <form [formGroup]="frameForm" class="flex flex-col gap-6 p-1">
   <!-- Visual Cards for Frame Style -->
   <div class="flex flex-col gap-3">
-    <span class="font-label-md text-label-md text-on-surface font-bold">Modèle de cadre</span>
+    <span class="font-qc-sans font-bold text-[12px] leading-[16px] tracking-[0.02em] text-qc-text font-bold">Modèle de cadre</span>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
       @for (styleOpt of frameStyles; track styleOpt.value) {
         <button 
           type="button"
-          class="p-3.5 rounded-2xl border text-left flex items-center justify-between transition-all cursor-pointer"
+          class="p-3.5 rounded-qc-card border text-left flex items-center justify-between transition-all cursor-pointer"
           [ngClass]="frameForm.get('style')?.value === styleOpt.value 
-            ? 'border-primary bg-primary/10 ring-2 ring-primary shadow-xs' 
-            : 'border-outline-variant/30 bg-surface-container-lowest hover:border-outline-variant hover:bg-surface-container/60'"
+            ? 'border-qc-accent bg-qc-accent/10 ring-2 ring-qc-accent shadow-xs' 
+            : 'border-qc-input-line/30 bg-white hover:border-qc-input-line hover:bg-qc-neutral-bg/60'"
           (click)="selectStyle(styleOpt.value)">
           <div class="flex items-center gap-3">
             <div 
-              class="w-10 h-10 rounded-xl flex items-center justify-center transition-colors"
-              [ngClass]="frameForm.get('style')?.value === styleOpt.value ? 'bg-primary text-on-primary' : 'bg-surface-container text-on-surface-variant'">
+              class="w-10 h-10 rounded-qc-md flex items-center justify-center transition-colors"
+              [ngClass]="frameForm.get('style')?.value === styleOpt.value ? 'bg-qc-accent text-white' : 'bg-qc-neutral-bg text-qc-muted'">
               <span class="material-symbols-outlined text-xl">{{ styleOpt.iconName }}</span>
             </div>
             <div>
-              <p class="font-label-md text-label-md font-bold text-on-surface">{{ styleOpt.label }}</p>
-              <p class="text-xs text-on-surface-variant line-clamp-1">{{ styleOpt.description }}</p>
+              <p class="font-qc-sans font-bold text-[12px] leading-[16px] tracking-[0.02em] font-bold text-qc-text">{{ styleOpt.label }}</p>
+              <p class="text-xs text-qc-muted line-clamp-1">{{ styleOpt.description }}</p>
             </div>
           </div>
           @if (frameForm.get('style')?.value === styleOpt.value) {
-            <span class="material-symbols-outlined text-primary text-lg font-bold">check_circle</span>
+            <span class="material-symbols-outlined text-qc-accent text-lg font-bold">check_circle</span>
           }
         </button>
       }
@@ -31,57 +31,57 @@
   </div>
 
   @if (frameForm.get('style')?.value !== 'none') {
-    <div class="flex flex-col gap-5 pt-2 border-t border-outline-variant/20">
+    <div class="flex flex-col gap-5 pt-2 border-t border-qc-input-line/20">
       
       <!-- Frame Text Input (if style has banner/badge) -->
       @if (frameForm.get('style')?.value === 'simple-bottom' || frameForm.get('style')?.value === 'badge-bottom') {
         <div class="flex flex-col gap-2">
-          <label class="font-label-md text-label-md text-on-surface font-bold" for="frame-text-input">
+          <label class="font-qc-sans font-bold text-[12px] leading-[16px] tracking-[0.02em] text-qc-text font-bold" for="frame-text-input">
             Texte du cadre
           </label>
           <div class="relative flex items-center">
-            <span class="material-symbols-outlined absolute left-4 text-on-surface-variant text-lg">title</span>
+            <span class="material-symbols-outlined absolute left-4 text-qc-muted text-lg">title</span>
             <input 
               id="frame-text-input" 
               type="text" 
               formControlName="text"
               placeholder="Ex: SCAN ME, MENU, INSTAGRAM..."
-              class="w-full h-12 pl-12 pr-4 bg-surface-container-lowest rounded-2xl border border-outline-variant/30 font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+              class="w-full h-12 pl-12 pr-4 bg-white rounded-qc-card border border-qc-input-line/30 font-qc-sans text-[14px] leading-[22px] text-qc-text focus:outline-none focus:ring-2 focus:ring-qc-accent focus:border-transparent transition-all"
             />
           </div>
         </div>
 
         <!-- Typography Selection -->
         <div class="flex flex-col gap-2">
-          <label class="font-label-md text-label-md text-on-surface font-bold" for="frame-font-select">
+          <label class="font-qc-sans font-bold text-[12px] leading-[16px] tracking-[0.02em] text-qc-text font-bold" for="frame-font-select">
             Police d'écriture
           </label>
           <div class="relative flex items-center">
-            <span class="material-symbols-outlined absolute left-4 text-on-surface-variant text-lg">font_download</span>
+            <span class="material-symbols-outlined absolute left-4 text-qc-muted text-lg">font_download</span>
             <select 
               id="frame-font-select" 
               formControlName="font"
-              class="w-full h-12 pl-12 pr-10 bg-surface-container-lowest rounded-2xl border border-outline-variant/30 font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all appearance-none cursor-pointer">
+              class="w-full h-12 pl-12 pr-10 bg-white rounded-qc-card border border-qc-input-line/30 font-qc-sans text-[14px] leading-[22px] text-qc-text focus:outline-none focus:ring-2 focus:ring-qc-accent focus:border-transparent transition-all appearance-none cursor-pointer">
               @for (f of fonts; track f) {
                 <option [value]="f" [style.font-family]="f">{{ f }}</option>
               }
             </select>
-            <span class="material-symbols-outlined absolute right-4 text-on-surface-variant pointer-events-none text-lg">expand_more</span>
+            <span class="material-symbols-outlined absolute right-4 text-qc-muted pointer-events-none text-lg">expand_more</span>
           </div>
         </div>
       }
 
       <!-- Colors Section with Quick Presets -->
       <div class="flex flex-col gap-3">
-        <span class="font-label-md text-label-md text-on-surface font-bold">Couleur du cadre</span>
+        <span class="font-qc-sans font-bold text-[12px] leading-[16px] tracking-[0.02em] text-qc-text font-bold">Couleur du cadre</span>
         
         <!-- Quick Presets -->
         <div class="flex items-center gap-2 flex-wrap">
           @for (preset of colorPresets; track preset.hex) {
             <button 
               type="button"
-              class="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-outline-variant/30 text-xs font-medium text-on-surface transition-all cursor-pointer hover:border-primary"
-              [ngClass]="frameForm.get('frameColor')?.value === preset.hex ? 'bg-surface-container-high ring-2 ring-primary font-bold' : 'bg-surface-container-lowest'"
+              class="flex items-center gap-2 px-3 py-1.5 rounded-qc-md border border-qc-input-line/30 text-xs font-medium text-qc-text transition-all cursor-pointer hover:border-qc-accent"
+              [ngClass]="frameForm.get('frameColor')?.value === preset.hex ? 'bg-qc-neutral-bg ring-2 ring-qc-accent font-bold' : 'bg-white'"
               (click)="selectColorPreset(preset.hex)">
               <span class="w-3.5 h-3.5 rounded-full border border-black/10 shadow-2xs" [style.background-color]="preset.hex"></span>
               <span>{{ preset.name }}</span>
@@ -91,7 +91,7 @@
 
         <!-- Custom Color Pickers -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
-          <div class="flex items-center justify-between p-3 bg-surface-container-lowest rounded-2xl border border-outline-variant/30">
+          <div class="flex items-center justify-between p-3 bg-white rounded-qc-card border border-qc-input-line/30">
             <div class="flex items-center gap-2.5">
               <input 
                 id="frameColorPicker" 
@@ -99,13 +99,13 @@
                 formControlName="frameColor"
                 class="w-8 h-8 rounded-lg cursor-pointer border-none bg-transparent"
               />
-              <label for="frameColorPicker" class="text-xs font-bold text-on-surface cursor-pointer">Fond / Bordure</label>
+              <label for="frameColorPicker" class="text-xs font-bold text-qc-text cursor-pointer">Fond / Bordure</label>
             </div>
-            <span class="text-xs font-mono font-bold text-on-surface-variant uppercase">{{ frameForm.get('frameColor')?.value }}</span>
+            <span class="text-xs font-mono font-bold text-qc-muted uppercase">{{ frameForm.get('frameColor')?.value }}</span>
           </div>
 
           @if (frameForm.get('style')?.value === 'simple-bottom' || frameForm.get('style')?.value === 'badge-bottom') {
-            <div class="flex items-center justify-between p-3 bg-surface-container-lowest rounded-2xl border border-outline-variant/30">
+            <div class="flex items-center justify-between p-3 bg-white rounded-qc-card border border-qc-input-line/30">
               <div class="flex items-center gap-2.5">
                 <input 
                   id="textColorPicker" 
@@ -113,9 +113,9 @@
                   formControlName="textColor"
                   class="w-8 h-8 rounded-lg cursor-pointer border-none bg-transparent"
                 />
-                <label for="textColorPicker" class="text-xs font-bold text-on-surface cursor-pointer">Texte</label>
+                <label for="textColorPicker" class="text-xs font-bold text-qc-text cursor-pointer">Texte</label>
               </div>
-              <span class="text-xs font-mono font-bold text-on-surface-variant uppercase">{{ frameForm.get('textColor')?.value }}</span>
+              <span class="text-xs font-mono font-bold text-qc-muted uppercase">{{ frameForm.get('textColor')?.value }}</span>
             </div>
           }
         </div>

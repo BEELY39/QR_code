@@ -57,4 +57,56 @@ export const FAQ_ITEMS: readonly FaqItem[] = [
     category: 'technique',
     iconName: 'palette',
   },
+  {
+    id: 'faq-static-vs-dynamic',
+    question: 'Quelle différence entre QR statique et dynamique ?',
+    answer:
+      'Le QR statique encode directement son contenu dans le code : il fonctionne pour toujours et se génère dans votre navigateur. Le QR dynamique pointe vers QRCraft, qui redirige vers votre destination et enregistre chaque scan. Vous gardez la main après l’impression.',
+    category: 'general',
+    iconName: 'qr_code_scanner',
+  },
+  {
+    id: 'faq-editable-destination',
+    question: 'Puis-je changer la destination après impression ?',
+    answer:
+      'Oui, avec un compte. Un QR dynamique peut changer de destination, être mis en pause ou recevoir une date d’expiration, sans être réimprimé. Le code imprimé reste le même.',
+    category: 'general',
+    iconName: 'qr_code_scanner',
+  },
+  {
+    id: 'faq-scan-data',
+    question: 'Quelles données sont collectées lors d’un scan ?',
+    answer:
+      'L’adresse IP sert uniquement à déduire la ville et le pays, puis elle est jetée. Le système, le navigateur, le type d’appareil, la langue et l’heure ne permettent pas de vous identifier. Aucune adresse IP n’est stockée.',
+    category: 'securite',
+    iconName: 'lock',
+  },
 ];
+
+/**
+ * Questions affichées sur l'accueil, dans l'ordre de la maquette.
+ * Desktop : les 6 ; mobile : les 4 premières (FR-029).
+ */
+export const LANDING_FAQ_IDS: readonly string[] = [
+  'faq-free',
+  'faq-static-vs-dynamic',
+  'faq-editable-destination',
+  'faq-scan-data',
+  'faq-svg-png',
+  'faq-scanner-app',
+];
+
+/**
+ * Résout une liste d'identifiants en questions. Un identifiant inconnu lève
+ * une erreur explicite : une sélection silencieusement incomplète casserait
+ * les données structurées (FR-038).
+ */
+export function selectFaqItems(ids: readonly string[]): readonly FaqItem[] {
+  return ids.map((id) => {
+    const item = FAQ_ITEMS.find((faq) => faq.id === id);
+    if (!item) {
+      throw new Error(`FAQ : identifiant inconnu « ${id} »`);
+    }
+    return item;
+  });
+}

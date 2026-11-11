@@ -52,3 +52,17 @@ npm run lint       # Analyse statique et typage strict
 npm run test:ci    # Suite de tests automatisés (121 tests)
 npm run build      # Compilation de production
 ```
+
+## Design system (refonte 011)
+
+Le jeu de tokens de marque vit dans le bloc `@theme` de `frontend/src/styles.css` :
+couleurs `qc-*`, typographie `text-qc-*` (avec interligne et interlettrage), rayons
+`rounded-qc-*`, ombres `shadow-qc-*`, et la bascule responsive `dk:` à 901 px.
+Aucune valeur de marque ne doit être écrite en dur dans un composant.
+
+Les primitives réutilisables sont dans `frontend/src/app/shared/ui/` (bouton, carte,
+badge, puce de tag, sélecteur segmenté, tuile de chiffre-clé, courbe miniature, icône).
+Le contenu éditorial de la landing est déclaratif : `core/constants/landing.constant.ts`.
+Les données de démonstration sont marquées « Données d'exemple ».
+
+Spécification, plan et contrats : `specs/011-refonte-design-landing/`.

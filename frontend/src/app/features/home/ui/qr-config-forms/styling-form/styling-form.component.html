@@ -2,11 +2,11 @@
   <!-- Section Forme des Modules -->
   <div class="space-y-3">
     <div class="flex items-center justify-between">
-      <label class="text-xs font-bold uppercase tracking-wider text-on-surface-variant flex items-center gap-1.5">
-        <span class="material-symbols-outlined text-base text-primary">grain</span>
+      <label class="text-xs font-bold uppercase tracking-wider text-qc-muted flex items-center gap-1.5">
+        <span class="material-symbols-outlined text-base text-qc-accent">grain</span>
         Style des motifs (Dots)
       </label>
-      <span class="text-xs text-on-surface-variant font-medium">6 designs</span>
+      <span class="text-xs text-qc-muted font-medium">6 designs</span>
     </div>
 
     <!-- Grille de cartes de styles -->
@@ -15,23 +15,23 @@
         <button
           type="button"
           (click)="selectDotStyle(style.value)"
-          class="relative flex items-start gap-3 p-3.5 rounded-2xl border text-left transition-all duration-200 group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-          [class.border-primary]="isSelected(style.value)"
-          [class.bg-primary/5]="isSelected(style.value)"
+          class="relative flex items-start gap-3 p-3.5 rounded-qc-card border text-left transition-all duration-200 group focus:outline-none focus-visible:ring-2 focus-visible:ring-qc-accent"
+          [class.border-qc-accent]="isSelected(style.value)"
+          [class.bg-qc-accent/5]="isSelected(style.value)"
           [class.ring-2]="isSelected(style.value)"
-          [class.ring-primary]="isSelected(style.value)"
-          [class.border-outline-variant]="!isSelected(style.value)"
-          [class.bg-surface-container-low]="!isSelected(style.value)"
-          [class.hover:border-outline]="!isSelected(style.value)"
-          [class.hover:bg-surface-container]="!isSelected(style.value)"
+          [class.ring-qc-accent]="isSelected(style.value)"
+          [class.border-qc-input-line]="!isSelected(style.value)"
+          [class.bg-qc-surface]="!isSelected(style.value)"
+          [class.hover:border-qc-input-line]="!isSelected(style.value)"
+          [class.hover:bg-qc-neutral-bg]="!isSelected(style.value)"
         >
           <!-- Badge Icône / Aperçu -->
           <div 
-            class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors"
-            [class.bg-primary]="isSelected(style.value)"
-            [class.text-on-primary]="isSelected(style.value)"
-            [class.bg-surface-container-high]="!isSelected(style.value)"
-            [class.text-on-surface-variant]="!isSelected(style.value)"
+            class="w-10 h-10 rounded-qc-md flex items-center justify-center shrink-0 transition-colors"
+            [class.bg-qc-accent]="isSelected(style.value)"
+            [class.text-white]="isSelected(style.value)"
+            [class.bg-qc-neutral-bg]="!isSelected(style.value)"
+            [class.text-qc-muted]="!isSelected(style.value)"
           >
             <span class="material-symbols-outlined text-xl">{{ style.iconName }}</span>
           </div>
@@ -40,12 +40,12 @@
           <div class="flex-1 min-w-0 pr-6">
             <h4 
               class="text-sm font-semibold truncate transition-colors"
-              [class.text-primary]="isSelected(style.value)"
-              [class.text-on-surface]="!isSelected(style.value)"
+              [class.text-qc-accent]="isSelected(style.value)"
+              [class.text-qc-text]="!isSelected(style.value)"
             >
               {{ style.label }}
             </h4>
-            <p class="text-xs text-on-surface-variant mt-0.5 line-clamp-1">
+            <p class="text-xs text-qc-muted mt-0.5 line-clamp-1">
               {{ style.description }}
             </p>
           </div>
@@ -53,9 +53,9 @@
           <!-- Radio indicateur discret -->
           <div 
             class="absolute top-3.5 right-3.5 w-4 h-4 rounded-full border flex items-center justify-center transition-colors"
-            [class.border-primary]="isSelected(style.value)"
-            [class.bg-primary]="isSelected(style.value)"
-            [class.border-outline]="!isSelected(style.value)"
+            [class.border-qc-accent]="isSelected(style.value)"
+            [class.bg-qc-accent]="isSelected(style.value)"
+            [class.border-qc-input-line]="!isSelected(style.value)"
           >
             @if (isSelected(style.value)) {
               <div class="w-1.5 h-1.5 rounded-full bg-white"></div>

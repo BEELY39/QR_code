@@ -1,0 +1,8 @@
+<div [class]="tileClass()">
+  <span [class]="labelClass()">{{ label() }}</span>
+  <span [class]="valueClass()">{{ value() }}</span>
+  @if (delta(); as d) {
+    <span [class]="deltaClass()">{{ d }}</span>
+  }
+  <ng-content />
+</div>

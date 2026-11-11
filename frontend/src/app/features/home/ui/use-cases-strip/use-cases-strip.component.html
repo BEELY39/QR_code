@@ -1,0 +1,19 @@
+<section id="usages" class="border-b border-qc-line bg-white py-5 pl-4 dk:py-8 dk:pl-0">
+  <div class="flex flex-col gap-2.5 dk:mx-auto dk:w-full dk:max-w-qc dk:flex-row dk:flex-wrap dk:items-center dk:justify-between dk:gap-4 dk:px-8">
+    <span class="text-[13px] font-medium text-qc-muted dk:text-[14px]">Un même outil pour</span>
+
+    <!-- Mobile : défilement horizontal, barre masquée -->
+    <div class="flex gap-2 overflow-x-auto pr-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden dk:hidden">
+      @for (chip of chipsMobile(); track chip) {
+        <span class="shrink-0 rounded-qc-pill border border-qc-line px-3.5 py-2 text-[13px] font-medium">{{ chip }}</span>
+      }
+    </div>
+
+    <!-- Desktop : puces en ligne -->
+    <div class="hidden dk:flex dk:flex-wrap dk:gap-2.5">
+      @for (chip of chips(); track chip) {
+        <span class="rounded-qc-pill border border-qc-line px-4 py-[9px] text-[14px] font-medium">{{ chip }}</span>
+      }
+    </div>
+  </div>
+</section>

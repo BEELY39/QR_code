@@ -39,26 +39,29 @@ describe('HomeComponent (Catégorie 3 - Test Intégration)', () => {
     expect(component).toBeTruthy();
   });
 
-  it('devrait intégrer toutes les sections attendues de la maquette', () => {
-    const navbar = fixture.debugElement.query(By.css('app-navbar'));
-    const hero = fixture.debugElement.query(By.css('app-hero-section'));
-    const simulator = fixture.debugElement.query(By.css('app-simulator-section'));
-    const features = fixture.debugElement.query(By.css('app-features-section'));
-    const showcase = fixture.debugElement.query(By.css('app-showcase-section'));
-    const alternatives = fixture.debugElement.query(By.css('app-alternatives-section'));
-    const faq = fixture.debugElement.query(By.css('app-faq-section'));
-    const cta = fixture.debugElement.query(By.css('app-cta-banner'));
-    const footer = fixture.debugElement.query(By.css('app-footer'));
+  it('devrait composer les blocs de la maquette desktop (FR-015)', () => {
+    const selectors = [
+      'app-navbar',
+      'app-hero-section',
+      'app-use-cases-strip',
+      'app-static-vs-dynamic',
+      'app-model-section',
+      'app-tracker-section',
+      'app-advertisers-section',
+      'app-creators-section',
+      'app-simulator-section',
+      'app-privacy-note',
+      'app-faq-section',
+      'app-cta-banner',
+      'app-footer',
+    ];
+    for (const selector of selectors) {
+      expect(fixture.debugElement.query(By.css(selector))).toBeTruthy();
+    }
+  });
 
-    expect(navbar).toBeTruthy();
-    expect(hero).toBeTruthy();
-    expect(simulator).toBeTruthy();
-    expect(features).toBeTruthy();
-    expect(showcase).toBeTruthy();
-    expect(alternatives).toBeTruthy();
-    expect(faq).toBeTruthy();
-    expect(cta).toBeTruthy();
-    expect(footer).toBeTruthy();
+  it("devrait conserver l'ancre #studio sur le simulateur (FR-019)", () => {
+    expect(fixture.nativeElement.querySelector('#studio #simulateur')).toBeTruthy();
   });
 
   describe('US1 (Intégration) - Transmission du SVG dynamique au simulateur', () => {
