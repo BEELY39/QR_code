@@ -1,0 +1,17 @@
+<svg
+  class="block overflow-visible text-qc-accent-on-dark"
+  [attr.width]="fluid() ? '100%' : width()"
+  [attr.height]="height()"
+  [attr.viewBox]="'0 0 ' + width() + ' ' + height()"
+  [attr.preserveAspectRatio]="fluid() ? 'none' : null"
+  aria-hidden="true">
+  <path [attr.d]="area()" fill="currentColor" [attr.fill-opacity]="fillOpacity()" />
+  <path
+    [attr.d]="line()"
+    fill="none"
+    stroke="currentColor"
+    [attr.stroke-width]="strokeWidth()"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    [attr.vector-effect]="fluid() ? 'non-scaling-stroke' : null" />
+</svg>

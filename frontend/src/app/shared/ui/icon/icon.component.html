@@ -1,0 +1,38 @@
+<svg
+  [attr.width]="size()"
+  [attr.height]="size()"
+  viewBox="0 0 24 24"
+  class="shrink-0"
+  [attr.fill]="definition().mode === 'stroke' ? 'none' : null"
+  [attr.stroke]="definition().mode === 'stroke' ? 'currentColor' : null"
+  [attr.stroke-width]="definition().mode === 'stroke' ? strokeWidth() : null"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  [attr.role]="label() ? 'img' : null"
+  [attr.aria-label]="label()"
+  [attr.aria-hidden]="label() ? null : 'true'">
+  @for (el of definition().elements; track $index) {
+    @if (el.tag === 'path') {
+      <path
+        [attr.d]="el.d"
+        [attr.fill]="el.filled ? 'currentColor' : null"
+        [attr.stroke]="el.filled ? 'none' : null"
+        [attr.fill-rule]="el.fillRule ?? null"
+        [attr.class]="el.className ?? null" />
+    } @else if (el.tag === 'rect') {
+      <rect
+        [attr.x]="el.x"
+        [attr.y]="el.y"
+        [attr.width]="el.width"
+        [attr.height]="el.height"
+        [attr.rx]="el.rx ?? null"
+        [attr.class]="el.className ?? null" />
+    } @else {
+      <circle
+        [attr.cx]="el.cx"
+        [attr.cy]="el.cy"
+        [attr.r]="el.r"
+        [attr.class]="el.className ?? null" />
+    }
+  }
+</svg>

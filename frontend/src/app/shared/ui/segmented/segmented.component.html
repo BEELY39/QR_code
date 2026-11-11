@@ -1,0 +1,14 @@
+<div role="tablist" [class]="trackClass()" (keydown)="onKeydown($event)">
+  @for (option of options(); track $index; let i = $index) {
+    <button
+      #tab
+      type="button"
+      role="tab"
+      [attr.aria-selected]="i === activeIndex() ? 'true' : 'false'"
+      [attr.tabindex]="i === activeIndex() ? 0 : -1"
+      [class]="optionClass(i)"
+      (click)="select(i)">
+      {{ option }}
+    </button>
+  }
+</div>
