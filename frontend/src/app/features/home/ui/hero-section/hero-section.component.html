@@ -1,138 +1,95 @@
-<div class="relative w-full">
-  <!-- Ambient Living Gradients & Accents -->
-  <div class="absolute top-12 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-gradient-to-tr from-primary/10 via-secondary-container/10 to-tertiary-fixed/20 blur-3xl pointer-events-none -z-10 rounded-full"></div>
-  <div class="absolute top-96 right-10 w-[400px] h-[400px] bg-secondary-fixed/40 blur-2xl pointer-events-none -z-10 rounded-full"></div>
+<section id="top" class="overflow-hidden bg-qc-ink text-white pt-9 pb-12 dk:pt-22 dk:pb-26">
+  <div class="mx-auto grid w-full max-w-qc gap-5.5 px-4 dk:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] dk:gap-14 dk:items-center dk:px-8">
 
-  <!-- HERO SECTION -->
-  <section class="max-w-[1440px] mx-auto px-margin-sm sm:px-margin pt-10 pb-20 lg:pt-16 lg:pb-28">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center">
-      
-      <!-- Left Column: Copy & Value Proposition -->
-      <div class="lg:col-span-7 flex flex-col items-start gap-space-lg">
-        
-        <!-- Live Announcement Pill -->
-        <div class="inline-flex items-center gap-space-xs px-space-md py-1.5 rounded-full bg-surface-container-high shadow-sm hover:shadow transition-shadow">
-          <span class="w-2.5 h-2.5 rounded-full bg-secondary-container animate-pulse"></span>
-          <span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Nouveau Studio v2.4</span>
-          <span class="hidden sm:inline-block w-1 h-1 rounded-full bg-outline-variant"></span>
-          <span class="hidden sm:inline font-body-sm text-body-sm text-primary font-semibold">Cadres intelligents &amp; Dégradés SVG</span>
-          <span class="material-symbols-outlined text-body-sm text-primary">arrow_forward</span>
-        </div>
+    <!-- Colonne texte -->
+    <div class="flex flex-col items-start gap-5.5 dk:gap-7">
+      <span class="inline-flex items-center gap-2 rounded-qc-pill border border-qc-ink-line bg-qc-ink-2 py-1 pl-1 pr-3 text-[12px] text-qc-on-dark-link dk:py-1.5 dk:pl-1.5 dk:pr-3.5 dk:text-[13px]">
+        <qc-badge variant="accent">Nouveau</qc-badge>
+        <span class="dk:hidden">{{ content().badgeMobile }}</span>
+        <span class="hidden dk:inline">{{ content().badge }}</span>
+      </span>
 
-        <!-- Main Headline -->
-        <h1 class="font-headline-xl text-headline-xl text-on-surface max-w-2xl tracking-tight">
-          Générateur de QR code <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary-container to-secondary-container">personnalisé gratuit</span>
-        </h1>
+      <h1 class="font-qc-display text-qc-h1-m font-bold dk:text-qc-h1 text-white">
+        {{ content().titleLead }}
+        <span class="dk:block text-qc-accent-on-dark">{{ content().titleAccent }}</span>
+      </h1>
 
-        <!-- Subtitle -->
-        <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
-          Créez en quelques secondes des QR codes vectoriels aux couleurs éclatantes, avec logo central et styles sur mesure. 100% gratuit, sans inscription et sans expiration.
-        </p>
+      <p class="max-w-[540px] text-qc-body text-qc-on-dark-muted dk:text-qc-lead">
+        <span class="dk:hidden">{{ content().leadMobile }}</span>
+        <span class="hidden dk:inline">{{ content().lead }}</span>
+      </p>
 
-        <!-- CTAs -->
-        <div class="flex flex-wrap items-center gap-space-md w-full sm:w-auto pt-space-xs">
-          <a class="inline-flex items-center justify-center gap-space-xs px-8 py-4 bg-primary text-on-primary font-label-lg text-label-lg rounded-full shadow-[0_12px_28px_-6px_rgba(65,44,231,0.35)] hover:bg-primary-container hover:shadow-[0_16px_36px_-6px_rgba(91,77,255,0.45)] hover:-translate-y-0.5 transition-all" href="#simulateur">
-            <span class="material-symbols-outlined text-xl">qr_code_scanner</span>
-            <span>Créer mon premier QR Code gratuit</span>
-          </a>
-          <a class="inline-flex items-center justify-center gap-space-xs px-6 py-4 bg-surface-container-low text-on-surface font-label-lg text-label-lg rounded-full hover:bg-surface-container-high transition-all"
-             [href]="hasVideo ? '#demo' : '#galerie'">
-            <span class="material-symbols-outlined text-lg">play_circle</span>
-            <span>{{ hasVideo ? 'Voir la démo en vidéo' : 'Voir les exemples' }}</span>
-          </a>
-        </div>
-
-        <!-- Reassurance Badges -->
-        <div class="flex flex-wrap items-center gap-x-space-lg gap-y-space-sm pt-space-md">
-          <div class="flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface-variant">
-            <span class="material-symbols-outlined text-tertiary text-lg" style="font-variation-settings: 'FILL' 1;">verified</span>
-            <span>100% Gratuit &amp; Sans abonnement</span>
-          </div>
-          <div class="flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface-variant">
-            <span class="material-symbols-outlined text-tertiary text-lg" style="font-variation-settings: 'FILL' 1;">shield</span>
-            <span>Génération locale privée</span>
-          </div>
-          <div class="flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface-variant">
-            <span class="material-symbols-outlined text-tertiary text-lg" style="font-variation-settings: 'FILL' 1;">all_inclusive</span>
-            <span>QR statiques permanents</span>
-          </div>
-        </div>
+      <div class="flex w-full flex-col gap-2.5 dk:w-auto dk:flex-row dk:flex-wrap dk:gap-3">
+        <a qcButton="primary" qcSize="lg" [qcBlock]="true" [href]="content().primaryCta.href" class="dk:!w-auto">
+          {{ content().primaryCta.label }}
+          <qc-icon name="arrow-right" [size]="18" />
+        </a>
+        <a qcButton="ghost-dark" qcSize="lg" [qcBlock]="true" [href]="content().secondaryCta.href" class="dk:!w-auto">
+          {{ content().secondaryCta.label }}
+        </a>
       </div>
 
-      <!-- Right Column: Expressive Interactive Hero Mockup -->
-      <div class="lg:col-span-5 relative flex justify-center lg:justify-end mt-12 lg:mt-0">
-        
-        <!-- Floating decorative pastilles inspired by brand badge -->
-        <div class="absolute -top-5 left-0 sm:-top-6 sm:left-4 z-20 bg-surface-container-lowest p-2.5 sm:p-3 rounded-2xl shadow-xl flex items-center gap-2 sm:gap-3 animate-bounce" style="animation-duration: 4s;">
-          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary-container flex items-center justify-center text-on-primary">
-            <span class="material-symbols-outlined text-xl">palette</span>
-          </div>
-          <div class="flex flex-col">
-            <span class="font-label-caps text-label-caps text-on-surface-variant">Palette active</span>
-            <span class="font-label-md text-label-md text-on-surface font-bold">Coucher de Soleil</span>
-          </div>
-        </div>
-
-        <div class="absolute -bottom-5 right-0 sm:-bottom-6 sm:right-6 z-20 bg-surface-container-lowest px-3 py-2.5 sm:px-4 sm:py-3 rounded-2xl shadow-xl hidden sm:flex items-center gap-2 sm:gap-3">
-          <div class="w-8 h-8 rounded-full bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed">
-            <span class="material-symbols-outlined text-lg">verified</span>
-          </div>
-          <div class="flex flex-col">
-            <span class="font-label-caps text-label-caps text-tertiary">Correction d'erreur</span>
-            <span class="font-label-md text-label-md text-on-surface font-extrabold">Haute (30% - ECL H)</span>
-          </div>
-        </div>
-
-        <!-- Featured Showcase Card: Black Frame with Menu QR code -->
-        <div class="relative w-full max-w-[380px] bg-inverse-surface text-inverse-on-surface p-6 rounded-[2.5rem] shadow-[0_24px_50px_-12px_rgba(26,27,33,0.35)] flex flex-col items-center">
-          
-          <!-- Top Eyebrow / Indicator -->
-          <div class="w-full flex items-center justify-between mb-5 px-1">
-            <div class="flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-secondary-container animate-pulse"></span>
-              <span class="font-label-caps text-label-caps tracking-wider text-surface-variant/90 uppercase font-semibold">
-                {{ currentStyle().label }}
-              </span>
-            </div>
-            <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-variant/20 text-surface-variant/80 text-xs">
-              <span class="material-symbols-outlined text-secondary-container text-sm animate-spin" style="animation-duration: 4s;">autorenew</span>
-              <span>Dynamique</span>
-            </div>
-          </div>
-
-          <!-- Inner White Plate for High Contrast Scanning -->
-          <div class="w-full aspect-square bg-surface-container-lowest rounded-[2rem] p-5 shadow-inner flex flex-col items-center justify-center relative overflow-hidden group">
-            @if (currentSvg()) {
-              <div
-                class="w-full h-full flex items-center justify-center transition-all duration-300 [&>svg]:w-full [&>svg]:h-full [&>svg]:max-w-full [&>svg]:max-h-full"
-                [class.opacity-0]="isTransitioning()"
-                [class.opacity-100]="!isTransitioning()"
-                [class.scale-95]="isTransitioning()"
-                [class.scale-100]="!isTransitioning()"
-                [innerHTML]="currentSvg()">
-              </div>
-            } @else {
-              <!-- Fallback / skeleton loader -->
-              <div class="w-full h-full flex flex-col items-center justify-center gap-3 animate-pulse">
-                <div class="w-48 h-48 rounded-2xl bg-surface-variant/10 flex items-center justify-center">
-                  <span class="material-symbols-outlined text-4xl text-surface-variant/40">qr_code_2</span>
-                </div>
-              </div>
-            }
-          </div>
-
-          <!-- Integrated Callout Banner -->
-          <div class="w-full mt-4 py-3 px-3 sm:py-3.5 sm:px-4 bg-surface-variant/20 rounded-2xl flex items-center justify-center sm:justify-between gap-2 text-center">
-            <span class="font-label-lg text-label-lg text-inverse-on-surface font-extrabold tracking-wide uppercase flex items-center gap-2 min-w-0">
-              <span class="truncate">SCANNEZ : « BIENVENUE »</span>
-              <span class="text-base shrink-0">✨</span>
-            </span>
-            <span class="material-symbols-outlined text-secondary-container text-xl shrink-0">qr_code_scanner</span>
-          </div>
-          <p class="mt-3 font-body-sm text-body-sm text-surface-variant/70 text-center">Compatible appareil photo natif iOS &amp; Android</p>
-        </div>
+      <div class="flex flex-wrap gap-x-6 gap-y-2 pt-2 text-[13px] text-qc-on-dark-muted dk:text-[14px]">
+        @for (item of content().guarantees; track item; let i = $index) {
+          <span class="flex items-center gap-2">
+            <span class="text-qc-accent-on-dark"><qc-icon name="check" [size]="16" [strokeWidth]="2.4" /></span>
+            <span class="dk:hidden">{{ content().guaranteesMobile[i] }}</span>
+            <span class="hidden dk:inline">{{ item }}</span>
+          </span>
+        }
       </div>
-
     </div>
-  </section>
-</div>
+
+    <!-- Visuel : mobile = une carte -->
+    <div class="flex items-center gap-4 rounded-qc-card-lg bg-white p-[18px] text-qc-text dk:hidden">
+      <div class="flex-none rounded-qc-md bg-qc-qr-canvas p-2.5">
+        <qc-icon name="qr-sample" [size]="104" [label]="'Exemple de QR code personnalisé'" />
+      </div>
+      <div class="flex min-w-0 flex-col gap-1.5">
+        <span class="text-[12px] text-qc-muted">{{ card().locationLabel }}</span>
+        <span class="font-qc-display text-[28px] font-bold leading-none">{{ scans().total }}</span>
+        <span class="text-[12px] text-qc-muted">scans · 7 jours</span>
+        <qc-badge variant="success" class="text-[11px]">Dernier : il y a 2 min</qc-badge>
+      </div>
+    </div>
+
+    <!-- Visuel : desktop = trois cartes flottantes -->
+    <div class="relative hidden h-[520px] dk:block">
+      <div class="absolute left-10 top-5 w-[360px] rounded-qc-xl bg-white p-7 text-qc-text shadow-qc-hero">
+        <div class="mb-5 flex items-center justify-between">
+          <span class="text-[13px] font-semibold">{{ card().locationLabel }}</span>
+          <qc-badge variant="success">{{ card().statusLabel }}</qc-badge>
+        </div>
+        <div class="flex justify-center rounded-qc-card bg-qc-qr-canvas p-6">
+          <qc-icon name="qr-sample" [size]="240" [label]="'Exemple de QR code personnalisé'" />
+        </div>
+        <div class="mt-4 rounded-qc-ctl bg-qc-ink py-3 text-center font-qc-display text-[15px] font-bold uppercase tracking-[0.08em] text-white">
+          {{ card().caption }}
+        </div>
+      </div>
+
+      <div class="absolute right-0 top-0 w-[230px] rounded-qc-lg border border-qc-ink-line bg-qc-ink-2 p-[18px]">
+        <div class="text-[12px] text-qc-on-dark-muted">{{ scans().label }}</div>
+        <div class="mb-2.5 mt-1 font-qc-display text-qc-num-xl font-bold">{{ scans().total }}</div>
+        <qc-sparkline
+          [points]="scanPoints()"
+          [scale]="scans().scale"
+          [xs]="scans().xs"
+          [width]="194"
+          [height]="56" />
+      </div>
+
+      <div class="absolute bottom-10 right-2.5 flex w-[260px] flex-col gap-3 rounded-qc-lg border border-qc-ink-line bg-qc-ink-2 p-[18px]">
+        <div class="text-[12px] text-qc-on-dark-muted">{{ lastScan().ageLabel }}</div>
+        @for (row of lastScan().rows; track row.text) {
+          <div class="flex items-center gap-2.5 text-[14px]">
+            <span class="text-qc-accent-on-dark"><qc-icon [name]="row.icon" [size]="18" /></span>
+            {{ row.text }}
+          </div>
+        }
+      </div>
+
+      <div class="absolute bottom-0 left-0 text-[11px] text-qc-on-dark-subtle">Données d'exemple</div>
+    </div>
+  </div>
+</section>

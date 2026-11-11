@@ -1,7 +1,7 @@
 <svg
   [attr.width]="size()"
   [attr.height]="size()"
-  viewBox="0 0 24 24"
+  [attr.viewBox]="definition().viewBox ?? '0 0 24 24'"
   class="shrink-0"
   [attr.fill]="definition().mode === 'stroke' ? 'none' : null"
   [attr.stroke]="definition().mode === 'stroke' ? 'currentColor' : null"

@@ -84,12 +84,17 @@ export const ICON_REGISTRY: Record<IconName, IconDefinition> = {
       { tag: 'path', d: 'M10 9.5v5l4.5-2.5z', filled: true },
     ],
   },
+  play: {
+    mode: 'fill',
+    elements: [{ tag: 'path', d: 'M8 5v14l11-7z', className: 'fill-current' }],
+  },
   upload: {
     mode: 'stroke',
     elements: [{ tag: 'path', d: 'M12 16V4M6 10l6-6 6 6M4 20h16' }],
   },
   'qr-sample': {
     mode: 'fill',
+    viewBox: '-1 -1 27 27',
     elements: [
       {
         tag: 'path',

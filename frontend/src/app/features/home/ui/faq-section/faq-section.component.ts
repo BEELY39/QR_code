@@ -1,19 +1,26 @@
-import { Component, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FaqItem } from '../../../../core/models/faq.model';
-import { FAQ_ITEMS } from '../../../../core/constants/faq.constant';
+import { LANDING_FAQ_IDS, selectFaqItems } from '../../../../core/constants/faq.constant';
+import { LANDING_CONTENT } from '../../../../core/constants/landing.constant';
+import { IconComponent } from '../../../../shared/ui/icon/icon.component';
 
+/** Accordéon de la landing : 6 questions, 4 visibles en mobile (FR-029). */
 @Component({
   selector: 'app-faq-section',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [RouterLink, IconComponent],
   templateUrl: './faq-section.component.html',
-  styleUrl: './faq-section.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FaqSectionComponent {
-  /** Liste des questions/réponses de la FAQ */
-  readonly faqs = signal<readonly FaqItem[]>(FAQ_ITEMS);
+  /** Questions affichées, dans l'ordre de la maquette. */
+  readonly faqs = signal<readonly FaqItem[]>(selectFaqItems(LANDING_FAQ_IDS));
+
+  /** Nombre de questions visibles en mobile. */
+  readonly mobileCount = 4;
+
+  readonly content = LANDING_CONTENT.faq;
 
   /** Identifiant de la question actuellement dépliée (la première par défaut) */
   readonly openFaqId = signal<string | null>('faq-free');

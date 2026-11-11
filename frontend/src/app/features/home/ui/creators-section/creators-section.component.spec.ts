@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { VideoSectionComponent } from './video-section.component';
+import { CreatorsSectionComponent } from './creators-section.component';
 import {
   PRESENTATION_VIDEO,
   buildEmbedUrl,
@@ -10,24 +10,28 @@ import {
   toReadableDuration,
 } from '../../../../core/constants/video.constant';
 
-describe('VideoSectionComponent', () => {
-  let fixture: ComponentFixture<VideoSectionComponent>;
+describe('CreatorsSectionComponent (lecteur différé)', () => {
+  let fixture: ComponentFixture<CreatorsSectionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [VideoSectionComponent],
+      imports: [CreatorsSectionComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(VideoSectionComponent);
+    fixture = TestBed.createComponent(CreatorsSectionComponent);
     fixture.detectChanges();
   });
 
-  it('ne rend la section que si une source vidéo est configurée', () => {
-    const section = fixture.nativeElement.querySelector('section#demo');
+  it('should create', () => {
+    expect(fixture.componentInstance).toBeTruthy();
+  });
+
+  it('rend le lecteur seulement si une source vidéo est configurée', () => {
+    const player = fixture.nativeElement.querySelector('#demo');
     if (hasVideoSource(PRESENTATION_VIDEO)) {
-      expect(section).toBeTruthy();
+      expect(player).toBeTruthy();
     } else {
-      expect(section).toBeNull();
+      expect(player).toBeNull();
     }
   });
 
@@ -50,6 +54,10 @@ describe('VideoSectionComponent', () => {
     expect(fixture.componentInstance.isStarted()).toBe(true);
     expect(el.querySelector('#presentation-video')).toBeTruthy();
     expect(el.querySelector('#video-play-button')).toBeNull();
+  });
+
+  it('marque la carte de chiffres comme données d\'exemple', () => {
+    expect(fixture.nativeElement.textContent).toContain("Données d'exemple");
   });
 });
 

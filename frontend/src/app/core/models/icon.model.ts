@@ -19,6 +19,7 @@ export type IconName =
   | 'utensils'
   | 'billboard'
   | 'video'
+  | 'play'
   | 'upload'
   | 'qr-sample';
 
@@ -54,5 +55,7 @@ export type IconElement = IconPath | IconRect | IconCircle;
 export interface IconDefinition {
   /** `stroke` : trait fin de la refonte ; `fill` : motif plein (QR illustratif) */
   readonly mode: 'stroke' | 'fill';
+  /** Par défaut `0 0 24 24` ; le QR illustratif déborde (`-1 -1 27 27`). */
+  readonly viewBox?: string;
   readonly elements: readonly IconElement[];
 }

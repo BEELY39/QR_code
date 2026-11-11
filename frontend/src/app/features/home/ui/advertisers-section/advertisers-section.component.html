@@ -1,0 +1,32 @@
+<section class="bg-qc-surface py-14 dk:py-28">
+  <div class="mx-auto flex w-full max-w-qc flex-col gap-4 px-4 dk:grid dk:grid-cols-2 dk:items-start dk:gap-16 dk:px-8">
+
+    <div class="flex flex-col gap-4">
+      <span class="text-[12px] font-semibold uppercase tracking-[0.08em] text-qc-accent dk:text-[13px]">{{ heading().eyebrow }}</span>
+      <h2 class="font-qc-display text-qc-h2-m font-bold tracking-[-0.03em] dk:text-qc-h2 text-qc-text">{{ heading().title }}</h2>
+      @if (heading().lead) {
+        <p class="hidden text-[18px] leading-[1.6] text-qc-muted dk:block">{{ heading().lead }}</p>
+      }
+    </div>
+
+    <!-- Mobile : liste compacte dans une carte -->
+    <div class="flex flex-col rounded-qc-card-lg bg-white px-4.5 py-1 text-[15px] dk:hidden">
+      @for (benefit of benefits(); track benefit.title; let i = $index) {
+        <div class="py-3.5 {{ i < benefits().length - 1 ? 'border-b border-qc-line-soft' : '' }}">
+          <strong>{{ benefit.titleMobile }}</strong>
+          <span class="text-qc-muted"> {{ benefit.descriptionMobile }}</span>
+        </div>
+      }
+    </div>
+
+    <!-- Desktop : cartes -->
+    <div class="hidden flex-col gap-3 dk:flex">
+      @for (benefit of benefits(); track benefit.title) {
+        <div class="flex flex-col gap-1.5 rounded-qc-card bg-white px-6 py-5.5">
+          <strong class="text-[16px]">{{ benefit.title }}</strong>
+          <span class="text-[15px] leading-[1.55] text-qc-muted">{{ benefit.description }}</span>
+        </div>
+      }
+    </div>
+  </div>
+</section>

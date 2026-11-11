@@ -1,70 +1,43 @@
-<footer class="w-full bg-surface-container-low text-on-surface-variant mt-space-xl">
-  <div class="max-w-[1440px] mx-auto px-margin-sm sm:px-margin py-space-xl">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-gutter mb-space-xl">
-      
-      <!-- Column 1: Brand & Bio -->
-      <div class="flex flex-col gap-space-sm">
-        <div class="flex items-center gap-space-sm mb-space-xs">
-          <div class="w-7 h-7 rounded-lg bg-primary flex items-center justify-center text-on-primary text-sm shadow-xs">
-            <span class="material-symbols-outlined text-base">qr_code_2</span>
-          </div>
-          <span class="font-title-md text-title-md text-on-surface font-bold">QRCraft</span>
+<footer class="bg-qc-ink px-4 pb-7 pt-9 text-qc-on-dark-muted dk:px-8 dk:pb-10 dk:pt-18">
+  <div class="mx-auto flex w-full max-w-qc flex-col gap-5 dk:gap-12">
+
+    <!-- Desktop : quatre colonnes -->
+    <div class="hidden gap-10 dk:grid dk:grid-cols-4">
+      <div class="flex flex-col gap-3.5">
+        <span class="font-qc-display text-[20px] font-bold text-white">QRCraft</span>
+        <p class="text-[14px] leading-[1.6]">{{ content().tagline }}</p>
+      </div>
+      @for (column of content().columns; track column.title) {
+        <div class="flex flex-col gap-2.5 text-[14px]">
+          <strong class="mb-1 text-white">{{ column.title }}</strong>
+          @for (link of column.links; track link.label) {
+            @if (link.isRoute) {
+              <a [routerLink]="link.href" class="text-qc-on-dark-muted no-underline hover:text-white">{{ link.label }}</a>
+            } @else {
+              <a [href]="link.href" class="text-qc-on-dark-muted no-underline hover:text-white">{{ link.label }}</a>
+            }
+          }
         </div>
-        <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
-          Générateur de QR codes vectoriels gratuit, privé et permanent. Vos données ne quittent jamais votre navigateur.
-        </p>
-      </div>
-
-      <!-- Column 2: Studio & Formats -->
-      <div class="flex flex-col gap-space-sm">
-        <span class="font-label-caps text-label-caps text-on-surface uppercase tracking-wider font-bold">Studio &amp; Formats</span>
-        <a class="font-body-md text-body-md hover:text-primary transition-colors" href="#simulateur">Studio Vectoriel</a>
-        <a class="font-body-md text-body-md hover:text-primary transition-colors" routerLink="/qr-code-wifi">Générateur QR Wi-Fi</a>
-        <a class="font-body-md text-body-md hover:text-primary transition-colors" routerLink="/qr-code-svg">Export SVG vectoriel</a>
-        <a class="font-body-md text-body-md hover:text-primary transition-colors" routerLink="/" fragment="print-pack">Pack impression PDF</a>
-        <span class="font-body-md text-body-md text-on-surface-variant">Correction d'erreur Haute (30%)</span>
-      </div>
-
-      <!-- Column 3: Guides & FAQ -->
-      <div class="flex flex-col gap-space-sm">
-        <span class="font-label-caps text-label-caps text-on-surface uppercase tracking-wider font-bold">Guides &amp; FAQ</span>
-        <a class="font-body-md text-body-md hover:text-primary transition-colors" routerLink="/articles">Fiches Guides &amp; Astuces</a>
-        <a class="font-body-md text-body-md hover:text-primary transition-colors" href="#faq">Questions Fréquentes (FAQ)</a>
-        <a class="font-body-md text-body-md hover:text-primary transition-colors" href="#alternatives">Comparatif Alternatives</a>
-        <a class="font-body-md text-body-md hover:text-primary transition-colors" routerLink="/qr-code-statique-vs-dynamique">Statique ou dynamique ?</a>
-      </div>
-
-      <!-- Column 4: Légal & Valeurs -->
-      <div class="flex flex-col gap-space-sm">
-        <span class="font-label-caps text-label-caps text-on-surface uppercase tracking-wider font-bold">Légal &amp; Valeurs</span>
-        <a class="font-body-md text-body-md hover:text-primary transition-colors" routerLink="/mentions-legales">Mentions Légales</a>
-        <a class="font-body-md text-body-md hover:text-primary transition-colors" routerLink="/confidentialite">Confidentialité &amp; RGPD</a>
-        <span class="font-body-md text-body-md text-on-surface-variant">Zéro Abonnement Caché</span>
-        <span class="font-body-md text-body-md text-on-surface-variant">QR Statiques Permanents</span>
-      </div>
-
+      }
     </div>
 
-    <!-- Bottom copyright bar -->
-    <div class="flex flex-col sm:flex-row items-center justify-between gap-space-md pt-space-lg bg-surface-container/50 rounded-xl px-space-lg py-4">
-      <div class="flex flex-col sm:flex-row items-center gap-space-sm sm:gap-space-md">
-        <p class="font-body-sm text-body-sm text-on-surface-variant">© 2026 QRCraft Studio. Tous droits réservés.</p>
-        <span class="hidden sm:inline-block w-1 h-1 rounded-full bg-outline-variant"></span>
-        <a
-          id="footer-legal-link"
-          class="inline-flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors"
-          routerLink="/mentions-legales">
-          <span class="material-symbols-outlined text-base">gavel</span>
-          Mentions légales
-        </a>
-      </div>
-      <div class="flex items-center gap-space-md font-body-sm text-body-sm">
-        <span class="text-tertiary font-semibold flex items-center gap-space-xs">
-          <span class="inline-block w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
-          Génération 100% locale sécurisée
-        </span>
+    <!-- Mobile : bloc de marque + liens compacts -->
+    <div class="flex flex-col gap-5 dk:hidden">
+      <span class="font-qc-display text-[18px] font-bold text-white">QRCraft</span>
+      <div class="grid grid-cols-2 gap-3 text-[14px]">
+        @for (link of content().mobileLinks; track link.label) {
+          @if (link.isRoute) {
+            <a [id]="link.id ?? null" [routerLink]="link.href" class="text-qc-on-dark-muted no-underline">{{ link.label }}</a>
+          } @else {
+            <a [id]="link.id ?? null" [href]="link.href" class="text-qc-on-dark-muted no-underline">{{ link.label }}</a>
+          }
+        }
       </div>
     </div>
 
+    <div class="flex flex-wrap items-center justify-between gap-3 border-t border-qc-ink-line-soft pt-4 text-[12px] dk:pt-6 dk:text-[13px]">
+      <span>{{ content().copyright }}</span>
+      <span class="hidden dk:inline">{{ content().madeIn }}</span>
+    </div>
   </div>
 </footer>

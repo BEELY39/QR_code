@@ -1,11 +1,14 @@
 import { Component, inject } from '@angular/core';
 import { NavbarComponent } from './ui/navbar/navbar.component';
 import { HeroSectionComponent } from './ui/hero-section/hero-section.component';
-import { VideoSectionComponent } from './ui/video-section/video-section.component';
+import { UseCasesStripComponent } from './ui/use-cases-strip/use-cases-strip.component';
+import { StaticVsDynamicComponent } from './ui/static-vs-dynamic/static-vs-dynamic.component';
+import { ModelSectionComponent } from './ui/model-section/model-section.component';
+import { TrackerSectionComponent } from './ui/tracker-section/tracker-section.component';
+import { AdvertisersSectionComponent } from './ui/advertisers-section/advertisers-section.component';
+import { CreatorsSectionComponent } from './ui/creators-section/creators-section.component';
 import { SimulatorSectionComponent } from './ui/simulator-section/simulator-section.component';
-import { FeaturesSectionComponent } from './ui/features-section/features-section.component';
-import { ShowcaseSectionComponent } from './ui/showcase-section/showcase-section.component';
-import { AlternativesSectionComponent } from './ui/alternatives-section/alternatives-section.component';
+import { PrivacyNoteComponent } from './ui/privacy-note/privacy-note.component';
 import { FaqSectionComponent } from './ui/faq-section/faq-section.component';
 import { CtaBannerComponent } from './ui/cta-banner/cta-banner.component';
 import { FooterComponent } from './ui/footer/footer.component';
@@ -13,18 +16,26 @@ import { QrSimulatorService } from './data-access/qr-simulator.service';
 import { SeoService } from '../../core/services/seo.service';
 import { SITE_URL } from '../../core/constants/site.constant';
 import { PRESENTATION_VIDEO } from '../../core/constants/video.constant';
+import { LANDING_FAQ_IDS, selectFaqItems } from '../../core/constants/faq.constant';
 
+/**
+ * Smart component de la landing : compose les 14 blocs et porte les
+ * métadonnées SEO. Aucun texte éditorial ici (FR-018).
+ */
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
     NavbarComponent,
     HeroSectionComponent,
-    VideoSectionComponent,
+    UseCasesStripComponent,
+    StaticVsDynamicComponent,
+    ModelSectionComponent,
+    TrackerSectionComponent,
+    AdvertisersSectionComponent,
+    CreatorsSectionComponent,
     SimulatorSectionComponent,
-    FeaturesSectionComponent,
-    ShowcaseSectionComponent,
-    AlternativesSectionComponent,
+    PrivacyNoteComponent,
     FaqSectionComponent,
     CtaBannerComponent,
     FooterComponent,
@@ -41,6 +52,8 @@ export class HomeComponent {
     seo.updateCanonical(`${SITE_URL}/`);
     // Déclare la vidéo de démonstration aux moteurs (extrait vidéo possible).
     seo.updateVideoSchema(PRESENTATION_VIDEO, SITE_URL);
+    // Le schéma FAQ ne décrit que les questions réellement affichées (FR-038).
+    seo.updateFaqSchema(selectFaqItems(LANDING_FAQ_IDS));
   }
 }
 export { HomeComponent as Home };

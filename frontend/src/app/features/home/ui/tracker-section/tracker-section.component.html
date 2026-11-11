@@ -1,0 +1,39 @@
+<section id="tracker" class="bg-white py-14 dk:py-28">
+  <div class="mx-auto flex w-full max-w-qc flex-col gap-5 px-4 dk:gap-14 dk:px-8">
+
+    <div class="flex flex-col gap-4 dk:flex-row dk:flex-wrap dk:items-end dk:justify-between dk:gap-6">
+      <div class="flex max-w-[640px] flex-col gap-4">
+        <span class="text-[12px] font-semibold uppercase tracking-[0.08em] text-qc-accent dk:text-[13px]">{{ eyebrow() }}</span>
+        <h2 class="font-qc-display text-qc-h2-m font-bold tracking-[-0.03em] dk:text-qc-h2 text-qc-text">{{ title() }}</h2>
+      </div>
+      <a [href]="cta().href" class="hidden items-center gap-2 font-semibold text-qc-text no-underline dk:inline-flex">
+        {{ cta().label }}
+        <qc-icon name="arrow-right" [size]="18" [strokeWidth]="2" />
+      </a>
+    </div>
+
+    <!-- Mobile : grille 2 × 2 compacte -->
+    <div class="grid grid-cols-2 gap-2.5 dk:hidden">
+      @for (pillar of pillars(); track pillar.title) {
+        <div class="flex flex-col gap-2 rounded-qc-card border border-qc-line p-4">
+          <span class="text-qc-accent"><qc-icon [name]="pillar.icon" [size]="22" /></span>
+          <h3 class="font-qc-display text-[16px] font-bold">{{ pillar.title }}</h3>
+          <p class="text-[13px] text-qc-muted">{{ pillar.descriptionMobile }}</p>
+        </div>
+      }
+    </div>
+
+    <!-- Desktop : quatre cartes -->
+    <div class="hidden gap-6 dk:grid dk:grid-cols-4">
+      @for (pillar of pillars(); track pillar.title) {
+        <div class="flex flex-col gap-3.5 rounded-qc-card-lg border border-qc-line p-7">
+          <span class="text-qc-accent"><qc-icon [name]="pillar.icon" [size]="28" /></span>
+          <h3 class="font-qc-display text-[20px] font-bold">{{ pillar.title }}</h3>
+          <p class="text-[15px] leading-[1.6] text-qc-muted">{{ pillar.description }}</p>
+        </div>
+      }
+    </div>
+
+    <app-dashboard-teaser />
+  </div>
+</section>

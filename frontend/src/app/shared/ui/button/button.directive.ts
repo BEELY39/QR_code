@@ -1,7 +1,7 @@
 import { Directive, booleanAttribute, computed, input } from '@angular/core';
 
-export type QcButtonVariant = 'primary' | 'dark' | 'outline' | 'ghost-dark' | 'light';
-export type QcButtonSize = 'md' | 'lg';
+export type QcButtonVariant = 'primary' | 'dark' | 'outline' | 'ghost-dark' | 'ghost-accent' | 'light';
+export type QcButtonSize = 'md' | 'lg' | 'xl';
 
 const BASE =
   'inline-flex items-center justify-center gap-2.5 font-semibold rounded-qc-md no-underline cursor-pointer transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-qc-accent';
@@ -12,11 +12,13 @@ const VARIANT: Readonly<Record<QcButtonVariant, string>> = {
   light: 'bg-white text-qc-text hover:bg-qc-surface',
   outline: 'border border-qc-text text-qc-text bg-transparent hover:bg-qc-surface',
   'ghost-dark': 'border border-qc-outline-on-dark text-white bg-transparent hover:bg-qc-ink-2',
+  'ghost-accent': 'border border-white text-white bg-transparent hover:bg-white/10',
 };
 
 const SIZE: Readonly<Record<QcButtonSize, string>> = {
   md: 'h-11 px-5 text-qc-body-sm',
   lg: 'h-13 px-6 text-qc-body',
+  xl: 'h-[54px] px-6 text-qc-body',
 };
 
 /**

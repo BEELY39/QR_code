@@ -1,8 +1,18 @@
 <app-navbar />
-<main class="w-full pt-20 bg-background">
-  <div class="flex flex-col w-full overflow-hidden">
-    <app-hero-section />
-    <app-video-section />
+<main class="w-full bg-white">
+  <app-hero-section />
+  <app-use-cases-strip />
+  <app-static-vs-dynamic />
+  <app-model-section />
+  <app-tracker-section />
+
+  <!-- Advertisers et créateurs : ordre inversé selon la largeur (FR-023) -->
+  <div class="flex w-full flex-col">
+    <app-creators-section class="order-1 dk:order-2" />
+    <app-advertisers-section class="order-2 dk:order-1" />
+  </div>
+
+  <div id="studio" class="scroll-mt-0">
     <app-simulator-section
       [mode]="simulatorService.mode()"
       [rawValue]="simulatorService.rawValue()"
@@ -17,7 +27,7 @@
       [design]="simulatorService.design()"
       (modeChange)="simulatorService.setMode($event)"
       (wifiConfigChange)="simulatorService.setWifiConfig($event)"
-      (designChange)="simulatorService.updateDesign($event)"  
+      (designChange)="simulatorService.updateDesign($event)"
       (valueChange)="simulatorService.setValue($event)"
       (urlChange)="simulatorService.setUrl($event)"
       (paletteSelect)="simulatorService.selectPalette($event)"
@@ -25,11 +35,10 @@
       (printPackClick)="simulatorService.downloadPrintPack($event.format, $event.withCredit)"
       (downloadClick)="simulatorService.downloadSvg()"
       (downloadPngClick)="simulatorService.downloadPng()" />
-    <app-features-section />
-    <app-showcase-section />
-    <app-alternatives-section />
-    <app-faq-section />
-    <app-cta-banner />
   </div>
+
+  <app-privacy-note />
+  <app-faq-section />
+  <app-cta-banner />
 </main>
 <app-footer />

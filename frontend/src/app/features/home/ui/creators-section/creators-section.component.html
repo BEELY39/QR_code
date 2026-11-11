@@ -1,0 +1,136 @@
+<section id="createurs" class="bg-qc-ink py-14 text-white dk:py-28">
+  <div class="mx-auto flex w-full max-w-qc flex-col gap-5 px-4 dk:grid dk:grid-cols-2 dk:items-center dk:gap-16 dk:px-8">
+
+    <!-- Texte -->
+    <div class="flex flex-col gap-4 dk:gap-5.5">
+      <span class="inline-flex items-center gap-2 self-start text-[12px] font-semibold uppercase tracking-[0.08em] text-qc-creator dk:text-[13px]">
+        <qc-icon name="video" [size]="18" [strokeWidth]="2" />
+        {{ content().eyebrow }}
+      </span>
+
+      <h2 class="font-qc-display text-qc-h2-m font-bold tracking-[-0.03em] dk:text-qc-h2">
+        <span class="dk:hidden">{{ content().titleLead }} </span>
+        <span class="hidden dk:inline">{{ content().titleLead }}<br /></span>
+        <span class="text-qc-accent-on-dark">{{ content().titleAccent }}</span>
+      </h2>
+
+      <p class="text-[15px] leading-[1.6] text-qc-on-dark-muted dk:hidden">{{ content().leadMobile }}</p>
+      <p class="hidden text-[18px] leading-[1.6] text-qc-on-dark-muted dk:block">{{ content().lead }}</p>
+
+      <div class="hidden flex-wrap gap-2.5 text-[14px] dk:flex">
+        @for (tag of content().tags; track tag.term) {
+          <span class="rounded-[10px] border border-qc-ink-line bg-qc-ink-2 px-3.5 py-2">
+            <strong>{{ tag.term }}</strong>{{ tag.definition }}
+          </span>
+        }
+      </div>
+
+      <ul class="hidden flex-col gap-3.5 text-[15px] text-qc-on-dark-list dk:flex">
+        @for (bullet of content().bullets; track bullet) {
+          <li class="flex gap-3">
+            <span class="shrink-0 text-qc-accent-on-dark"><qc-icon name="check" [size]="20" [strokeWidth]="2.2" /></span>
+            {{ bullet }}
+          </li>
+        }
+      </ul>
+
+      <div class="hidden flex-wrap gap-3 dk:flex">
+        <a qcButton="light" qcSize="lg" [href]="content().ctaPrimary.href">{{ content().ctaPrimary.label }}</a>
+        <a qcButton="ghost-dark" qcSize="lg" [href]="content().ctaSecondary.href">{{ content().ctaSecondary.label }}</a>
+      </div>
+    </div>
+
+    <!-- Lecteur différé + carte de chiffres -->
+    <div class="flex flex-col gap-4">
+      @if (isConfigured) {
+        <div id="demo" class="relative aspect-video overflow-hidden rounded-qc-card-lg border border-qc-ink-line bg-qc-ink-3">
+          @if (isStarted()) {
+            @if (embedUrl(); as url) {
+              <!-- L'iframe n'existe qu'après le clic : aucun cookie YouTube avant -->
+              <iframe
+                id="presentation-video"
+                class="absolute inset-0 h-full w-full"
+                [src]="url"
+                [title]="video.title"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen>
+              </iframe>
+            } @else if (fileSource(); as file) {
+              <video
+                id="presentation-video"
+                class="absolute inset-0 h-full w-full"
+                [attr.width]="video.width"
+                [attr.height]="video.height"
+                controls
+                autoplay
+                playsinline
+                preload="auto">
+                <source [src]="file.src" [type]="file.mimeType" />
+                Votre navigateur ne peut pas lire cette vidéo.
+              </video>
+            }
+          } @else {
+            <button
+              id="video-play-button"
+              type="button"
+              (click)="start()"
+              [attr.aria-label]="'Lire la vidéo : ' + video.title + ' (' + duration + ')'"
+              class="absolute inset-0 flex h-full w-full cursor-pointer flex-col items-center justify-center gap-3 bg-gradient-to-br from-qc-accent to-qc-ink-2 text-white">
+              <span class="flex h-16 w-16 items-center justify-center rounded-full bg-white text-qc-accent">
+                <qc-icon name="play" [size]="30" />
+              </span>
+              <span class="px-4 text-center font-qc-display text-[18px] font-bold">{{ video.title }}</span>
+              <span class="text-[13px] text-white/80">{{ duration }} · se lance au clic</span>
+            </button>
+
+            <span class="absolute bottom-4 left-4 flex items-center gap-2 rounded-[10px] bg-qc-ink/85 px-3 py-2 text-[13px] font-semibold">
+              <span class="rounded-[5px] bg-qc-youtube px-1.5 py-0.5 text-[11px]">SPONSO</span>
+              {{ duration }}
+            </span>
+
+            <div class="absolute bottom-4 right-4 flex flex-col items-center gap-1.5 rounded-[14px] bg-white p-2.5 dk:bottom-5 dk:right-5">
+              <qc-icon name="qr-sample" [size]="72" [label]="'QR code de la vidéo'" />
+              <span class="text-[11px] font-bold tracking-[0.04em] text-qc-text">SCANNEZ-MOI</span>
+            </div>
+          }
+        </div>
+      }
+
+      <!-- Desktop : carte de chiffres -->
+      <div class="hidden flex-col gap-3.5 rounded-qc-card-lg border border-qc-ink-line bg-qc-ink-2 p-5.5 dk:flex">
+        <div class="flex items-start justify-between gap-3">
+          <div class="flex flex-col gap-1">
+            <span class="text-[13px] text-qc-on-dark-muted">{{ highlight().sponsorLabel }}</span>
+            <span class="font-qc-display text-[30px] font-bold">{{ highlight().value }}</span>
+          </div>
+          <qc-badge variant="success-on-dark" class="whitespace-nowrap">{{ highlight().badgeLabel }}</qc-badge>
+        </div>
+        <qc-sparkline
+          [points]="highlight().series.points"
+          [xs]="highlight().series.xs"
+          [scale]="highlight().series.scale"
+          [width]="480"
+          [height]="90"
+          [strokeWidth]="2.5"
+          [fillOpacity]="0.15"
+          [fluid]="true" />
+        <div class="flex justify-between text-[11px] text-qc-on-dark-subtle">
+          @for (label of highlight().series.axisLabels; track label) {
+            <span>{{ label }}</span>
+          }
+        </div>
+        <span class="text-[11px] text-qc-on-dark-subtle">Données d'exemple</span>
+      </div>
+
+      <!-- Mobile : deux tuiles chiffrées + CTA pleine largeur -->
+      <div class="grid grid-cols-2 gap-2.5 dk:hidden">
+        @for (tile of highlight().tiles; track tile.label) {
+          <qc-kpi-tile [label]="tile.label" [value]="tile.value" size="md" tone="dark" />
+        }
+      </div>
+      <a qcButton="light" qcSize="xl" [qcBlock]="true" [href]="content().ctaSecondary.href" class="dk:hidden">{{ content().ctaSecondary.label }}</a>
+      <span class="text-[11px] text-qc-on-dark-subtle dk:hidden">Données d'exemple</span>
+    </div>
+  </div>
+</section>

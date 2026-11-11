@@ -1,56 +1,56 @@
-<header class="fixed top-0 left-0 right-0 z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(31,32,70,0.04)]">
-  <div class="h-20 max-w-[1440px] mx-auto px-margin-sm sm:px-margin flex items-center justify-between gap-space-md">
-    <div class="flex items-center gap-space-md">
-      <a class="flex items-center gap-space-sm" routerLink="/">
-        <div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary shadow-sm">
-          <span class="material-symbols-outlined text-xl">qr_code_2</span>
-        </div>
-        <span class="font-title-md text-title-md text-on-surface tracking-tight font-bold">QRCraft</span>
-      </a>
-    </div>
-    <nav class="hidden md:flex items-center gap-space-xs p-space-xs bg-surface-container-low rounded-full">
-      <a class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" routerLink="/" routerLinkActive="bg-primary-fixed text-on-primary-fixed font-semibold" [routerLinkActiveOptions]="{ exact: true }">Accueil</a>
-      <a class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" href="#simulateur">Studio</a>
-      <a class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" href="#galerie">Galerie</a>
-      <a id="nav-articles-link" class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" routerLink="/articles" routerLinkActive="bg-primary-fixed text-on-primary-fixed font-semibold">Articles</a>
-      <a class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" href="#faq">FAQ</a>
-    </nav>
-    <div class="flex items-center gap-space-md">
-      <a class="hidden sm:inline-flex items-center justify-center px-space-lg py-space-sm bg-primary-container text-on-primary font-label-lg text-label-lg rounded-full shadow-[0_4px_20px_-2px_rgba(91,77,255,0.25)] hover:bg-primary transition-all" href="#simulateur">Ouvrir le Studio</a>
-      <div class="flex items-center gap-space-sm pl-space-xs">
-        <button aria-label="Menu utilisateur" class="p-space-xs rounded-full hover:bg-surface-container-high transition-colors" type="button">
-          <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-primary to-secondary-container flex items-center justify-center text-white text-xs font-bold shadow-sm">
-            JD
-          </div>
-        </button>
-      </div>
+<header class="sticky top-0 z-50 dk:relative bg-qc-ink border-b border-qc-ink-line-soft">
+  <div class="mx-auto flex h-15 dk:h-18 w-full max-w-qc items-center justify-between gap-6 px-4 dk:px-8">
 
-      <!-- Bouton menu mobile : la navigation principale est masquée sous md -->
+    <a routerLink="/" class="flex items-center gap-2.5 text-white no-underline">
+      <span class="flex h-7 w-7 dk:h-8 dk:w-8 items-center justify-center rounded-[7px] dk:rounded-qc-sm bg-qc-accent">
+        <qc-icon name="qr-grid" [size]="16" [strokeWidth]="2.2" />
+      </span>
+      <span class="font-qc-display text-[18px] dk:text-[20px] font-bold tracking-[-0.02em]">QRCraft</span>
+    </a>
+
+    <!-- Liens desktop -->
+    <nav class="hidden dk:flex items-center gap-7 text-[15px]" aria-label="Navigation principale">
+      @for (link of links(); track link.href) {
+        @if (link.isRoute) {
+          <a [id]="link.id ?? null" [routerLink]="link.href" class="text-qc-on-dark-link no-underline hover:text-white transition-colors">{{ link.label }}</a>
+        } @else {
+          <a [id]="link.id ?? null" [href]="link.href" class="text-qc-on-dark-link no-underline hover:text-white transition-colors">{{ link.label }}</a>
+        }
+      }
+    </nav>
+
+    <!-- Actions desktop -->
+    <div class="hidden dk:flex items-center gap-3">
+      <a [href]="authLink().href" class="px-3.5 py-2.5 text-[15px] font-medium text-white no-underline">{{ authLink().label }}</a>
+      <a [href]="signupLink().href" qcButton="light" qcSize="md" class="rounded-[10px] text-[15px] font-semibold px-[18px]">{{ signupLink().label }}</a>
+    </div>
+
+    <!-- Actions mobile -->
+    <div class="flex dk:hidden items-center gap-1.5">
+      <a [href]="authLink().href" class="rounded-[10px] bg-white px-3.5 py-2.5 text-[14px] font-semibold text-qc-text no-underline">{{ authLink().label }}</a>
       <button
         id="mobile-menu-toggle"
         type="button"
-        class="md:hidden p-2 -mr-1 rounded-full text-on-surface hover:bg-surface-container-high transition-colors"
-        [attr.aria-expanded]="menuOpen()"
+        class="flex h-11 w-11 items-center justify-center text-white cursor-pointer"
         aria-controls="mobile-menu"
+        [attr.aria-expanded]="menuOpen()"
         [attr.aria-label]="menuOpen() ? 'Fermer le menu' : 'Ouvrir le menu'"
         (click)="toggleMenu()">
-        <span class="material-symbols-outlined text-2xl block">{{ menuOpen() ? 'close' : 'menu' }}</span>
+        <qc-icon [name]="menuOpen() ? 'chevron-right' : 'menu'" [size]="22" />
       </button>
     </div>
   </div>
 
-  <!-- Panneau de navigation mobile -->
   @if (menuOpen()) {
-    <nav
-      id="mobile-menu"
-      class="md:hidden border-t border-outline-variant/40 bg-surface/95 backdrop-blur-xl px-margin-sm pb-space-md pt-space-sm flex flex-col gap-1"
-      aria-label="Navigation principale">
-      <a class="px-space-md py-3 rounded-2xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container transition-colors" routerLink="/" (click)="closeMenu()">Accueil</a>
-      <a class="px-space-md py-3 rounded-2xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container transition-colors" href="#simulateur" (click)="closeMenu()">Studio de Création</a>
-      <a class="px-space-md py-3 rounded-2xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container transition-colors" href="#galerie" (click)="closeMenu()">Modèles &amp; Galerie</a>
-      <a id="mobile-nav-articles-link" class="px-space-md py-3 rounded-2xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container transition-colors" routerLink="/articles" (click)="closeMenu()">Articles &amp; Guides</a>
-      <a class="px-space-md py-3 rounded-2xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container transition-colors" href="#faq" (click)="closeMenu()">Foire Aux Questions</a>
-      <a class="mt-space-xs px-space-md py-3.5 rounded-full bg-primary-container text-on-primary font-label-lg text-label-lg text-center shadow-[0_4px_20px_-2px_rgba(91,77,255,0.25)]" href="#simulateur" (click)="closeMenu()">Ouvrir le Studio</a>
+    <nav id="mobile-menu" class="dk:hidden border-t border-qc-ink-line-soft bg-qc-ink px-4 pb-4 pt-2 flex flex-col gap-1" aria-label="Navigation mobile">
+      @for (link of links(); track link.href) {
+        @if (link.isRoute) {
+          <a [id]="link.id ? 'mobile-' + link.id : null" [routerLink]="link.href" (click)="closeMenu()" class="rounded-qc-md px-3 py-3 text-[15px] text-qc-on-dark-link no-underline">{{ link.label }}</a>
+        } @else {
+          <a [id]="link.id ? 'mobile-' + link.id : null" [href]="link.href" (click)="closeMenu()" class="rounded-qc-md px-3 py-3 text-[15px] text-qc-on-dark-link no-underline">{{ link.label }}</a>
+        }
+      }
+      <a [href]="signupLink().href" (click)="closeMenu()" qcButton="light" qcSize="md" qcBlock class="mt-2">{{ signupLink().label }}</a>
     </nav>
   }
 </header>
