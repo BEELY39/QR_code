@@ -1,0 +1,48 @@
+<main class="min-h-screen bg-qc-surface font-qc-sans text-qc-ink">
+  <header class="border-b border-qc-line bg-white">
+    <div class="mx-auto flex h-15 dk:h-18 w-full max-w-qc items-center justify-between gap-6 px-4 dk:px-8">
+      <a routerLink="/" class="flex items-center gap-2.5 text-qc-ink no-underline">
+        <span class="flex h-8 w-8 items-center justify-center rounded-qc-sm bg-qc-accent text-white">
+          <qc-icon name="qr-grid" [size]="18" />
+        </span>
+        <span class="font-qc-display text-[20px] font-bold">QRCraft</span>
+      </a>
+    </div>
+  </header>
+
+  <section class="mx-auto flex w-full max-w-qc flex-col gap-6 px-4 py-10 dk:px-8 dk:py-16">
+    @if (auth.user(); as user) {
+      <div class="flex items-center gap-4">
+        @if (user.pictureUrl) {
+          <img [src]="user.pictureUrl" alt="" width="56" height="56" referrerpolicy="no-referrer"
+               class="h-14 w-14 rounded-qc-pill object-cover" />
+        } @else {
+          <span class="flex h-14 w-14 items-center justify-center rounded-qc-pill bg-qc-accent font-qc-display text-[22px] font-bold text-white">
+            {{ initial(user.displayName) }}
+          </span>
+        }
+        <h1 class="m-0 font-qc-display text-[30px] dk:text-[36px] font-bold tracking-[-0.03em]">
+          Bonjour, {{ user.displayName }}
+        </h1>
+      </div>
+
+      @if (newAccount()) {
+        <p role="status" class="m-0 rounded-qc-md bg-qc-success-bg px-4 py-3 text-qc-body font-medium text-qc-success">
+          Votre compte QRCraft vient d’être créé. Bienvenue !
+        </p>
+      }
+
+      <p class="m-0 max-w-[640px] text-qc-body text-qc-muted">
+        Votre espace connecté accueillera bientôt vos campagnes, vos QR dynamiques et leurs statistiques.
+        En attendant, le Studio reste ouvert à tous.
+      </p>
+
+      <div class="flex flex-wrap items-center gap-6">
+        <a routerLink="/" fragment="studio" class="font-semibold text-qc-accent hover:text-qc-accent-hover">Ouvrir le Studio</a>
+        <button id="app-logout-button" type="button" (click)="auth.logout()" class="cursor-pointer font-medium text-qc-muted hover:text-qc-ink">Se déconnecter</button>
+      </div>
+    } @else {
+      <p class="m-0 text-qc-body text-qc-muted">Chargement de votre espace…</p>
+    }
+  </section>
+</main>

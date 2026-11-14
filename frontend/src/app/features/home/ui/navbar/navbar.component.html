@@ -21,13 +21,30 @@
 
     <!-- Actions desktop -->
     <div class="hidden dk:flex items-center gap-3">
-      <a [href]="authLink().href" class="px-3.5 py-2.5 text-[15px] font-medium text-white no-underline">{{ authLink().label }}</a>
-      <a [href]="signupLink().href" qcButton="light" qcSize="md" class="rounded-[10px] text-[15px] font-semibold px-[18px]">{{ signupLink().label }}</a>
+      @if (user(); as current) {
+        <span class="flex items-center gap-2.5 text-[15px] font-medium text-white">
+          @if (current.pictureUrl) {
+            <img [src]="current.pictureUrl" alt="" width="32" height="32" referrerpolicy="no-referrer" class="h-8 w-8 rounded-qc-pill object-cover" />
+          } @else {
+            <span id="nav-user-avatar" class="flex h-8 w-8 items-center justify-center rounded-qc-pill bg-qc-accent font-qc-display text-[14px] font-bold">{{ initial() }}</span>
+          }
+          {{ current.displayName }}
+        </span>
+        <a id="nav-account-link" routerLink="/app" qcButton="light" qcSize="md" class="rounded-[10px] text-[15px] font-semibold px-[18px]">Mon espace</a>
+        <button id="nav-logout-button" type="button" (click)="logout.emit()" class="cursor-pointer px-3 py-2.5 text-[15px] font-medium text-qc-on-dark-link hover:text-white">Se déconnecter</button>
+      } @else {
+        <a [id]="authLink().id ?? null" [routerLink]="authLink().href" class="px-3.5 py-2.5 text-[15px] font-medium text-white no-underline">{{ authLink().label }}</a>
+        <a [routerLink]="signupLink().href" qcButton="light" qcSize="md" class="rounded-[10px] text-[15px] font-semibold px-[18px]">{{ signupLink().label }}</a>
+      }
     </div>
 
     <!-- Actions mobile -->
     <div class="flex dk:hidden items-center gap-1.5">
-      <a [href]="authLink().href" class="rounded-[10px] bg-white px-3.5 py-2.5 text-[14px] font-semibold text-qc-text no-underline">{{ authLink().label }}</a>
+      @if (user()) {
+        <a routerLink="/app" class="rounded-[10px] bg-white px-3.5 py-2.5 text-[14px] font-semibold text-qc-text no-underline">Mon espace</a>
+      } @else {
+        <a [routerLink]="authLink().href" class="rounded-[10px] bg-white px-3.5 py-2.5 text-[14px] font-semibold text-qc-text no-underline">{{ authLink().label }}</a>
+      }
       <button
         id="mobile-menu-toggle"
         type="button"
@@ -50,7 +67,12 @@
           <a [id]="link.id ? 'mobile-' + link.id : null" [href]="link.href" (click)="closeMenu()" class="rounded-qc-md px-3 py-3 text-[15px] text-qc-on-dark-link no-underline">{{ link.label }}</a>
         }
       }
-      <a [href]="signupLink().href" (click)="closeMenu()" qcButton="light" qcSize="md" qcBlock class="mt-2">{{ signupLink().label }}</a>
+      @if (user()) {
+        <a id="mobile-nav-account-link" routerLink="/app" (click)="closeMenu()" qcButton="light" qcSize="md" qcBlock class="mt-2">Mon espace</a>
+        <button id="mobile-nav-logout-button" type="button" (click)="closeMenu(); logout.emit()" class="cursor-pointer rounded-qc-md px-3 py-3 text-left text-[15px] text-qc-on-dark-link">Se déconnecter</button>
+      } @else {
+        <a [routerLink]="signupLink().href" (click)="closeMenu()" qcButton="light" qcSize="md" qcBlock class="mt-2">{{ signupLink().label }}</a>
+      }
     </nav>
   }
 </header>

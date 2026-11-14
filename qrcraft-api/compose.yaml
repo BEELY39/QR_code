@@ -1,0 +1,18 @@
+# Base PostgreSQL locale, démarrée automatiquement par `./mvnw spring-boot:run` (profil dev).
+# Spring Boot lit ce fichier et crée la connexion lui-même : aucune propriété de base à écrire.
+# Valeurs jetables, sans usage hors du poste de développement.
+# Même majeure que la production (R10) : aligner l'image si l'instance Dokploy diffère.
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: qrcraft
+      POSTGRES_USER: qrcraft
+      POSTGRES_PASSWORD: dev-only-password
+    ports:
+      - "5432"
+    volumes:
+      - qrcraft-pg-data:/var/lib/postgresql/data
+
+volumes:
+  qrcraft-pg-data:

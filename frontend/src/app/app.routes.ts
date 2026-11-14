@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './features/home/home.component';
 import { LegalNoticeComponent } from './features/legal/legal-notice.component';
+import { authGuard } from './core/auth/auth.guard';
 
 export const routes: Routes = [
   {
@@ -43,6 +44,25 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/legal/privacy/privacy.component').then(m => m.PrivacyComponent),
     title: 'Confidentialité — vos données ne quittent pas votre navigateur | QRCraft'
+  },
+  {
+    // `/connexion` et `/inscription` : seules routes où le module Google est fourni (principe V).
+    path: 'connexion',
+    loadChildren: () => import('./features/auth/auth.routes').then(m => m.AUTH_ROUTES),
+    data: { mode: 'signin' },
+    title: 'Connexion — QRCraft'
+  },
+  {
+    path: 'inscription',
+    loadChildren: () => import('./features/auth/auth.routes').then(m => m.AUTH_ROUTES),
+    data: { mode: 'signup' },
+    title: 'Créer un compte — QRCraft'
+  },
+  {
+    path: 'app',
+    canMatch: [authGuard],
+    loadComponent: () => import('./features/app-home/app-home.component').then(m => m.AppHomeComponent),
+    title: 'Mon espace — QRCraft'
   },
   {
     // Une URL inconnue doit afficher une 404, pas dupliquer l'accueil en 200.

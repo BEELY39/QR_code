@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { NavbarComponent } from '../../home/ui/navbar/navbar.component';
+import { SiteHeaderComponent } from '../../../shared/layout/site-header/site-header.component';
 import { FooterComponent } from '../../home/ui/footer/footer.component';
 import { SeoService } from '../../../core/services/seo.service';
 import { SITE_URL } from '../../../core/constants/site.constant';
@@ -17,7 +17,7 @@ interface FormatRow {
 @Component({
   selector: 'app-qr-code-svg',
   standalone: true,
-  imports: [RouterLink, NavbarComponent, FooterComponent],
+  imports: [RouterLink, SiteHeaderComponent, FooterComponent],
   templateUrl: './qr-code-svg.component.html',
 })
 export class QrCodeSvgComponent {

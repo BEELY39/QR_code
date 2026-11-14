@@ -19,6 +19,18 @@
 # les routes connues sont pré-rendues en fichiers statiques et servies directement.
 # Tout chemin non résolu retombe sur l'app avec un vrai statut 404 — sinon Google
 # indexe autant de pages fantômes dupliquant l'accueil (soft 404).
+# Espace connecté : rendu dans le navigateur (non prérendu). Doit précéder la règle 404 ci-dessous,
+# sinon un rechargement de /app afficherait la page d'accueil prérendue.
+[[redirects]]
+  from = "/app"
+  to = "/index.csr.html"
+  status = 200
+
+[[redirects]]
+  from = "/app/*"
+  to = "/index.csr.html"
+  status = 200
+
 [[redirects]]
   from = "/*"
   to = "/index.html"

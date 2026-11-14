@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { NavbarComponent } from './ui/navbar/navbar.component';
+import { SiteHeaderComponent } from '../../shared/layout/site-header/site-header.component';
 import { HeroSectionComponent } from './ui/hero-section/hero-section.component';
 import { UseCasesStripComponent } from './ui/use-cases-strip/use-cases-strip.component';
 import { StaticVsDynamicComponent } from './ui/static-vs-dynamic/static-vs-dynamic.component';
@@ -26,7 +26,7 @@ import { LANDING_FAQ_IDS, selectFaqItems } from '../../core/constants/faq.consta
   selector: 'app-home',
   standalone: true,
   imports: [
-    NavbarComponent,
+    SiteHeaderComponent,
     HeroSectionComponent,
     UseCasesStripComponent,
     StaticVsDynamicComponent,
