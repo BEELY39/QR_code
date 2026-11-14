@@ -12,7 +12,7 @@ espace connecté (QR dynamiques, campagnes, statistiques de scan).
 | Dossier | Contenu |
 |---|---|
 | `frontend/` | Angular 21 standalone + Signals, SSR/SSG, Tailwind v4, tests Vitest via `ng test` |
-| `qrcraft-api/` | Back-end Spring Boot 4.1 / Java 21 / Maven (socle en cours, spec 012) |
+| `qrcraft-api/` | Back-end Spring Boot 4.1 / Java 21 / Maven (socle 012, authentification 013) |
 | `specs/NNN-*/` | Artefacts Spec Kit par feature : `spec.md`, `plan.md`, `tasks.md`, `contracts/`, `checklists/` |
 | `.specify/` | Constitution (`memory/constitution.md`), gabarits et scripts Spec Kit, communs aux deux agents |
 | `.claude/skills/`, `.agents/skills/` | Commandes Spec Kit de Claude Code et d'Antigravity, même version, mêmes noms |
@@ -45,7 +45,7 @@ Front-end, depuis `frontend/` :
 Back-end, depuis `qrcraft-api/` (Docker Desktop démarré pour les tests de base de données) :
 
 - `./mvnw test` (ou `mvnw.cmd test` sous PowerShell)
-- `./mvnw spring-boot:run`
+- `./mvnw spring-boot:run` (port 8081 ; le site de dev, `npm start`, l'appelle sur `http://localhost:8081`)
 
 ## Workflow Spec Kit
 
@@ -124,17 +124,14 @@ d'implémentation, et chaque story se clôt par build puis tests.
   Issues #211 – #217, epic #218, jalon « 012 — Socle back-end ».
   `./mvnw clean verify` vert (71 tests, ~100 s) ; `spring-boot:run` validé (port 8081 sur le poste
   de l'utilisateur : CrowdSec occupe 8080). **Reste** : push et PR (T055), sur accord de l'utilisateur.
-- **013 — Authentification Google** : spec écrite et clarifiée (`specs/013-google-jwt-auth/`).
-  Décisions : connexion par **fenêtre Google** depuis le site (pas de secret client, pas d'adresse de
-  redirection dans la console Google) ; **Google uniquement** (formulaire e-mail / mot de passe de la
-  maquette retiré) ; session de **7 jours sans renouvellement** (risque accepté : pas de révocation
-  serveur). Le propriétaire crée lui-même l'identifiant OAuth ; la feature lui fournit le guide de
-  configuration. Plan fait : bouton `asl-google-signin-button` fourni **au niveau de la route**
-  `/connexion` · `/inscription` ; jeton QRCraft dans un **cookie `HttpOnly` `SameSite=Strict`**
-  (`qrcraft_session`, 7 j) ; `POST /api/auth/google`, `GET /api/me`, `POST /api/auth/logout` ; table
-  `users` (V1) ; API de dev sur le port 8081. Identifiant client Google (public) :
-  `984838546224-vnk721eak0da8nhvvht54jhdtkoq8cce.apps.googleusercontent.com` — le **secret client
-  n'est jamais utilisé ni versionné**. Tâches T001 – T077 dans `tasks.md` (cycle CLI → tests → code → build → tests par phase) ; issues #219 – #224, epic
-  #225, jalon « 013 — Authentification Google ». Prochaine étape : `/speckit-implement`.
+- **013 — Authentification Google** : **implémentée** sur `feat/013-google-jwt-auth` (branche issue de
+  `feat/012-backend-dependencies`, toutes deux non poussées). Connexion par **fenêtre Google** (pas de
+  secret client, pas d'URI de redirection), **Google uniquement**, session **7 jours** dans le cookie
+  `qrcraft_session` (`HttpOnly`, `SameSite=Strict`, `Path=/api`) ; `POST /api/auth/google`,
+  `GET /api/me`, `POST /api/auth/logout` ; table `users` (V1) ; site : `/connexion`, `/inscription`,
+  `/app` (garde, rendu client), barre de navigation connectée. Guide : `docs/google-oauth.md`.
+  Build et tests verts : 96 tests API, 206 tests site. Module Google absent de l'accueil (vérifié).
+  **Reste** : essai réel avec un compte Google par le propriétaire (T075), puis push et PR (T077) sur
+  son accord. Issues #219 – #224, epic #225.
 - **Suite prévue** : entités `Campaign`, `QrCode`, `Scan`, `ScanDailyRollup` et leurs migrations
   Flyway, puis redirection `/r/{shortCode}`.
