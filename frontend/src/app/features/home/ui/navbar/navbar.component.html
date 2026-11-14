@@ -31,6 +31,7 @@
           {{ current.displayName }}
         </span>
         <a id="nav-account-link" routerLink="/app" qcButton="light" qcSize="md" class="rounded-[10px] text-[15px] font-semibold px-[18px]">Mon espace</a>
+        <button id="nav-logout-button" type="button" (click)="logout.emit()" class="cursor-pointer px-3 py-2.5 text-[15px] font-medium text-qc-on-dark-link hover:text-white">Se déconnecter</button>
       } @else {
         <a [id]="authLink().id ?? null" [routerLink]="authLink().href" class="px-3.5 py-2.5 text-[15px] font-medium text-white no-underline">{{ authLink().label }}</a>
         <a [routerLink]="signupLink().href" qcButton="light" qcSize="md" class="rounded-[10px] text-[15px] font-semibold px-[18px]">{{ signupLink().label }}</a>
@@ -68,6 +69,7 @@
       }
       @if (user()) {
         <a id="mobile-nav-account-link" routerLink="/app" (click)="closeMenu()" qcButton="light" qcSize="md" qcBlock class="mt-2">Mon espace</a>
+        <button id="mobile-nav-logout-button" type="button" (click)="closeMenu(); logout.emit()" class="cursor-pointer rounded-qc-md px-3 py-3 text-left text-[15px] text-qc-on-dark-link">Se déconnecter</button>
       } @else {
         <a [routerLink]="signupLink().href" (click)="closeMenu()" qcButton="light" qcSize="md" qcBlock class="mt-2">{{ signupLink().label }}</a>
       }

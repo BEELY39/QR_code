@@ -1,4 +1,4 @@
-import { Component, computed, input, signal } from '@angular/core';
+import { Component, computed, input, output, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ButtonDirective } from '../../../../shared/ui/button/button.directive';
 import { IconComponent } from '../../../../shared/ui/icon/icon.component';
@@ -25,6 +25,9 @@ export class NavbarComponent {
 
   /** Utilisateur connecté, fourni par le conteneur `app-site-header` ; `null` = visiteur anonyme. */
   readonly user = input<AppUser | null>(null);
+
+  /** Clic sur « Se déconnecter » ; le conteneur appelle le service d'authentification. */
+  readonly logout = output<void>();
 
   /** Initiale affichée quand Google ne fournit pas de photo. */
   readonly initial = computed(() => this.user()?.displayName.trim().charAt(0).toUpperCase() || '?');

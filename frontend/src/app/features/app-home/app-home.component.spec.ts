@@ -10,11 +10,13 @@ const USER: AppUser = { id: 'u1', email: 'a@example.com', displayName: 'Alice', 
 
 describe('AppHomeComponent', () => {
   let fixture: ComponentFixture<AppHomeComponent>;
+  let logout: ReturnType<typeof vi.fn>;
 
   async function setup(user: AppUser | null) {
+    logout = vi.fn().mockResolvedValue(undefined);
     await TestBed.configureTestingModule({
       imports: [AppHomeComponent],
-      providers: [provideRouter([]), { provide: AuthService, useValue: { user: signal(user) } }],
+      providers: [provideRouter([]), { provide: AuthService, useValue: { user: signal(user), logout } }],
     }).compileComponents();
     fixture = TestBed.createComponent(AppHomeComponent);
     fixture.detectChanges();
@@ -40,5 +42,11 @@ describe('AppHomeComponent', () => {
   it('indique le chargement tant que l’utilisateur n’est pas connu', async () => {
     await setup(null);
     expect(fixture.nativeElement.textContent).toContain('Chargement de votre espace');
+  });
+
+  it('déconnecte l’utilisateur au clic sur « Se déconnecter »', async () => {
+    await setup(USER);
+    (fixture.nativeElement.querySelector('#app-logout-button') as HTMLButtonElement).click();
+    expect(logout).toHaveBeenCalled();
   });
 });

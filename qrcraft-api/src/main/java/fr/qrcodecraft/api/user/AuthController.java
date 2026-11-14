@@ -56,6 +56,15 @@ public class AuthController {
 	}
 
 	/**
+	 * Efface le cookie de session. Idempotent : répond 204 même sans session. Limite acceptée
+	 * (clarification Q2) : un jeton copié auparavant reste valable jusqu'à son expiration.
+	 */
+	@PostMapping("/logout")
+	public ResponseEntity<Void> logout() {
+		return ResponseEntity.noContent().header(HttpHeaders.SET_COOKIE, sessionCookie.clear().toString()).build();
+	}
+
+	/**
 	 * Signature, émetteur, audience ou expiration refusés → 401 ; tout autre échec du décodage
 	 * (clés publiques de Google injoignables) → 503.
 	 */

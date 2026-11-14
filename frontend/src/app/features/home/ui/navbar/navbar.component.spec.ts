@@ -78,5 +78,18 @@ describe('NavbarComponent', () => {
       expect(host().querySelector('#mobile-nav-account-link')?.getAttribute('href')).toBe('/app');
       expect(host().querySelector('#mobile-menu a[href="/inscription"]')).toBeNull();
     });
+
+    it('émet logout au clic sur « Se déconnecter » (desktop et menu mobile)', () => {
+      const emitted: unknown[] = [];
+      component.logout.subscribe(() => emitted.push(true));
+      fixture.componentRef.setInput('user', USER);
+      component.toggleMenu();
+      fixture.detectChanges();
+
+      (host().querySelector('#nav-logout-button') as HTMLButtonElement).click();
+      (host().querySelector('#mobile-nav-logout-button') as HTMLButtonElement).click();
+
+      expect(emitted).toHaveLength(2);
+    });
   });
 });

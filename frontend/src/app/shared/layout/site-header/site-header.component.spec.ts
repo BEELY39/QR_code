@@ -11,12 +11,14 @@ const USER: AppUser = { id: 'u1', email: 'a@example.com', displayName: 'Alice', 
 describe('SiteHeaderComponent', () => {
   let fixture: ComponentFixture<SiteHeaderComponent>;
   let user: ReturnType<typeof signal<AppUser | null>>;
+  let logout: ReturnType<typeof vi.fn>;
 
   beforeEach(async () => {
     user = signal<AppUser | null>(null);
+    logout = vi.fn().mockResolvedValue(undefined);
     await TestBed.configureTestingModule({
       imports: [SiteHeaderComponent],
-      providers: [provideRouter([]), { provide: AuthService, useValue: { user } }],
+      providers: [provideRouter([]), { provide: AuthService, useValue: { user, logout } }],
     }).compileComponents();
     fixture = TestBed.createComponent(SiteHeaderComponent);
     fixture.detectChanges();
@@ -33,5 +35,14 @@ describe('SiteHeaderComponent', () => {
 
     expect(fixture.nativeElement.querySelector('app-navbar #nav-account-link')).toBeTruthy();
     expect(fixture.nativeElement.textContent).toContain('Alice');
+  });
+
+  it('déconnecte l’utilisateur quand la barre émet logout', () => {
+    user.set(USER);
+    fixture.detectChanges();
+
+    (fixture.nativeElement.querySelector('#nav-logout-button') as HTMLButtonElement).click();
+
+    expect(logout).toHaveBeenCalled();
   });
 });

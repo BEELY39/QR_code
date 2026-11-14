@@ -157,6 +157,26 @@ class AuthControllerTests {
 		assertThat(repository.count()).isZero();
 	}
 
+	@Test
+	void logoutClearsTheSessionCookie() throws Exception {
+		MvcResult result = mockMvc.perform(post("/api/auth/logout")).andExpect(status().isNoContent()).andReturn();
+
+		assertThat(result.getResponse().getHeader(HttpHeaders.SET_COOKIE)).startsWith("qrcraft_session=;")
+			.contains("Max-Age=0", "Path=/api", "HttpOnly", "SameSite=Strict");
+	}
+
+	@Test
+	void logoutWithASessionAlsoClearsIt() throws Exception {
+		String setCookie = login(TestGoogleKeys.validToken("sub-1", "a@example.com")).andReturn().getResponse()
+			.getHeader(HttpHeaders.SET_COOKIE);
+		String token = setCookie.substring("qrcraft_session=".length(), setCookie.indexOf(';'));
+
+		MvcResult result = mockMvc.perform(post("/api/auth/logout").cookie(new jakarta.servlet.http.Cookie("qrcraft_session", token)))
+			.andExpect(status().isNoContent())
+			.andReturn();
+		assertThat(result.getResponse().getHeader(HttpHeaders.SET_COOKIE)).contains("Max-Age=0");
+	}
+
 	private void assertInvalidGoogleToken(String credential) throws Exception {
 		MvcResult result = login(credential)
 			.andExpect(status().isUnauthorized())

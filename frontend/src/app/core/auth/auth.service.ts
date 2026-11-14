@@ -1,6 +1,7 @@
 import { Injectable, PLATFORM_ID, computed, inject, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { AppUser, AuthStatus, LoginResponse } from './auth.model';
 import { API_BASE_URL } from './api-base-url.token';
@@ -20,6 +21,7 @@ export class AuthService {
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private readonly http = inject(HttpClient);
   private readonly apiBaseUrl = inject(API_BASE_URL);
+  private readonly router = inject(Router);
 
   private readonly statusSignal = signal<AuthStatus>('unknown');
   private readonly userSignal = signal<AppUser | null>(null);
@@ -84,6 +86,23 @@ export class AuthService {
       void this.refresh();
     } else {
       this.setAnonymous();
+    }
+  }
+
+  /**
+   * Déconnexion : l'API efface le cookie ; côté site, l'état repasse à anonyme et l'on revient à
+   * l'accueil, même si l'API ne répond pas.
+   */
+  async logout(): Promise<void> {
+    try {
+      await firstValueFrom(
+        this.http.post<void>(`${this.apiBaseUrl}/api/auth/logout`, null, { withCredentials: true })
+      );
+    } catch {
+      // Sans réponse de l'API, le cookie expirera de lui-même ; la session locale est oubliée.
+    } finally {
+      this.setAnonymous();
+      await this.router.navigateByUrl('/');
     }
   }
 

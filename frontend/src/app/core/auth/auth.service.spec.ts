@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { Router, provideRouter } from '@angular/router';
 
 import { AuthService, HAS_SESSION_KEY } from './auth.service';
 import { API_BASE_URL } from './api-base-url.token';
@@ -22,7 +23,12 @@ describe('AuthService', () => {
   beforeEach(() => {
     localStorage.clear();
     TestBed.configureTestingModule({
-      providers: [provideHttpClient(), provideHttpClientTesting(), { provide: API_BASE_URL, useValue: API }],
+      providers: [
+        provideRouter([]),
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        { provide: API_BASE_URL, useValue: API },
+      ],
     });
     service = TestBed.inject(AuthService);
     http = TestBed.inject(HttpTestingController);
@@ -116,6 +122,35 @@ describe('AuthService', () => {
 
       expect(service.status()).toBe('anonymous');
       expect(localStorage.getItem(HAS_SESSION_KEY)).toBeNull();
+    });
+  });
+
+  describe('logout', () => {
+    it('efface la session côté API, repasse anonyme et revient à l’accueil', async () => {
+      const navigate = vi.spyOn(TestBed.inject(Router), 'navigateByUrl').mockResolvedValue(true);
+      localStorage.setItem(HAS_SESSION_KEY, 'true');
+      const pending = service.logout();
+
+      const req = http.expectOne(`${API}/api/auth/logout`);
+      expect(req.request.method).toBe('POST');
+      expect(req.request.withCredentials).toBe(true);
+      req.flush(null, { status: 204, statusText: 'No Content' });
+      await pending;
+
+      expect(service.status()).toBe('anonymous');
+      expect(localStorage.getItem(HAS_SESSION_KEY)).toBeNull();
+      expect(navigate).toHaveBeenCalledWith('/');
+    });
+
+    it('déconnecte localement même si l’API ne répond pas', async () => {
+      const navigate = vi.spyOn(TestBed.inject(Router), 'navigateByUrl').mockResolvedValue(true);
+      const pending = service.logout();
+
+      http.expectOne(`${API}/api/auth/logout`).error(new ProgressEvent('error'));
+      await pending;
+
+      expect(service.status()).toBe('anonymous');
+      expect(navigate).toHaveBeenCalledWith('/');
     });
   });
 });

@@ -37,8 +37,9 @@
         En attendant, le Studio reste ouvert à tous.
       </p>
 
-      <div>
+      <div class="flex flex-wrap items-center gap-6">
         <a routerLink="/" fragment="studio" class="font-semibold text-qc-accent hover:text-qc-accent-hover">Ouvrir le Studio</a>
+        <button id="app-logout-button" type="button" (click)="auth.logout()" class="cursor-pointer font-medium text-qc-muted hover:text-qc-ink">Se déconnecter</button>
       </div>
     } @else {
       <p class="m-0 text-qc-body text-qc-muted">Chargement de votre espace…</p>
