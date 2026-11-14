@@ -1,0 +1,106 @@
+<main class="flex min-h-screen flex-wrap bg-white font-qc-sans text-qc-ink">
+
+  <!-- Colonne de connexion -->
+  <section class="flex min-w-0 flex-[1_1_520px] flex-col px-4 py-6 dk:px-12 dk:py-10">
+    <a routerLink="/" class="flex items-center gap-2.5 text-qc-ink no-underline">
+      <span class="flex h-8 w-8 items-center justify-center rounded-qc-sm bg-qc-accent text-white">
+        <qc-icon name="qr-grid" [size]="18" />
+      </span>
+      <span class="font-qc-display text-[20px] font-bold">QRCraft</span>
+    </a>
+
+    <div class="m-auto flex w-full max-w-[420px] flex-col gap-5 py-12">
+      <div class="flex flex-col gap-2.5">
+        <h1 class="m-0 font-qc-display text-[30px] dk:text-[36px] font-bold tracking-[-0.03em]">
+          {{ isSignup() ? 'Créer votre compte' : 'Se connecter' }}
+        </h1>
+        <p class="m-0 text-qc-body text-qc-muted">
+          @if (isSignup()) {
+            Gratuit. Débloquez les QR dynamiques, les campagnes et le suivi des scans.
+          } @else {
+            Retrouvez vos QR dynamiques, vos campagnes et vos statistiques.
+          }
+        </p>
+      </div>
+
+      @if (googleConfigured) {
+        <div class="flex min-h-[52px] items-center justify-center" [attr.aria-busy]="busy()">
+          @defer (on immediate) {
+            <asl-google-signin-button
+              type="standard"
+              size="large"
+              shape="pill"
+              theme="outline"
+              locale="fr"
+              [text]="isSignup() ? 'signup_with' : 'signin_with'"
+            />
+          } @placeholder {
+            <span class="flex h-[52px] w-full items-center justify-center rounded-qc-md border border-qc-input-line text-qc-body font-semibold text-qc-muted">
+              Chargement de Google…
+            </span>
+          }
+        </div>
+      } @else {
+        <p class="m-0 rounded-qc-md border border-qc-input-line px-4 py-3 text-qc-ui text-qc-muted">
+          Connexion Google non configurée.
+        </p>
+      }
+
+      @if (errorMessage(); as message) {
+        <p role="alert" class="m-0 rounded-qc-md bg-qc-warning-bg px-4 py-3 text-qc-ui font-medium text-qc-warning">
+          {{ message }}
+        </p>
+      }
+
+      <p class="m-0 text-qc-meta leading-[1.55] text-qc-subtle">
+        {{ isSignup() ? 'En créant un compte' : 'En vous connectant' }}, vous acceptez les
+        <a routerLink="/mentions-legales" class="text-qc-accent hover:text-qc-accent-hover">conditions d’utilisation</a>
+        et la
+        <a routerLink="/confidentialite" class="text-qc-accent hover:text-qc-accent-hover">politique de confidentialité</a>.
+      </p>
+
+      <p class="m-0 text-[15px] text-qc-ink-soft">
+        @if (isSignup()) {
+          Déjà un compte ?
+          <a routerLink="/connexion" class="font-semibold text-qc-accent hover:text-qc-accent-hover">Se connecter</a>
+        } @else {
+          Pas encore de compte ?
+          <a routerLink="/inscription" class="font-semibold text-qc-accent hover:text-qc-accent-hover">Créer un compte</a>
+        }
+      </p>
+
+      <a routerLink="/" fragment="studio" class="text-qc-ui text-qc-muted hover:text-qc-accent-hover">
+        Continuer sans compte vers le Studio gratuit
+      </a>
+    </div>
+  </section>
+
+  <!-- Panneau d'illustration (desktop uniquement, comme Mobile-Signup) -->
+  <aside class="hidden dk:flex min-w-0 flex-[1_1_520px] flex-col justify-center gap-9 bg-qc-ink px-14 py-16 text-white">
+    <h2 class="m-0 max-w-[480px] font-qc-display text-[40px] font-bold leading-[1.1] tracking-[-0.03em]">
+      Imprimez une fois.<br /><span class="text-qc-accent-on-dark">Ajustez à volonté.</span>
+    </h2>
+
+    <div class="flex max-w-[480px] flex-col gap-1 rounded-qc-card-lg border border-qc-ink-line bg-qc-ink-2 p-5">
+      <div class="flex justify-between px-1 pb-3 text-qc-meta text-qc-on-dark-muted">
+        <span>Menu restaurant</span><span>20 QR codes</span>
+      </div>
+      <div class="flex items-center justify-between rounded-qc-ctl bg-qc-ink-3 p-3">
+        <span class="text-[15px] font-medium">Table 5 · terrasse</span><span class="font-qc-display font-bold">312</span>
+      </div>
+      <div class="flex items-center justify-between rounded-qc-ctl p-3">
+        <span class="text-[15px] font-medium">Table 12 · salle</span><span class="font-qc-display font-bold">248</span>
+      </div>
+      <div class="flex items-center justify-between rounded-qc-ctl p-3">
+        <span class="text-[15px] font-medium">Comptoir</span><span class="font-qc-display font-bold">197</span>
+      </div>
+      <div class="px-1 pt-2.5 text-qc-micro text-qc-on-dark-subtle">Données d'exemple</div>
+    </div>
+
+    <ul class="m-0 flex max-w-[480px] list-none flex-col gap-3.5 p-0 text-[15px] text-qc-on-dark-link">
+      <li class="flex gap-3"><qc-icon name="check" [size]="20" [strokeWidth]="2.2" class="flex-none text-qc-accent-on-dark" />Destination modifiable après impression</li>
+      <li class="flex gap-3"><qc-icon name="check" [size]="20" [strokeWidth]="2.2" class="flex-none text-qc-accent-on-dark" />Campagnes, emplacements et tags</li>
+      <li class="flex gap-3"><qc-icon name="check" [size]="20" [strokeWidth]="2.2" class="flex-none text-qc-accent-on-dark" />Statistiques sans stockage d'adresse IP</li>
+    </ul>
+  </aside>
+</main>

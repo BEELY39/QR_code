@@ -21,13 +21,13 @@
 
     <!-- Actions desktop -->
     <div class="hidden dk:flex items-center gap-3">
-      <a [href]="authLink().href" class="px-3.5 py-2.5 text-[15px] font-medium text-white no-underline">{{ authLink().label }}</a>
-      <a [href]="signupLink().href" qcButton="light" qcSize="md" class="rounded-[10px] text-[15px] font-semibold px-[18px]">{{ signupLink().label }}</a>
+      <a [routerLink]="authLink().href" class="px-3.5 py-2.5 text-[15px] font-medium text-white no-underline">{{ authLink().label }}</a>
+      <a [routerLink]="signupLink().href" qcButton="light" qcSize="md" class="rounded-[10px] text-[15px] font-semibold px-[18px]">{{ signupLink().label }}</a>
     </div>
 
     <!-- Actions mobile -->
     <div class="flex dk:hidden items-center gap-1.5">
-      <a [href]="authLink().href" class="rounded-[10px] bg-white px-3.5 py-2.5 text-[14px] font-semibold text-qc-text no-underline">{{ authLink().label }}</a>
+      <a [routerLink]="authLink().href" class="rounded-[10px] bg-white px-3.5 py-2.5 text-[14px] font-semibold text-qc-text no-underline">{{ authLink().label }}</a>
       <button
         id="mobile-menu-toggle"
         type="button"
@@ -50,7 +50,7 @@
           <a [id]="link.id ? 'mobile-' + link.id : null" [href]="link.href" (click)="closeMenu()" class="rounded-qc-md px-3 py-3 text-[15px] text-qc-on-dark-link no-underline">{{ link.label }}</a>
         }
       }
-      <a [href]="signupLink().href" (click)="closeMenu()" qcButton="light" qcSize="md" qcBlock class="mt-2">{{ signupLink().label }}</a>
+      <a [routerLink]="signupLink().href" (click)="closeMenu()" qcButton="light" qcSize="md" qcBlock class="mt-2">{{ signupLink().label }}</a>
     </nav>
   }
 </header>

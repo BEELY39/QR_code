@@ -14,8 +14,8 @@ export const LANDING_CONTENT: LandingContent = {
   ],
   // FR-022 : tant que l'inscription et l'espace connecté n'existent pas,
   // les CTA d'authentification mènent au Studio, sans changer de libellé.
-  navAuth: { label: 'Se connecter', href: '#studio', isRoute: false, id: 'nav-auth-link' },
-  navSignup: { label: 'Créer un compte', href: '#studio', isRoute: false },
+  navAuth: { label: 'Se connecter', href: '/connexion', isRoute: true, id: 'nav-auth-link' },
+  navSignup: { label: 'Créer un compte', href: '/inscription', isRoute: true },
 
   hero: {
     badge: 'QR codes dynamiques et tracker de scans',
@@ -79,7 +79,7 @@ export const LANDING_CONTENT: LandingContent = {
         'Tracker : où, quand, quel QR, quel appareil',
         'UTM automatiques, test A/B, export CSV et PDF',
       ],
-      cta: { label: 'Créer un compte', href: '#studio', isRoute: false },
+      cta: { label: 'Créer un compte', href: '/inscription', isRoute: true },
       ctaVariant: 'light',
     },
   ],
@@ -96,7 +96,7 @@ export const LANDING_CONTENT: LandingContent = {
       badge: 'Avec compte',
       tone: 'dark',
       description: 'Destination modifiable après impression, campagnes, tags et tracker de scans.',
-      cta: { label: 'Créer un compte →', href: '#studio', isRoute: false },
+      cta: { label: 'Créer un compte →', href: '/inscription', isRoute: true },
     },
   ],
 
@@ -147,7 +147,7 @@ export const LANDING_CONTENT: LandingContent = {
   tracker: {
     eyebrow: 'Tracker de scans',
     title: 'Où, quand, quel QR, quel appareil.',
-    cta: { label: 'Voir le tableau de bord', href: '#studio', isRoute: false },
+    cta: { label: 'Voir le tableau de bord', href: '/inscription', isRoute: true },
   },
   trackerPillars: [
     {
@@ -231,8 +231,8 @@ export const LANDING_CONTENT: LandingContent = {
       { term: 'Campagne', definition: ' = le sponsor' },
       { term: 'QR code', definition: ' = la vidéo' },
     ],
-    ctaPrimary: { label: 'Tracker mon prochain sponsor', href: '#studio', isRoute: false },
-    ctaSecondary: { label: 'Voir le tracker créateur', href: '#studio', isRoute: false },
+    ctaPrimary: { label: 'Tracker mon prochain sponsor', href: '/inscription', isRoute: true },
+    ctaSecondary: { label: 'Voir le tracker créateur', href: '/inscription', isRoute: true },
   },
 
   privacy: {
@@ -260,7 +260,7 @@ export const LANDING_CONTENT: LandingContent = {
     title: "Votre prochain QR code mérite mieux qu'un carré noir.",
     lead: 'Commencez gratuitement. Créez un compte le jour où vous voulez mesurer.',
     primary: { label: 'Ouvrir le Studio', href: '#studio', isRoute: false },
-    secondary: { label: 'Créer un compte', href: '#studio', isRoute: false },
+    secondary: { label: 'Créer un compte', href: '/inscription', isRoute: true },
   },
 
   footer: {
