@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { NavbarComponent } from '../home/ui/navbar/navbar.component';
+import { SiteHeaderComponent } from '../../shared/layout/site-header/site-header.component';
 import { FooterComponent } from '../home/ui/footer/footer.component';
 import { SeoService } from '../../core/services/seo.service';
 import { SITE_URL } from '../../core/constants/site.constant';
@@ -12,7 +12,7 @@ import { selectFaqItems } from '../../core/constants/faq.constant';
 @Component({
   selector: 'app-articles',
   standalone: true,
-  imports: [CommonModule, RouterLink, NavbarComponent, FooterComponent],
+  imports: [CommonModule, RouterLink, SiteHeaderComponent, FooterComponent],
   templateUrl: './articles.component.html',
   styleUrl: './articles.component.scss',
 })

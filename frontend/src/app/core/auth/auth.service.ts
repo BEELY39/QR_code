@@ -49,6 +49,49 @@ export class AuthService {
     }
   }
 
+  /**
+   * Vérifie la session auprès de l'API (`GET /api/me`).
+   * @returns l'utilisateur, ou `null` si aucune session valide
+   */
+  async refresh(): Promise<AppUser | null> {
+    try {
+      const user = await firstValueFrom(
+        this.http.get<AppUser>(`${this.apiBaseUrl}/api/me`, { withCredentials: true })
+      );
+      this.setAuthenticated(user);
+      return user;
+    } catch (error) {
+      if (error instanceof HttpErrorResponse && error.status === 401) {
+        this.setAnonymous();
+      } else {
+        // API injoignable : on ne sait pas, on garde l'indicateur pour réessayer au prochain chargement.
+        this.userSignal.set(null);
+        this.statusSignal.set('anonymous');
+      }
+      return null;
+    }
+  }
+
+  /**
+   * Appelé une fois au démarrage, dans le navigateur uniquement. Sans indicateur de session,
+   * aucun appel réseau : l'accueil d'un visiteur anonyme ne contacte pas l'API.
+   */
+  initFromBrowser(): void {
+    if (!this.isBrowser) {
+      return;
+    }
+    if (this.hasSessionHint()) {
+      void this.refresh();
+    } else {
+      this.setAnonymous();
+    }
+  }
+
+  /** Session refusée par l'API (401 sur un appel protégé). */
+  markSessionExpired(): void {
+    this.setAnonymous();
+  }
+
   protected setAuthenticated(user: AppUser): void {
     this.userSignal.set(user);
     this.statusSignal.set('authenticated');

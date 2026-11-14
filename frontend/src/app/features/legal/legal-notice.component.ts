@@ -1,7 +1,7 @@
 import { ViewportScroller } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { NavbarComponent } from '../home/ui/navbar/navbar.component';
+import { SiteHeaderComponent } from '../../shared/layout/site-header/site-header.component';
 import { FooterComponent } from '../home/ui/footer/footer.component';
 import { SeoService } from '../../core/services/seo.service';
 import { SITE_URL } from '../../core/constants/site.constant';
@@ -51,7 +51,7 @@ interface LegalSection {
 @Component({
   selector: 'app-legal-notice',
   standalone: true,
-  imports: [RouterLink, NavbarComponent, FooterComponent],
+  imports: [RouterLink, SiteHeaderComponent, FooterComponent],
   templateUrl: './legal-notice.component.html',
   styleUrl: './legal-notice.component.css',
 })

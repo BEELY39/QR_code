@@ -66,4 +66,56 @@ describe('AuthService', () => {
       expect(localStorage.getItem(HAS_SESSION_KEY)).toBeNull();
     });
   });
+
+  describe('refresh', () => {
+    it('lit l’utilisateur de la session et passe à l’état connecté', async () => {
+      const pending = service.refresh();
+
+      const req = http.expectOne(`${API}/api/me`);
+      expect(req.request.method).toBe('GET');
+      expect(req.request.withCredentials).toBe(true);
+      req.flush(USER);
+
+      await expect(pending).resolves.toEqual(USER);
+      expect(service.status()).toBe('authenticated');
+      expect(localStorage.getItem(HAS_SESSION_KEY)).toBe('true');
+    });
+
+    it('passe à l’état anonyme et oublie l’indicateur sur un 401', async () => {
+      localStorage.setItem(HAS_SESSION_KEY, 'true');
+      const pending = service.refresh();
+
+      http.expectOne(`${API}/api/me`).flush(null, { status: 401, statusText: 'Unauthorized' });
+
+      await expect(pending).resolves.toBeNull();
+      expect(service.status()).toBe('anonymous');
+      expect(localStorage.getItem(HAS_SESSION_KEY)).toBeNull();
+    });
+  });
+
+  describe('initFromBrowser', () => {
+    it('ne fait aucun appel réseau pour un visiteur qui ne s’est jamais connecté', () => {
+      service.initFromBrowser();
+
+      http.expectNone(`${API}/api/me`);
+      expect(service.status()).toBe('anonymous');
+    });
+
+    it('vérifie la session quand une connexion a déjà eu lieu dans ce navigateur', () => {
+      localStorage.setItem(HAS_SESSION_KEY, 'true');
+      service.initFromBrowser();
+
+      http.expectOne(`${API}/api/me`).flush(USER);
+    });
+  });
+
+  describe('markSessionExpired', () => {
+    it('repasse à l’état anonyme et retire l’indicateur', () => {
+      localStorage.setItem(HAS_SESSION_KEY, 'true');
+      service.markSessionExpired();
+
+      expect(service.status()).toBe('anonymous');
+      expect(localStorage.getItem(HAS_SESSION_KEY)).toBeNull();
+    });
+  });
 });
