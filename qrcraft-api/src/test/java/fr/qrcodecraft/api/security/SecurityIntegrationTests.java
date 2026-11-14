@@ -76,8 +76,9 @@ class SecurityIntegrationTests {
 
 	@Test
 	void expiredTokenIsRejected() throws Exception {
-		Instant twoHoursAgo = Instant.now().minusSeconds(7200);
-		String token = new TokenService(encoder, properties, Clock.fixed(twoHoursAgo, ZoneOffset.UTC)).issue("user-42", Map.of());
+		// Émis il y a « durée de vie + 1 h » : expiré quelle que soit la durée configurée (7 j depuis 013).
+		Instant issuedAt = Instant.now().minus(properties.ttl()).minusSeconds(3600);
+		String token = new TokenService(encoder, properties, Clock.fixed(issuedAt, ZoneOffset.UTC)).issue("user-42", Map.of());
 
 		mockMvc.perform(get("/test/me").header("Authorization", "Bearer " + token))
 			.andExpect(status().isUnauthorized());

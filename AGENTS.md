@@ -25,6 +25,8 @@ espace connecté (QR dynamiques, campagnes, statistiques de scan).
 - QR statiques générés à 100 % dans le navigateur ; le back-end ne sert qu'au dynamique (redirection
   `/r/{shortCode}`, comptes, campagnes, statistiques).
 - Angular : tout élément créé via `ng generate` ; découpage service / smart / dumb ; pas de `any`.
+- Génération par CLI et cycle de sprint (tests → code → build → tests) : voir « Directives de
+  développement » ci-dessous — elles priment.
 - Styles : Tailwind v4 et les tokens `qc-*` de `frontend/src/styles.css` ; CSS natif en dernier recours.
 - Back-end : controller → service → repository, DTO en records, Flyway seul maître du schéma, pool
   Postgres à 5, threads virtuels, caches bornés, seul `/actuator/health` exposé, secrets en variables
@@ -53,6 +55,55 @@ Back-end, depuis `qrcraft-api/` (Docker Desktop démarré pour les tests de base
 **Reprise par l'autre agent** : l'avancement se lit dans `specs/NNN-*/tasks.md`. Cocher chaque tâche dès
 qu'elle est terminée ; l'agent qui reprend part des cases non cochées et ne refait pas les autres.
 
+## Directives de développement (règles de l'utilisateur, prioritaires)
+
+### Génération par CLI — aucune création manuelle quand un générateur existe
+
+- Tout squelette (composant, service, contrôleur, entité, garde, intercepteur, classe de test…) est
+  **généré par le CLI officiel** quand il en existe un ; on édite ensuite le fichier généré pour y
+  mettre la logique. Création à la main (éditeur, `touch`…) interdite dans ce cas.
+- **Exception** : création manuelle tolérée uniquement quand aucun générateur ne couvre ce type de
+  fichier (fichier de configuration spécifique, DTO simple, migration SQL…).
+- Avant de créer un fichier, vérifier les générateurs disponibles dans le projet.
+
+Générateurs disponibles (vérifié le 2026-11-14) :
+
+| Projet | Générateur | Usage |
+|---|---|---|
+| `frontend/` | Angular CLI 21.2 (`npx ng generate …`) | composants, services, gardes, intercepteurs, directives, pipes, environnements — **toujours** |
+| `qrcraft-api/` | aucun générateur de classe installé (ni Spring Boot CLI, ni JHipster, ni Yeoman ; le wrapper Maven ne génère pas de classe isolée) | **exception** : classes Java (entités, repositories, services, contrôleurs, DTO, tests) et migrations Flyway créées à la main, dans les paquets existants et selon leurs conventions |
+
+Si un générateur Java est ajouté au projet un jour, il devient obligatoire et ce tableau est mis à jour.
+
+### Cycle d'un sprint — ordre impératif, aucune étape sautée
+
+1. **Squelettes et tests (TDD, phase rouge)** : générer par CLI les fichiers nécessaires, puis écrire
+   les tests unitaires (logique métier) et d'intégration (`@SpringBootTest`, `@WebMvcTest`, tests de
+   composants). Ils doivent échouer.
+2. **Code** : compléter les fichiers générés jusqu'à satisfaire la spec Spec Kit et faire passer ces
+   tests, en respectant l'architecture et les conventions.
+3. **Build — bloquant** : lancer le build. En échec (compilation, typage, packaging) : **interdit** de
+   lancer les tests ou de passer à la suite ; corriger et relancer jusqu'au succès complet.
+4. **Tests — bloquant** : lancer toute la suite (unitaires + intégration). Un test en échec : corriger,
+   relancer le build (étape 3), puis les tests (étape 4). Tout vert : sprint validé.
+
+| Projet | Étape 3 — build | Étape 4 — tests |
+|---|---|---|
+| `qrcraft-api/` | `./mvnw clean package -DskipTests` | `./mvnw clean verify` (Docker Desktop démarré) |
+| `frontend/` | `npm run lint && npm run build` (typage puis build) | `npm run test:ci` |
+
+Sous PowerShell, `./mvnw` → `.\mvnw.cmd`. Le projet utilise le wrapper Maven : `mvn` n'est pas
+installé globalement.
+
+### Verrouillage entre sprints
+
+Tant que le build ou les tests du sprint en cours ne sont pas au vert, il est **interdit** de démarrer
+un nouveau sprint ou d'initialiser une nouvelle spécification. La boucle complète
+(CLI + tests → code → build → tests) est répétée intégralement à chaque sprint.
+
+Dans `tasks.md`, les tâches de génération et de test d'une story précèdent toujours ses tâches
+d'implémentation, et chaque story se clôt par build puis tests.
+
 ## Conventions de travail
 
 - Langue : français pour les échanges, les specs, les commits et les PR.
@@ -73,5 +124,17 @@ qu'elle est terminée ; l'agent qui reprend part des cases non cochées et ne re
   Issues #211 – #217, epic #218, jalon « 012 — Socle back-end ».
   `./mvnw clean verify` vert (71 tests, ~100 s) ; `spring-boot:run` validé (port 8081 sur le poste
   de l'utilisateur : CrowdSec occupe 8080). **Reste** : push et PR (T055), sur accord de l'utilisateur.
-- **Suite prévue** : entités `User`, `Campaign`, `QrCode`, `Scan`, `ScanDailyRollup` et leurs
-  migrations Flyway, puis redirection `/r/{shortCode}` et point de connexion Google.
+- **013 — Authentification Google** : spec écrite et clarifiée (`specs/013-google-jwt-auth/`).
+  Décisions : connexion par **fenêtre Google** depuis le site (pas de secret client, pas d'adresse de
+  redirection dans la console Google) ; **Google uniquement** (formulaire e-mail / mot de passe de la
+  maquette retiré) ; session de **7 jours sans renouvellement** (risque accepté : pas de révocation
+  serveur). Le propriétaire crée lui-même l'identifiant OAuth ; la feature lui fournit le guide de
+  configuration. Plan fait : bouton `asl-google-signin-button` fourni **au niveau de la route**
+  `/connexion` · `/inscription` ; jeton QRCraft dans un **cookie `HttpOnly` `SameSite=Strict`**
+  (`qrcraft_session`, 7 j) ; `POST /api/auth/google`, `GET /api/me`, `POST /api/auth/logout` ; table
+  `users` (V1) ; API de dev sur le port 8081. Identifiant client Google (public) :
+  `984838546224-vnk721eak0da8nhvvht54jhdtkoq8cce.apps.googleusercontent.com` — le **secret client
+  n'est jamais utilisé ni versionné**. Tâches T001 – T077 dans `tasks.md` (cycle CLI → tests → code → build → tests par phase) ; issues #219 – #224, epic
+  #225, jalon « 013 — Authentification Google ». Prochaine étape : `/speckit-implement`.
+- **Suite prévue** : entités `Campaign`, `QrCode`, `Scan`, `ScanDailyRollup` et leurs migrations
+  Flyway, puis redirection `/r/{shortCode}`.
