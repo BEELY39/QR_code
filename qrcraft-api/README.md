@@ -18,13 +18,13 @@ Depuis ce dossier (sous PowerShell, remplacer `./mvnw` par `.\mvnw.cmd`) :
 | Commande | Effet |
 |---|---|
 | `./mvnw verify` | compile et lance toute la suite de tests ; les tests de démarrage utilisent un PostgreSQL éphémère (Testcontainers) |
-| `./mvnw spring-boot:run` | lance l'API en profil `dev` sur `http://localhost:8080` ; Docker Compose démarre `compose.yaml` |
+| `./mvnw spring-boot:run` | lance l'API en profil `dev` sur `http://localhost:8081` (8080 est souvent pris, par CrowdSec par exemple) ; Docker Compose démarre `compose.yaml` |
 | `./mvnw -DskipTests package` | produit `target/qrcraft-api-0.0.1-SNAPSHOT.jar`, sans profil ni Docker Compose |
 
 Vérification rapide une fois lancée :
 
 ```bash
-curl -i http://localhost:8080/actuator/health
+curl -i http://localhost:8081/actuator/health
 ```
 
 → `200 {"groups":["liveness","readiness"],"status":"UP"}`, sans aucun détail de composant. Tout
@@ -48,11 +48,28 @@ Un secret préfixé `dev-only-` ou `test-only-` fait échouer le démarrage hors
 | `SPRING_DATASOURCE_USERNAME` | oui | — |
 | `SPRING_DATASOURCE_PASSWORD` | oui | — |
 | `QRCRAFT_SECURITY_JWT_SECRET` | oui | ≥ 32 octets aléatoires, par ex. `openssl rand -base64 48` |
-| `QRCRAFT_SECURITY_JWT_TTL` | non | durée ISO-8601, `PT1H` par défaut |
-| `QRCRAFT_SECURITY_GOOGLE_CLIENT_ID` | oui | `<n>.apps.googleusercontent.com` |
+| `QRCRAFT_SECURITY_JWT_TTL` | non | durée ISO-8601 de la session, `P7D` (7 jours) |
+| `QRCRAFT_SECURITY_GOOGLE_CLIENT_ID` | oui | `<n>.apps.googleusercontent.com` (public, cf. `docs/google-oauth.md`) |
+| `QRCRAFT_CORS_ALLOWED_ORIGINS` | non | origines du site, défaut `https://qrcode-craft.fr,https://www.qrcode-craft.fr` |
 | `QRCRAFT_GEOIP_DATABASE_PATH` | non | chemin du fichier `.mmdb` ; absent = ville et pays non renseignés |
 
 Sans ces variables, le jar refuse de démarrer et nomme la première propriété manquante.
+
+## Connexion Google
+
+Google uniquement, par la fenêtre de choix de compte : **aucune URI de redirection, aucun secret
+client**. Configuration de la console et variables : [`docs/google-oauth.md`](../docs/google-oauth.md).
+
+| Méthode | Chemin | Accès | Effet |
+|---|---|---|---|
+| `POST` | `/api/auth/google` | public | `{ "credential": "<jeton Google>" }` → vérifie, crée ou retrouve le compte, pose le cookie |
+| `GET` | `/api/me` | session | utilisateur connecté |
+| `POST` | `/api/auth/logout` | public | efface le cookie (`204`) |
+
+Session : jeton QRCraft de **7 jours** sans renouvellement, dans le cookie `qrcraft_session`
+(`HttpOnly`, `Secure`, `SameSite=Strict`, `Path=/api`) — jamais lisible par le JavaScript du site.
+Les comptes sont dans la table `users` (migration `V1__create_users.sql`), retrouvés par
+l'identifiant Google, jamais par l'e-mail.
 
 ## Exploitation
 
@@ -85,6 +102,6 @@ moins 512 Mo de mémoire pour le conteneur. Si l'hébergement ne le permet pas, 
 | Tests en échec avec `Could not find a valid Docker environment` | Docker Desktop arrêté | démarrer Docker Desktop, attendre que `docker info` réponde, relancer |
 | `Failed to configure a DataSource: 'url' attribute is not specified` au lancement du jar | variables de base absentes | définir `SPRING_DATASOURCE_*`, ou utiliser `./mvnw spring-boot:run` en local |
 | `qrcraft.security.jwt.secret est obligatoire` | secret JWT absent | définir `QRCRAFT_SECURITY_JWT_SECRET` |
-| `Port 8080 was already in use` avec `spring-boot:run` | un autre service occupe 8080 (par exemple CrowdSec) | `./mvnw spring-boot:run -Dspring-boot.run.arguments=--server.port=8081` |
+| `Port 8081 was already in use` avec `spring-boot:run` | un autre service occupe 8081 | `./mvnw spring-boot:run -Dspring-boot.run.arguments=--server.port=8082`, et adapter `apiBaseUrl` dans `frontend/src/environments/environment.development.ts` |
 | Le conteneur `qrcraft-api-postgres-1` reste actif après un arrêt brutal | l'API n'a pas pu l'arrêter elle-même | `docker compose stop` depuis ce dossier |
 | Avertissement `Géolocalisation désactivée` au démarrage | `QRCRAFT_GEOIP_DATABASE_PATH` absent ou fichier illisible | normal en dev ; en production, fournir la base DB-IP Lite |

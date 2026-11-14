@@ -53,6 +53,16 @@ npm run test:ci    # Suite de tests automatisés (121 tests)
 npm run build      # Compilation de production
 ```
 
+## 🔐 Authentification
+
+Connexion **avec Google uniquement**, par la fenêtre de choix de compte (`/connexion`, `/inscription`).
+Le module Google n'est chargé que sur ces deux pages : l'accueil et le Studio restent utilisables sans
+compte et sans aucun appel à Google. La session (7 jours) est un cookie `HttpOnly` posé par l'API
+`qrcraft-api/` ; l'espace `/app` est réservé aux personnes connectées.
+
+Configuration de la console Google et variables : [`docs/google-oauth.md`](docs/google-oauth.md).
+En local, lancer l'API (`cd qrcraft-api && ./mvnw spring-boot:run`, port 8081) puis le site (`npm start`).
+
 ## Design system (refonte 011)
 
 Le jeu de tokens de marque vit dans le bloc `@theme` de `frontend/src/styles.css` :
